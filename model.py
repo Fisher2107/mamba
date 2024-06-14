@@ -2,6 +2,7 @@ from mamba_ssm.modules.mamba_simple import Mamba
 from mamba_ssm.modules.block import Block
 from mamba_ssm.ops.triton.layer_norm import RMSNorm, layer_norm_fn, rms_norm_fn
 import torch
+from torch.distributions.categorical import Categorical
 from functools import partial
 import torch.nn as nn
 
@@ -11,22 +12,30 @@ def generate_data(device,batch_size,city_count,coord_dim=2):
 def compute_tour_length(x, tour): 
     """
     Compute the length of a batch of tours
-    Inputs : x of size (bsz, nb_nodes, 2) batch of tsp tour instances
-             tour of size (bsz, nb_nodes) batch of sequences (node indices) of tsp tours
+    Inputs : x of size (bsz, city_count+1, 2) batch of tsp tour instances
+             tour of size (bsz, city_count) batch of sequences (node indices) of tsp tours
     Output : L of size (bsz,)             batch of lengths of each tsp tour
     """
+    x = x[:,:-1,:]
     bsz = x.shape[0]
-    nb_nodes = x.shape[1]
-    arange_vec = torch.arange(bsz, device=x.device)
-    first_cities = x[arange_vec, tour[:,0], :] # size(first_cities)=(bsz,2)
-    previous_cities = first_cities
-    L = torch.zeros(bsz, device=x.device)
-    with torch.no_grad():
-        for i in range(1,nb_nodes):
-            current_cities = x[arange_vec, tour[:,i], :] 
-            L += torch.sum( (current_cities - previous_cities)**2 , dim=1 )**0.5 # dist(current, previous node) 
-            previous_cities = current_cities
-        L += torch.sum( (current_cities - first_cities)**2 , dim=1 )**0.5 # dist(last, first node)  
+    arange_vec = torch.arange(bsz, device=x.device).unsqueeze(-1)
+    tour = tour.to(x.device)
+
+    # Get the cities in the order of the tour
+    ordered_cities = x[arange_vec, tour, :] # size(ordered_cities)=(bsz, city_count, 2)
+
+    # Compute the differences between each pair of consecutive cities
+    diffs = ordered_cities[:, 1:, :] - ordered_cities[:, :-1, :] # size(diffs)=(bsz, city_count-1, 2)
+
+    # Compute the distance between each pair of consecutive cities
+    distances = torch.sqrt(torch.sum(diffs**2, dim=2)) # size(distances)=(bsz, city_count-1)
+
+    # Add the distance from the last city to the first
+    distances = torch.cat([distances, torch.norm(ordered_cities[:, 0, :] - ordered_cities[:, -1, :], dim=1).unsqueeze(-1)], dim=1)
+
+    # Sum the distances to get the total length of each tour
+    L = torch.sum(distances, dim=1)
+
     return L
 
 class MambaFull(nn.Module):
@@ -86,17 +95,16 @@ def seq2seq_generate_tour(args,device,model,inputs):
         #print(outputs[0])
         outputs = nn.Softmax(dim=1)(outputs)
         #print(outputs[0])
-        #if args.deterministic:
-        next_city = torch.argmax(outputs, dim=1)
-        #print(next_city.shape)
-        #else:
-        #    next_city = Categorical(outputs).sample()
+        if args.deterministic:
+            next_city = torch.argmax(outputs, dim=1)
+        else:
+            next_city = Categorical(outputs).sample()
         #print(next_city[0])
         tours.append(next_city)
         sumLogProbOfActions.append(torch.log(outputs[torch.arange(args.bsz), next_city]) )
         mask[torch.arange(args.bsz), next_city] = 0
         inputs = torch.cat((inputs, inputs[torch.arange(args.bsz), next_city, :].unsqueeze(1)), dim=1)
         args.sequence_length += 1
-    tours = torch.stack(tours, dim=1)
-    sumLogProbOfActions = torch.stack(sumLogProbOfActions, dim=1).sum(dim=1)
+    tours = torch.stack(tours, dim=1).to(device)
+    sumLogProbOfActions = torch.stack(sumLogProbOfActions, dim=1).sum(dim=1).to(device)
     return tours, sumLogProbOfActions
