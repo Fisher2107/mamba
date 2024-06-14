@@ -39,12 +39,12 @@ class MambaFull(nn.Module):
             eps=self.norm_f.eps,
             residual=residual,
             prenorm=False,
-            residual_in_fp32=self.residual_in_fp32,
+            residual_in_fp32=True,
             is_rms_norm=True
         )
         logits = self.output_head(x)
         #mask vistited cities
-        return x
+        return logits
 
 def generate_data(device,batch_size,city_count,coord_dim=2):
-    return torch.rand(batch_size,city_count,2).long().to_device(device)
+    return torch.rand(batch_size,city_count+1,2).to(device)
