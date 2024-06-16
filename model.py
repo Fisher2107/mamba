@@ -10,11 +10,19 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import time
 
-def generate_data(device, batch_size, city_count, coord_dim=2):
-    random_data = torch.rand(batch_size, city_count, coord_dim).to(device)
-    #The twos will signify the start of the decoding phase
-    twos_data = torch.full((batch_size, 1, coord_dim), 2).to(device)
-    return torch.cat((random_data, twos_data), dim=1)
+def generate_data(device, batch_size, city_count, coord_dim=2 , start = 2):
+    
+    #The value of start will signify the start of the decoding phase
+    if start == 'rand':
+        return torch.rand(batch_size, city_count+1, coord_dim).to(device)
+    if start == 0:
+        epsilon = 0.02
+        random_data = epsilon + (1 - epsilon) * torch.rand(batch_size, city_count, coord_dim).to(device)
+    else:
+        random_data = torch.rand(batch_size, city_count, coord_dim).to(device)
+    
+    start_data = torch.full((batch_size, 1, coord_dim), start).to(device)
+    return torch.cat((random_data, start_data), dim=1)
 
 def compute_tour_length(x, tour): 
     """
@@ -132,8 +140,27 @@ def plot_tsp(x_coord, x_path, plot_concorde=False, plot_dist_pair=False):
         print('Concorde time: {:.3f}sec'.format(running_time))  
         print('gap:',(gap/nb_plots).item())
 
+# Fourier feature mapping
+class input_mapping(nn.Module):
+    def __init__(self, fourier_scale, d_model, coord_dim=2,device='cuda'):
+        super().__init__()
+        self.fourier_scale = fourier_scale
+        if fourier_scale is None:
+            self.embedding = nn.Linear(2, d_model)
+        else:
+            torch.manual_seed(2)
+            self.B = torch.randn(d_model // 2, 2).to(device) * fourier_scale
+
+    def forward(self, x):
+        if self.fourier_scale is None:
+            return self.embedding(x)
+        else:
+            x_proj = 2. * np.pi * x @ self.B.T
+            return torch.cat([torch.sin(x_proj), torch.cos(x_proj)], dim=-1)
+
+
 class MambaFull(nn.Module):
-    def __init__(self,d_model,city_count,nb_layers,coord_dim=2,mlp_cls=nn.Identity,norm_f=nn.LayerNorm):
+    def __init__(self,d_model,city_count,nb_layers,coord_dim=2,mlp_cls=nn.Identity,norm_f=nn.LayerNorm,fourier_scale=None):
         super().__init__()
         self.d_model=d_model
         self.city_count=city_count
@@ -141,7 +168,7 @@ class MambaFull(nn.Module):
         self.mlp = mlp_cls(d_model)
         self.norm_f = norm_f(d_model)
 
-        self.embedding = nn.Linear(coord_dim, d_model)
+        self.embedding = input_mapping(fourier_scale,d_model,coord_dim=coord_dim)
         self.layers = nn.ModuleList([
                     Block(dim= d_model,
                         mixer_cls= partial(Mamba,d_model),
