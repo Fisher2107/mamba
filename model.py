@@ -142,17 +142,13 @@ def plot_tsp(x_coord, x_path, plot_concorde=False, plot_dist_pair=False):
 
 # Fourier feature mapping
 class input_mapping(nn.Module):
-    def __init__(self, fourier_scale, d_model, coord_dim=2,device='cuda'):
+    def __init__(self, B, d_model, coord_dim=2,device='cuda'):
         super().__init__()
-        self.fourier_scale = fourier_scale
-        if fourier_scale is None:
-            self.embedding = nn.Linear(2, d_model)
-        else:
-            torch.manual_seed(2)
-            self.B = torch.randn(d_model // 2, 2).to(device) * fourier_scale
+        self.B = B
+        self.embedding = nn.Linear(coord_dim, d_model)
 
     def forward(self, x):
-        if self.fourier_scale is None:
+        if self.B is None:
             return self.embedding(x)
         else:
             x_proj = 2. * np.pi * x @ self.B.T
@@ -160,7 +156,7 @@ class input_mapping(nn.Module):
 
 
 class MambaFull(nn.Module):
-    def __init__(self,d_model,city_count,nb_layers,coord_dim=2,mlp_cls=nn.Identity,norm_f=nn.LayerNorm,fourier_scale=None):
+    def __init__(self,d_model,city_count,nb_layers,coord_dim=2,mlp_cls=nn.Identity,norm_f=nn.LayerNorm,B=None):
         super().__init__()
         self.d_model=d_model
         self.city_count=city_count
@@ -168,7 +164,7 @@ class MambaFull(nn.Module):
         self.mlp = mlp_cls(d_model)
         self.norm_f = norm_f(d_model)
 
-        self.embedding = input_mapping(fourier_scale,d_model,coord_dim=coord_dim)
+        self.embedding = input_mapping(B,d_model,coord_dim=coord_dim)
         self.layers = nn.ModuleList([
                     Block(dim= d_model,
                         mixer_cls= partial(Mamba,d_model),
@@ -186,6 +182,7 @@ class MambaFull(nn.Module):
         for layer in self.layers:
             x , residual = layer(x,residual)
 
+        # Set prenorm=False here since we don't need the residual
         x = layer_norm_fn(
             x,
             self.norm_f.weight,
