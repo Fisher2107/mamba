@@ -1,6 +1,7 @@
 from mamba_ssm.modules.mamba_simple import Mamba
 from mamba_ssm.modules.block import Block
 from mamba_ssm.ops.triton.layer_norm import RMSNorm, layer_norm_fn, rms_norm_fn
+from mamba_ssm.modules.mlp import GatedMLP
 import torch
 from torch.distributions.categorical import Categorical
 from functools import partial
@@ -24,14 +25,15 @@ def generate_data(device, batch_size, city_count, coord_dim=2 , start = 2):
     start_data = torch.full((batch_size, 1, coord_dim), start).to(device)
     return torch.cat((random_data, start_data), dim=1)
 
-def compute_tour_length(x, tour): 
+def compute_tour_length(x, tour,remove_start_token=True): 
     """
     Compute the length of a batch of tours
     Inputs : x of size (bsz, city_count+1, 2) batch of tsp tour instances
              tour of size (bsz, city_count) batch of sequences (node indices) of tsp tours
     Output : L of size (bsz,)             batch of lengths of each tsp tour
     """
-    x = x[:,:-1,:]
+    if remove_start_token:
+        x = x[:,:-1,:]
     bsz = x.shape[0]
     arange_vec = torch.arange(bsz, device=x.device).unsqueeze(-1)
     tour = tour.to(x.device)
@@ -145,14 +147,18 @@ class input_mapping(nn.Module):
     def __init__(self, B, d_model, coord_dim=2,device='cuda'):
         super().__init__()
         self.B = B
-        self.embedding = nn.Linear(coord_dim, d_model)
+        if B is None:
+            self.embedding = nn.Linear(coord_dim, d_model)
+        else:
+            self.embedding = nn.Linear(d_model, d_model)
 
     def forward(self, x):
         if self.B is None:
             return self.embedding(x)
         else:
-            x_proj = 2. * np.pi * x @ self.B.T
-            return torch.cat([torch.sin(x_proj), torch.cos(x_proj)], dim=-1)
+            x = 2. * np.pi * x @ self.B.T
+            x= torch.cat([torch.sin(x), torch.cos(x)], dim=-1)
+            return self.embedding(x)
 
 
 class MambaFull(nn.Module):
@@ -161,7 +167,10 @@ class MambaFull(nn.Module):
         self.d_model=d_model
         self.city_count=city_count
         self.nb_layers=nb_layers
-        self.mlp = mlp_cls(d_model)
+        if self.mlp_cls is None:
+            self.mlp_cls = GatedMLP(d_model)
+        else:
+            self.mlp = mlp_cls(d_model)
         self.norm_f = norm_f(d_model)
 
         self.embedding = input_mapping(B,d_model,coord_dim=coord_dim)
