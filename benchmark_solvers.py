@@ -94,7 +94,7 @@ def exact_solver(cities,device='cpu'):
     #print(tour_length)
     return tour_length.mean()
     
-
-test_input = torch.load('data/start_2/test_rand_2000_5_2.pt')
-print(greedy_tsp(test_input))
-print(exact_solver(test_input))
+if __name__ == '__main__':
+    test_input = torch.load('data/start_2/test_rand_2000_5_2.pt')
+    print(greedy_tsp(test_input))
+    print(exact_solver(test_input))

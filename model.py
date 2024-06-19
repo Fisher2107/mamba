@@ -162,22 +162,24 @@ class input_mapping(nn.Module):
 
 
 class MambaFull(nn.Module):
-    def __init__(self,d_model,city_count,nb_layers,coord_dim=2,mlp_cls=nn.Identity,norm_f=nn.LayerNorm,B=None):
+    def __init__(self,d_model,city_count,nb_layers,coord_dim=2,mlp_cls='identity',norm_f=nn.LayerNorm,B=None):
         super().__init__()
         self.d_model=d_model
         self.city_count=city_count
         self.nb_layers=nb_layers
-        if self.mlp_cls is None:
+        if mlp_cls == 'gatedmlp':
             self.mlp_cls = GatedMLP(d_model)
+        elif mlp_cls == 'identity':
+            self.mlp_cls = nn.Identity
         else:
-            self.mlp = mlp_cls(d_model)
+            raise ValueError('mlp_cls must be either "gatedmlp" or "identity"')
         self.norm_f = norm_f(d_model)
 
         self.embedding = input_mapping(B,d_model,coord_dim=coord_dim)
         self.layers = nn.ModuleList([
                     Block(dim= d_model,
                         mixer_cls= partial(Mamba,d_model),
-                        mlp_cls= mlp_cls,
+                        mlp_cls= self.mlp_cls,
                         fused_add_norm=True,
                         residual_in_fp32=True,
                         )   for _ in range(nb_layers)])
