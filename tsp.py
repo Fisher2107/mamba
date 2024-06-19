@@ -6,6 +6,24 @@ from tqdm import tqdm
 import matplotlib.pyplot as plt
 import time
 from model import MambaFull, generate_data, seq2seq_generate_tour, compute_tour_length
+from datetime import datetime
+import argparse
+
+
+#parser
+parser = argparse.ArgumentParser(description='Train Mamba model')
+parser.add_argument('--bsz', type=int, default=600, help='Batch size')
+parser.add_argument('--d_model', type=int, default=64, help='Model dimension')
+parser.add_argument('--coord_dim', type=int, default=2, help='Coordinate dimension')
+parser.add_argument('--nb_layers', type=int, default=4, help='Number of layers in the model')
+parser.add_argument('--mlp_cls', type=str, default='gatedmlp', help='Type of mlp to use')
+parser.add_argument('--city_count', type=int, default=5, help='Number of cities')
+parser.add_argument('--fourier_scale', type=float, default=None, help='Fourier scale')
+parser.add_argument('--nb_epochs', type=int, default=500, help='Number of epochs')
+parser.add_argument('--test_size', type=int, default=2000, help='Size of test data')
+parser.add_argument('--nb_batch_per_epoch', type=int, default=10, help='Number of batches per epoch')
+parser.add_argument('--save_loc', type=str, default='checkpoints/embed/Linear_mlp_4lay', help='Location to save model')
+parser.add_argument('--checkpoint', type=str, default=None, help='Checkpoint to load')
 
 # Define model parameters and hyperparameters
 class DotDict(dict):
@@ -13,56 +31,92 @@ class DotDict(dict):
         self.update(kwds)
         self.__dict__ = self
 
-args=DotDict()
-#Args for the model
+args=DotDict() 
 
-args.bsz=50
-args.d_model = 64
+#Args for the model
+args.bsz=600
+args.d_model = 64 #ensure that this is a multiple of 2
 args.coord_dim = 2
-args.nb_layers = 2
-args.mlp_cls = nn.Identity #nn.Linear
-args.city_count = 50
-args.sequence_length = args.city_count + 1
+args.nb_layers = 4
+args.mlp_cls = 'gatedmlp' #set as 'identity' or 'gatedmlp'
+args.city_count = 5
 args.deterministic = False #used for sampling from the model
+args.fourier_scale = None #If set as None a standard Linear map is used else a gaussian fourier feature mapping is used
+#args.polar = True #TODO
 
 #Args for the training
-args.nb_epochs=100
-args.nb_batch_per_epoch=100 
-args.nb_batch_eval=10
+args.nb_epochs=500
+args.test_size=2000
+args.nb_batch_per_epoch=10
+args.save_loc = 'checkpoints/embed/Linear_mlp_4lay'
+args.test_data_loc=f'data/start_2/test_rand_{args.test_size}_{args.city_count}_{args.coord_dim}.pt'
 #0 => data will not be recycled and each step new data is generated, however this will make the gpu spend most of the time loading data. Recommeded val is 100
-args.recycle_data=25
+args.recycle_data=0
 
-tot_time_ckpt = 0
+# Update the DotDict instance with the parsed arguments
+parsed_args = parser.parse_args()
+for key, value in vars(parsed_args).items():
+    setattr(args, key, value)
+
+#Load checkpoint
+if args.checkpoint is not None:
+    checkpoint = torch.load(args.checkpoint)
 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-print(device)
-#model which will be trained on
-model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls).to(device)
-#model which will be used as our baseline in the REINFORCE algorithm. This model will not be trained and only used for evaluation
-model_baseline = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls).to(device)
-model_baseline.load_state_dict(model_train.state_dict())
-model_baseline.eval()
 
-# Define a loss function
+if args.fourier_scale is None:
+    args.B = None
+else:
+    if checkpoint:
+        args.B = checkpoint['args'].B
+    else:
+        args.B = torch.randn(args.d_model // 2, 2).to(device) * args.fourier_scale
+
+#model which will be train and baseline as in the REINFORCE algorithm. 
+model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls, B = args.B).to(device)
+model_baseline = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls, B = args.B).to(device)
 loss_fn = nn.CrossEntropyLoss()
-
-# Define an optimizer
 optimizer = Adam(model_train.parameters(), lr=1e-4)
 
 
-mean_tour_length_train_list = [] # List to store loss values
-mean_tour_length_train_best = float('inf') # Variable to store the best loss value
-best_loss = float('inf')
+if checkpoint:
+    model_train.load_state_dict(checkpoint['model_state_dict'])
+    optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+    tot_time_ckpt = checkpoint['time_tot']
+    start_epoch = checkpoint['epoch']
+    mean_tour_length_list = checkpoint['mean_tour_length_list']
+    mean_tour_length_best = min([i.item() for i in checkpoint['mean_tour_length_list']])
+    print(mean_tour_length_best,mean_tour_length_list[-1])
+else:
+    tot_time_ckpt, start_epoch = 0,0
+    mean_tour_length_list = [] 
+    mean_tour_length_best = float('inf') 
+
+model_baseline.load_state_dict(model_train.state_dict())
+model_baseline.eval()
+for name, param in model_train.named_parameters():
+    print(f"Parameter: {name}, Size: {param.size()}")
+total_params = sum(p.numel() for p in model_train.parameters())
+print(f"Total number of parameters: {total_params}")
+
+
+test_data = torch.load(args.test_data_loc).to(device)
+test_data_batches = torch.split(test_data, args.bsz)
+
+print(test_data.shape)
+print([x.shape for x in test_data_batches])
 
 start_training_time = time.time()
+now = datetime.now()
+date_time = now.strftime("%d-%m_%H-%M")
 
 # Training loop
-for epoch in tqdm(range(args.nb_epochs)):
+for epoch in tqdm(range(start_epoch,args.nb_epochs)):
     model_train.train()
     i= 0 # Tracks the number of steps before we generate new data
     start = time.time()
-    for step in tqdm(range(args.nb_batch_per_epoch)):
+    for step in range(args.nb_batch_per_epoch):
 
         if i == 0:
             #Inputs will have size (bsz, seq_len, coord_dim)
@@ -71,11 +125,13 @@ for epoch in tqdm(range(args.nb_epochs)):
         else: i-=1
 
         # list that will contain Long tensors of shape (bsz,) that gives the idx of the cities chosen at time t
-        tours_train, sumLogProbOfActions = seq2seq_generate_tour(args,device,model_train,inputs)
-        tours_baseline, _ = seq2seq_generate_tour(args,device,model_baseline,inputs)
+        tours_train, sumLogProbOfActions = seq2seq_generate_tour(device,model_train,inputs,args.deterministic)
+        tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,args.deterministic)
         #get the length of the tours
-        L_train = compute_tour_length(inputs, tours_train)
-        L_baseline = compute_tour_length(inputs, tours_baseline)
+        with torch.no_grad():
+            L_train = compute_tour_length(inputs, tours_train)
+            L_baseline = compute_tour_length(inputs, tours_baseline)
+        #print(f"L_train requires_grad: {L_train.requires_grad}")
 
         # backprop     
         loss = torch.mean( (L_train - L_baseline)* sumLogProbOfActions )
@@ -87,45 +143,44 @@ for epoch in tqdm(range(args.nb_epochs)):
     time_tot = time.time()-start_training_time + tot_time_ckpt
 
     ###################
-    # Evaluate train model and baseline on 10k random TSP instances
+    # Evaluate train model and baseline
     ###################
     model_train.eval()
-    mean_tour_length_train = 0
-    mean_tour_length_baseline = 0
-    for step in range(0,args.nb_batch_eval):
+    L_train_total = 0
+    L_baseline_total = 0
+    
+    # Compute tour for model and baseline for test data, making it sure its split to not overload the gpu
+    for test_data_batch in test_data_batches:
+        tour_train, _ = seq2seq_generate_tour(device, model_train, test_data_batch, deterministic=True)
+        tour_baseline, _ = seq2seq_generate_tour(device, model_baseline, test_data_batch, deterministic=True)
 
-        # generate a batch of random tsp instances 
-        inputs = generate_data(device, args.bsz, args.city_count, args.coord_dim)  
+        # Get the lengths of the tours and add to the accumulators
+        L_train_total += compute_tour_length(test_data_batch, tour_train).sum()
+        L_baseline_total += compute_tour_length(test_data_batch, tour_baseline).sum()
 
-        # compute tour for model and baseline
-        with torch.no_grad():
-            tour_train, _ = seq2seq_generate_tour(args,device,model_train,inputs)
-            tour_baseline, _ = seq2seq_generate_tour(args,device,model_baseline,inputs)
-            
-        # get the lengths of the tours
-        L_train = compute_tour_length(inputs, tour_train)
-        L_baseline = compute_tour_length(inputs, tour_baseline)
+    # Compute the average tour lengths
+    L_train = L_train_total / args.test_size
+    L_baseline = L_baseline_total / args.test_size
 
-        # L_tr and L_bl are tensors of shape (bsz,). Compute the mean tour length
-        mean_tour_length_train += L_train.mean().item()
-        mean_tour_length_baseline += L_baseline.mean().item()
+    print(f'Epoch {epoch}, test tour length train: {L_train}, test tour length baseline: {L_baseline}, time one epoch: {time_one_epoch}, time tot: {time_tot}')
 
-    mean_tour_length_train =  mean_tour_length_train/ args.nb_batch_eval
-    mean_tour_length_baseline =  mean_tour_length_baseline/ args.nb_batch_eval
-    print(f'Epoch {epoch}, mean tour length train: {mean_tour_length_train}, mean tour length baseline: {mean_tour_length_baseline}, time one epoch: {time_one_epoch}, time tot: {time_tot}')
-
-    mean_tour_length_train_list.append(mean_tour_length_train)
+    mean_tour_length_list.append(L_train)
     # evaluate train model and baseline and update if train model is better
-    if mean_tour_length_train < mean_tour_length_baseline:
+    if L_train < L_baseline:
         model_baseline.load_state_dict( model_train.state_dict() )
 
     # Save checkpoint every 10,000 epochs
-    if mean_tour_length_train > mean_tour_length_train_best:
-        mean_tour_length_train_best = mean_tour_length_train
+    if L_train < mean_tour_length_best or epoch % 10 == 0:
+        mean_tour_length_best = L_train
+
+        # Append to filename
+        filename = f"file_{date_time}.pt"
         checkpoint = {
             'epoch': epoch,
             'model_state_dict': model_train.state_dict(),
             'optimizer_state_dict': optimizer.state_dict(),
-            'mean_tour_length_list': mean_tour_length_train_list,
+            'mean_tour_length_list': mean_tour_length_list,
+            'args': args,
+            'time_tot': time_tot
         }
-        torch.save(checkpoint, 'best_checkpoint.pt')
+        torch.save(checkpoint, f'{args.save_loc}_{date_time}.pt' )
