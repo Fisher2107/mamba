@@ -168,7 +168,7 @@ class MambaFull(nn.Module):
         self.city_count=city_count
         self.nb_layers=nb_layers
         if mlp_cls == 'gatedmlp':
-            self.mlp_cls = GatedMLP(d_model)
+            self.mlp_cls = GatedMLP
         elif mlp_cls == 'identity':
             self.mlp_cls = nn.Identity
         else:
