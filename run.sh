@@ -21,4 +21,4 @@ source /exports/applications/support/set_qlogin_environment.sh
 module load cuda/11.8
 
 # Run the executable
-python mamba.py
+python tsp.py
