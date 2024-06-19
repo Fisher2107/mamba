@@ -61,7 +61,8 @@ for key, value in vars(parsed_args).items():
 #Load checkpoint
 if args.checkpoint is not None:
     checkpoint = torch.load(args.checkpoint)
-
+else:
+    checkpoint = None
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
