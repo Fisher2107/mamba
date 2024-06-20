@@ -42,6 +42,7 @@ args.mlp_cls = 'gatedmlp' #set as 'identity' or 'gatedmlp'
 args.city_count = 5
 args.deterministic = False #used for sampling from the model
 args.fourier_scale = None #If set as None a standard Linear map is used else a gaussian fourier feature mapping is used
+args.start = 2 #start token
 #args.polar = True #TODO
 
 #Args for the training
@@ -49,7 +50,7 @@ args.nb_epochs=500
 args.test_size=2000
 args.nb_batch_per_epoch=10
 args.save_loc = 'checkpoints/embed/Linear_mlp_4lay'
-args.test_data_loc=f'data/start_2/test_rand_{args.test_size}_{args.city_count}_{args.coord_dim}.pt'
+args.test_data_loc=f'data/start_{args.start}/test_rand_{args.test_size}_{args.city_count}_{args.coord_dim}.pt'
 #0 => data will not be recycled and each step new data is generated, however this will make the gpu spend most of the time loading data. Recommeded val is 100
 args.recycle_data=0
 
@@ -120,7 +121,7 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
 
         if i == 0:
             #Inputs will have size (bsz, seq_len, coord_dim)
-            inputs = generate_data(device, args.bsz, args.city_count, args.coord_dim)
+            inputs = generate_data(device, args.bsz, args.city_count, args.coord_dim,start=args.start)
             i=args.recycle_data
         else: i-=1
 
