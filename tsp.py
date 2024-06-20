@@ -105,8 +105,7 @@ print(f"Total number of parameters: {total_params}")
 test_data = torch.load(args.test_data_loc).to(device)
 test_data_batches = torch.split(test_data, args.bsz)
 
-print(test_data.shape)
-print([x.shape for x in test_data_batches])
+print(args)
 
 start_training_time = time.time()
 now = datetime.now()
