@@ -24,6 +24,7 @@ parser.add_argument('--test_size', type=int, default=2000, help='Size of test da
 parser.add_argument('--nb_batch_per_epoch', type=int, default=10, help='Number of batches per epoch')
 parser.add_argument('--save_loc', type=str, default='checkpoints/embed/Linear_mlp_4lay', help='Location to save model')
 parser.add_argument('--checkpoint', type=str, default=None, help='Checkpoint to load')
+parser.add_argument('--start', type=int, default=2, help='Start token')
 
 # Define model parameters and hyperparameters
 class DotDict(dict):
