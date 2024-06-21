@@ -25,6 +25,9 @@ parser.add_argument('--nb_batch_per_epoch', type=int, default=10, help='Number o
 parser.add_argument('--save_loc', type=str, default='checkpoints/embed/Linear_mlp_4lay', help='Location to save model')
 parser.add_argument('--checkpoint', type=str, default=None, help='Checkpoint to load')
 parser.add_argument('--start', type=int, default=2, help='Start token')
+parser.add_argument('--recycle_data', type=int, default=0, help='Recycle data')
+parser.add_argument('--model_name', type=str, default='Full', help='Model name')
+parser.add_argument('--reverse', type=bool, default=False, help='Reverse even model layers')
 
 # Define model parameters and hyperparameters
 class DotDict(dict):
@@ -76,9 +79,14 @@ else:
     else:
         args.B = torch.randn(args.d_model // 2, 2).to(device) * args.fourier_scale
 
+name_to_model_maps = {
+    'Full': MambaFull,
+    'Pointer': MambaFull2
+}
+
 #model which will be train and baseline as in the REINFORCE algorithm. 
-model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls, B = args.B).to(device)
-model_baseline = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls, B = args.B).to(device)
+model_train = name_to_model_maps[args.model_name](args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls, B = args.B, reverse=args.reverse).to(device)
+model_baseline = name_to_model_maps[args.model_name](args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls, B = args.B, reverse=args.revers).to(device)
 loss_fn = nn.CrossEntropyLoss()
 optimizer = Adam(model_train.parameters(), lr=1e-4)
 

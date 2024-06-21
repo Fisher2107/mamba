@@ -162,7 +162,7 @@ class input_mapping(nn.Module):
 
 
 class MambaFull(nn.Module):
-    def __init__(self,d_model,city_count,nb_layers,coord_dim=2,mlp_cls='identity',norm_f=nn.LayerNorm,B=None):
+    def __init__(self,d_model,city_count,nb_layers,coord_dim=2,mlp_cls='identity',norm_f=nn.LayerNorm,B=None,reverse=False):
         super().__init__()
         self.d_model=d_model
         self.city_count=city_count
@@ -185,13 +185,17 @@ class MambaFull(nn.Module):
                         )   for _ in range(nb_layers)])
         
         self.output_head = nn.Linear(d_model,city_count, bias=False)
+        self.reverse = reverse
 
     def forward(self,x):
         x = self.embedding(x)
 
         residual=None
-        for layer in self.layers:
-            x , residual = layer(x,residual)
+        for i,layer in enumerate(self.layers):
+            if reverse == True and i>0:
+                x , residual = layer(torch.flip(x,[1]),residual,mask=None)
+            else:
+                x , residual = layer(x,residual)
 
         # Set prenorm=False here since we don't need the residual
         x = layer_norm_fn(
