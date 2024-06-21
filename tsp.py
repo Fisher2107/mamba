@@ -81,12 +81,14 @@ else:
 
 name_to_model_maps = {
     'Full': MambaFull,
-    'Pointer': MambaFull2
+    'Pointer': None,
 }
+
+print(args.reverse)
 
 #model which will be train and baseline as in the REINFORCE algorithm. 
 model_train = name_to_model_maps[args.model_name](args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls, B = args.B, reverse=args.reverse).to(device)
-model_baseline = name_to_model_maps[args.model_name](args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls, B = args.B, reverse=args.revers).to(device)
+model_baseline = name_to_model_maps[args.model_name](args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls, B = args.B, reverse=args.reverse).to(device)
 loss_fn = nn.CrossEntropyLoss()
 optimizer = Adam(model_train.parameters(), lr=1e-4)
 
