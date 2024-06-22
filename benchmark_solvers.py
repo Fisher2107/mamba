@@ -75,28 +75,19 @@ def compute_tour_length(x, tour,remove_start_token=True):
 
     return L
 
-def exact_solver(cities,device='cpu',split=1):
+def exact_solver(cities, device='cpu', split=1):
     cities = cities[:, :-1, :]
     bsz, city_count, _ = cities.shape
-    split_size = bsz//split
-    arange_vec = torch.arange(bsz, device=device).unsqueeze(-1)
+    split_size = bsz // split
     permutations = torch.tensor(list(itertools.permutations(range(city_count))), device=device).unsqueeze(1)
-    permutations = permutations.repeat(1, split_size, 1)  # Repeat it bsz times along the second dimension to make it (city_count!, bsz, city_count)
-    #print(permutations.shape)
-    
-    all_min_tour_lengths = torch.zeros(bsz, device=device).fill_(float('inf'))
-    #print(all_tour_lengths.shape)
-    
-    for j in range(split):
-        split_tour_lengths = torch.zeros(split_size, len(permutations), device=device)
 
+    all_min_tour_lengths = torch.zeros(bsz, device=device).fill_(float('inf'))
+
+    for j in range(split):
         for i in range(permutations.shape[0]):
             tour_length = compute_tour_length(cities[j*split_size:(j+1)*split_size], permutations[i], remove_start_token=False)
-            #print(tour_length)
-            split_tour_lengths[:, i] = tour_length
+            all_min_tour_lengths[j*split_size:(j+1)*split_size] = torch.min(tour_length, all_min_tour_lengths[j*split_size:(j+1)*split_size])
 
-        tour_length,_ = torch.min(split_tour_lengths, dim=1)
-        all_min_tour_lengths[j*split_size:(j+1)*split_size] = tour_length
     return all_min_tour_lengths.mean()
     
 if __name__ == '__main__':
