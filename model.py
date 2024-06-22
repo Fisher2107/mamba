@@ -1,4 +1,5 @@
 from mamba_ssm.modules.mamba_simple import Mamba
+from mamba_ssm.modules.mamba2_simple import Mamba2Simple
 from mamba_ssm.modules.block import Block
 from mamba_ssm.ops.triton.layer_norm import RMSNorm, layer_norm_fn, rms_norm_fn
 from mamba_ssm.modules.mlp import GatedMLP
@@ -162,7 +163,7 @@ class input_mapping(nn.Module):
 
 
 class MambaFull(nn.Module):
-    def __init__(self,d_model,city_count,nb_layers,coord_dim=2,mlp_cls='identity',norm_f=nn.LayerNorm,B=None,reverse=False):
+    def __init__(self,d_model,city_count,nb_layers,coord_dim=2,mlp_cls='identity',norm_f=nn.LayerNorm,B=None,reverse=False,mamba2=False):
         super().__init__()
         self.d_model=d_model
         self.city_count=city_count
@@ -176,9 +177,14 @@ class MambaFull(nn.Module):
         self.norm_f = norm_f(d_model)
 
         self.embedding = input_mapping(B,d_model,coord_dim=coord_dim)
+        if mamba2:
+            self.mixer_cls = partial(Mamba2Simple,d_model)
+        else:
+            self.mixer_cls = partial(Mamba,d_model)
+
         self.layers = nn.ModuleList([
                     Block(dim= d_model,
-                        mixer_cls= partial(Mamba,d_model),
+                        mixer_cls= self.mixer_cls,
                         mlp_cls= self.mlp_cls,
                         fused_add_norm=True,
                         residual_in_fp32=True,

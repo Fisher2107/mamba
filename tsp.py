@@ -27,6 +27,7 @@ parser.add_argument('--checkpoint', type=str, default=None, help='Checkpoint to 
 parser.add_argument('--start', type=int, default=2, help='Start token')
 parser.add_argument('--recycle_data', type=int, default=0, help='Recycle data')
 parser.add_argument('--model_name', type=str, default='Full', help='Model name')
+paerser.add_argument('--mamba2', type=bool, default=False, help='choose if mamba2 is used')
 parser.add_argument('--reverse', type=bool, default=False, help='Reverse even model layers')
 
 # Define model parameters and hyperparameters
@@ -87,8 +88,8 @@ name_to_model_maps = {
 print(args.reverse)
 
 #model which will be train and baseline as in the REINFORCE algorithm. 
-model_train = name_to_model_maps[args.model_name](args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls, B = args.B, reverse=args.reverse).to(device)
-model_baseline = name_to_model_maps[args.model_name](args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls, B = args.B, reverse=args.reverse).to(device)
+model_train = name_to_model_maps[args.model_name](args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls, B = args.B, reverse=args.reverse,mamba2=args.mamba2).to(device)
+model_baseline = name_to_model_maps[args.model_name](args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls, B = args.B, reverse=args.reverse,mamba2=args.mamba2).to(device)
 loss_fn = nn.CrossEntropyLoss()
 optimizer = Adam(model_train.parameters(), lr=1e-4)
 
