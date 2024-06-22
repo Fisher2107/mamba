@@ -1,5 +1,5 @@
 from mamba_ssm.modules.mamba_simple import Mamba
-from mamba_ssm.modules.mamba2_simple import Mamba2Simple
+from mamba_ssm.modules.mamba2 import Mamba2
 from mamba_ssm.modules.block import Block
 from mamba_ssm.ops.triton.layer_norm import RMSNorm, layer_norm_fn, rms_norm_fn
 from mamba_ssm.modules.mlp import GatedMLP
@@ -178,7 +178,7 @@ class MambaFull(nn.Module):
 
         self.embedding = input_mapping(B,d_model,coord_dim=coord_dim)
         if mamba2:
-            self.mixer_cls = partial(Mamba2Simple,d_model)
+            self.mixer_cls = partial(Mamba2,d_model)
         else:
             self.mixer_cls = partial(Mamba,d_model)
 

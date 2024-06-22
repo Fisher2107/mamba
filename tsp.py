@@ -27,7 +27,7 @@ parser.add_argument('--checkpoint', type=str, default=None, help='Checkpoint to 
 parser.add_argument('--start', type=int, default=2, help='Start token')
 parser.add_argument('--recycle_data', type=int, default=0, help='Recycle data')
 parser.add_argument('--model_name', type=str, default='Full', help='Model name')
-paerser.add_argument('--mamba2', type=bool, default=False, help='choose if mamba2 is used')
+parser.add_argument('--mamba2', type=bool, default=False, help='choose if mamba2 is used')
 parser.add_argument('--reverse', type=bool, default=False, help='Reverse even model layers')
 
 # Define model parameters and hyperparameters
