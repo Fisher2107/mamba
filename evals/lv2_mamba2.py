@@ -38,9 +38,9 @@ model_train.eval()'''
 #plt.plot(mean_tour_length_list, label='Reverse 4')
 
 
-greedy = greedy_tsp(test_data,device=device)[0].item()
-exact = exact_solver(test_data,device=device,split=10).item()
-print(greedy)
+#greedy = greedy_tsp(test_data,device=device)[0].item()
+#print(greedy)
+exact = exact_solver(test_data,device=device,split=1).item()
 print(exact)
 
 
