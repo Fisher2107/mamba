@@ -75,19 +75,22 @@ def compute_tour_length(x, tour,remove_start_token=True):
 
     return L
 
-def exact_solver(cities,device='cpu'):
+def exact_solver(cities,device='cpu',split=1):
     cities = cities[:, :-1, :]
     bsz, city_count, _ = cities.shape
+    split_size = bsz//split
     arange_vec = torch.arange(bsz, device=device).unsqueeze(-1)
     permutations = torch.tensor(list(itertools.permutations(range(city_count))), device=device).unsqueeze(1)
-    permutations = permutations.repeat(1, 2000, 1)  # Repeat it 2000 times along the second dimension to make it (120, 2000, 5)
+    permutations = permutations.repeat(1, split_size, 1)  # Repeat it bsz times along the second dimension to make it (city_count!, bsz, city_count)
     #print(permutations.shape)
     all_tour_lengths = torch.zeros(bsz, len(permutations), device=device)
     #print(all_tour_lengths.shape)
-    for i in range(permutations.shape[0]):
-        tour_length = compute_tour_length(cities, permutations[i], remove_start_token=False)
-        #print(tour_length)
-        all_tour_lengths[:, i] = tour_length
+    
+    for j in range(split):
+        for i in range(permutations.shape[0]):
+            tour_length = compute_tour_length(cities[j*split_size:(j+1)*split_size], permutations[i], remove_start_token=False)
+            #print(tour_length)
+            all_tour_lengths[j*split_size:(j+1)*split_size, i] = tour_length
     #print(all_tour_lengths)
     #print(all_tour_lengths.shape)
     tour_length,_ = torch.min(all_tour_lengths, dim=1)

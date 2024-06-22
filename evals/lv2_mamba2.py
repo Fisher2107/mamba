@@ -39,7 +39,7 @@ model_train.eval()'''
 
 
 greedy = greedy_tsp(test_data,device=device)[0].item()
-exact = exact_solver(test_data,device=device).item()
+exact = exact_solver(test_data,device=device,split=10).item()
 print(greedy)
 print(exact)
 
