@@ -83,19 +83,21 @@ def exact_solver(cities,device='cpu',split=1):
     permutations = torch.tensor(list(itertools.permutations(range(city_count))), device=device).unsqueeze(1)
     permutations = permutations.repeat(1, split_size, 1)  # Repeat it bsz times along the second dimension to make it (city_count!, bsz, city_count)
     #print(permutations.shape)
-    all_tour_lengths = torch.zeros(bsz, len(permutations), device=device)
+    
+    all_min_tour_lengths = torch.zeros(bsz, device=device).fill_(float('inf'))
     #print(all_tour_lengths.shape)
     
     for j in range(split):
+        split_tour_lengths = torch.zeros(split_size, len(permutations), device=device)
+
         for i in range(permutations.shape[0]):
             tour_length = compute_tour_length(cities[j*split_size:(j+1)*split_size], permutations[i], remove_start_token=False)
             #print(tour_length)
-            all_tour_lengths[j*split_size:(j+1)*split_size, i] = tour_length
-    #print(all_tour_lengths)
-    #print(all_tour_lengths.shape)
-    tour_length,_ = torch.min(all_tour_lengths, dim=1)
-    #print(tour_length)
-    return tour_length.mean()
+            split_tour_lengths[:, i] = tour_length
+
+        tour_length,_ = torch.min(split_tour_lengths, dim=1)
+        all_min_tour_lengths[j*split_size:(j+1)*split_size] = tour_length
+    return all_min_tour_lengths.mean()
     
 if __name__ == '__main__':
     test_input = torch.load('data/start_2/test_rand_2000_5_2.pt')
