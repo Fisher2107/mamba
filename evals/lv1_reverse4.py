@@ -22,8 +22,9 @@ class DotDict(dict):
         self.update(kwds)
         self.__dict__ = self
 
-checkpoint = torch.load('../checkpoints/start/Linear_mlp_2start_again_21-06_12-51.pt')
-#checkpoint2 = torch.load('../checkpoints/reverse/Linear_mlp_5reverse_20-06_18-38.pt')
+
+checkpoint= torch.load('../checkpoints/reverse/Linear_reverse4_21-06_17-02.pt')
+checkpoint2 = torch.load('../checkpoints/start/Linear_mlp_2start_again_21-06_12-51.pt')
 
 #checkpoint3 = torch.load('../checkpoints/reverse/Linear_mlp_randreverse_20-06_19-04.pt')
 #checkpoint4 = torch.load('../checkpoints/reverse/Linear_mlp_0start_20-06_19-42.pt')
@@ -36,12 +37,12 @@ model_train.eval()'''
 
 
 mean_tour_length_list = [tensor.cpu().numpy() for tensor in checkpoint['mean_tour_length_list']]
-#mean_tour_length_list2 = [tensor.cpu().numpy() for tensor in checkpoint2['mean_tour_length_list']]
+mean_tour_length_list2 = [tensor.cpu().numpy() for tensor in checkpoint2['mean_tour_length_list'][:1000]]
 #mean_tour_length_list3 = [tensor.cpu().numpy() for tensor in checkpoint3['mean_tour_length_list']]
 #mean_tour_length_list4 = [tensor.cpu().numpy() for tensor in checkpoint4['mean_tour_length_list']]
 
-plt.plot(mean_tour_length_list, label='Start 2')
-#plt.plot(mean_tour_length_list2, label='Start 5')
+plt.plot(mean_tour_length_list, label='Reverse')
+plt.plot(mean_tour_length_list2, label='Non-Reverse')
 #plt.plot(mean_tour_length_list3, label='Start random')
 #plt.plot(mean_tour_length_list4, label='Start 0')
 
@@ -58,7 +59,8 @@ plt.axhline(y=exact, color='g', linestyle='--', label='Exact Solver')
 plt.xlabel('Epoch')
 plt.ylabel('Mean Tour Length')
 plt.ylim(2.1, 2.64)
+plt.title('4 layers')
 
 plt.legend()
-plt.savefig('figs/mean_tour_length_direction.pdf')
+plt.savefig('figs/reverse_exp_4lay.pdf')
 plt.show()
