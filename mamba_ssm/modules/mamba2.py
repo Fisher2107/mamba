@@ -145,7 +145,6 @@ class Mamba2(nn.Module):
                                               **factory_kwargs)
 
     def forward(self, u, seqlen=None, seq_idx=None, inference_params=None):
-        print("u.shape", u.shape)
         """
         u: (batch, seqlen, hidden_dim) if seqlen=None.
             If seqlen is not None, u is (batch * seqlen, hidden_dim). This is so that when we

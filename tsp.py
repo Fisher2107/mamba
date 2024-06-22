@@ -55,7 +55,6 @@ args.nb_epochs=500
 args.test_size=2000
 args.nb_batch_per_epoch=10
 args.save_loc = 'checkpoints/embed/Linear_mlp_4lay'
-args.test_data_loc=f'data/start_{args.start}/test_rand_{args.test_size}_{args.city_count}_{args.coord_dim}.pt'
 #0 => data will not be recycled and each step new data is generated, however this will make the gpu spend most of the time loading data. Recommeded val is 100
 args.recycle_data=0
 
@@ -63,6 +62,7 @@ args.recycle_data=0
 parsed_args = parser.parse_args()
 for key, value in vars(parsed_args).items():
     setattr(args, key, value)
+args.test_data_loc=f'data/start_{args.start}/test_rand_{args.test_size}_{args.city_count}_{args.coord_dim}.pt'
 
 #Load checkpoint
 if args.checkpoint is not None:
