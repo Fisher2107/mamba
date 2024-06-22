@@ -40,7 +40,7 @@ args=DotDict()
 
 #Args for the model
 args.bsz=600
-args.d_model = 64 #ensure that this is a multiple of 2
+args.d_model = 64 #ensure that this is a multiple of 2 if fourier_scale is not None
 args.coord_dim = 2
 args.nb_layers = 4
 args.mlp_cls = 'gatedmlp' #set as 'identity' or 'gatedmlp'
@@ -109,8 +109,8 @@ else:
 
 model_baseline.load_state_dict(model_train.state_dict())
 model_baseline.eval()
-for name, param in model_train.named_parameters():
-    print(f"Parameter: {name}, Size: {param.size()}")
+#for name, param in model_train.named_parameters():
+#    print(f"Parameter: {name}, Size: {param.size()}")
 total_params = sum(p.numel() for p in model_train.parameters())
 print(f"Total number of parameters: {total_params}")
 

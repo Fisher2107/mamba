@@ -178,7 +178,7 @@ class MambaFull(nn.Module):
 
         self.embedding = input_mapping(B,d_model,coord_dim=coord_dim)
         if mamba2:
-            self.mixer_cls = partial(Mamba2,d_model)
+            self.mixer_cls = partial(Mamba2,d_model,headdim=32)
         else:
             self.mixer_cls = partial(Mamba,d_model)
 
