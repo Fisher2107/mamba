@@ -1,5 +1,6 @@
 import torch
 import itertools
+from tqdm import tqdm
 
 def greedy_tsp(cities, device='cpu'):
     """
@@ -83,8 +84,8 @@ def exact_solver(cities, device='cpu', split=1):
 
     all_min_tour_lengths = torch.zeros(bsz, device=device).fill_(float('inf'))
 
-    for j in range(split):
-        for i in range(permutations.shape[0]):
+    for j in tqdm(range(split)):
+        for i in tqdm(range(permutations.shape[0])):
             tour_length = compute_tour_length(cities[j*split_size:(j+1)*split_size], permutations[i], remove_start_token=False)
             all_min_tour_lengths[j*split_size:(j+1)*split_size] = torch.min(tour_length, all_min_tour_lengths[j*split_size:(j+1)*split_size])
 
