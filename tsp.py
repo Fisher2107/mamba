@@ -13,18 +13,20 @@ import argparse
 #parser
 parser = argparse.ArgumentParser(description='Train Mamba model')
 parser.add_argument('--bsz', type=int, default=600, help='Batch size')
-parser.add_argument('--d_model', type=int, default=64, help='Model dimension')
+parser.add_argument('--d_model', type=int, default=64, help='Model dimension')#ensure that this is a multiple of 2 if fourier_scale is not None
 parser.add_argument('--coord_dim', type=int, default=2, help='Coordinate dimension')
 parser.add_argument('--nb_layers', type=int, default=4, help='Number of layers in the model')
-parser.add_argument('--mlp_cls', type=str, default='gatedmlp', help='Type of mlp to use')
+parser.add_argument('--mlp_cls', type=str, default='gatedmlp', help='Type of mlp to use')#set as 'identity' or 'gatedmlp'
 parser.add_argument('--city_count', type=int, default=5, help='Number of cities')
-parser.add_argument('--fourier_scale', type=float, default=None, help='Fourier scale')
-parser.add_argument('--nb_epochs', type=int, default=500, help='Number of epochs')
-parser.add_argument('--test_size', type=int, default=2000, help='Size of test data')
-parser.add_argument('--nb_batch_per_epoch', type=int, default=10, help='Number of batches per epoch')
-parser.add_argument('--save_loc', type=str, default='checkpoints/embed/Linear_mlp_4lay', help='Location to save model')
-parser.add_argument('--checkpoint', type=str, default=None, help='Checkpoint to load')
+parser.add_argument('--fourier_scale', type=float, default=None, help='Fourier scale')#If set as None a standard Linear map is used else a gaussian fourier feature mapping is used
 parser.add_argument('--start', type=int, default=2, help='Start token')
+
+parser.add_argument('--nb_epochs', type=int, default=500, help='Number of epochs')
+parser.add_argument('--nb_batch_per_epoch', type=int, default=10, help='Number of batches per epoch')
+
+parser.add_argument('--test_size', type=int, default=2000, help='Size of test data')
+parser.add_argument('--save_loc', type=str, default='checkpoints/not_named', help='Location to save model')
+parser.add_argument('--checkpoint', type=str, default=None, help='Checkpoint to load')
 parser.add_argument('--recycle_data', type=int, default=0, help='Recycle data')
 parser.add_argument('--model_name', type=str, default='Full', help='Model name')
 parser.add_argument('--mamba2', type=bool, default=False, help='choose if mamba2 is used')
@@ -37,26 +39,6 @@ class DotDict(dict):
         self.__dict__ = self
 
 args=DotDict() 
-
-#Args for the model
-args.bsz=600
-args.d_model = 64 #ensure that this is a multiple of 2 if fourier_scale is not None
-args.coord_dim = 2
-args.nb_layers = 4
-args.mlp_cls = 'gatedmlp' #set as 'identity' or 'gatedmlp'
-args.city_count = 5
-args.deterministic = False #used for sampling from the model
-args.fourier_scale = None #If set as None a standard Linear map is used else a gaussian fourier feature mapping is used
-args.start = 2 #start token
-#args.polar = True #TODO
-
-#Args for the training
-args.nb_epochs=500
-args.test_size=2000
-args.nb_batch_per_epoch=10
-args.save_loc = 'checkpoints/embed/Linear_mlp_4lay'
-#0 => data will not be recycled and each step new data is generated, however this will make the gpu spend most of the time loading data. Recommeded val is 100
-args.recycle_data=0
 
 # Update the DotDict instance with the parsed arguments
 parsed_args = parser.parse_args()
@@ -85,9 +67,7 @@ name_to_model_maps = {
     'Pointer': None,
 }
 
-print(args.reverse)
-
-#model which will be train and baseline as in the REINFORCE algorithm. 
+#load train and baseline model, where baseline is used to reduce variance in loss function as per the REINFORCE algorithm. 
 model_train = name_to_model_maps[args.model_name](args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls, B = args.B, reverse=args.reverse,mamba2=args.mamba2).to(device)
 model_baseline = name_to_model_maps[args.model_name](args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls, B = args.B, reverse=args.reverse,mamba2=args.mamba2).to(device)
 loss_fn = nn.CrossEntropyLoss()
@@ -95,19 +75,29 @@ optimizer = Adam(model_train.parameters(), lr=1e-4)
 
 
 if checkpoint:
-    model_train.load_state_dict(checkpoint['model_state_dict'])
+    if 'model_baseline_state_dict' in checkpoint.keys():
+        model_train.load_state_dict(checkpoint['model_train_state_dict'])
+        model_baseline.load_state_dict(checkpoint['model_baseline_state_dict'])
+    else:
+        model_train.load_state_dict(checkpoint['model_state_dict'])
+        model_baseline.load_state_dict(checkpoint['model_state_dict']) 
+
     optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
     tot_time_ckpt = checkpoint['time_tot']
     start_epoch = checkpoint['epoch']
     mean_tour_length_list = checkpoint['mean_tour_length_list']
     mean_tour_length_best = min([i.item() for i in checkpoint['mean_tour_length_list']])
-    print(mean_tour_length_best,mean_tour_length_list[-1])
+    if 'time_to_reach_best' in checkpoint.keys():    
+        best_time = checkpoint['time_to_reach_best']
+    else:
+        best_time = 0
 else:
     tot_time_ckpt, start_epoch = 0,0
     mean_tour_length_list = [] 
     mean_tour_length_best = float('inf') 
+    best_time = 0
+    model_baseline.load_state_dict(model_train.state_dict())
 
-model_baseline.load_state_dict(model_train.state_dict())
 model_baseline.eval()
 #for name, param in model_train.named_parameters():
 #    print(f"Parameter: {name}, Size: {param.size()}")
@@ -138,8 +128,8 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
         else: i-=1
 
         # list that will contain Long tensors of shape (bsz,) that gives the idx of the cities chosen at time t
-        tours_train, sumLogProbOfActions = seq2seq_generate_tour(device,model_train,inputs,args.deterministic)
-        tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,args.deterministic)
+        tours_train, sumLogProbOfActions = seq2seq_generate_tour(device,model_train,inputs,deterministic=False)
+        tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,deterministic=False)
         #get the length of the tours
         with torch.no_grad():
             L_train = compute_tour_length(inputs, tours_train)
@@ -181,6 +171,7 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
     # evaluate train model and baseline and update if train model is better
     if L_train < L_baseline:
         model_baseline.load_state_dict( model_train.state_dict() )
+        best_time = time_tot
 
     # Save checkpoint every 10,000 epochs
     if L_train < mean_tour_length_best or epoch % 10 == 0:
@@ -190,10 +181,12 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
         filename = f"file_{date_time}.pt"
         checkpoint = {
             'epoch': epoch,
-            'model_state_dict': model_train.state_dict(),
+            'model_train_state_dict': model_train.state_dict(),
+            'model_baseline_state_dict': model_baseline.state_dict(),
             'optimizer_state_dict': optimizer.state_dict(),
             'mean_tour_length_list': mean_tour_length_list,
             'args': args,
-            'time_tot': time_tot
+            'time_tot': time_tot,
+            'time_to_reach_best': best_time,
         }
         torch.save(checkpoint, f'{args.save_loc}_{date_time}.pt' )
