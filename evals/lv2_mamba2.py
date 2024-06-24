@@ -23,15 +23,16 @@ class DotDict(dict):
         self.__dict__ = self
 
 checkpoint= torch.load('../checkpoints/mamba2/mamba_3lay_22-06_18-55.pt')
-checkpoint2 = torch.load('../checkpoints/mamba2/mamba_4lay_22-06_23-42.pt')
+checkpoint2 = torch.load('../checkpoints/mamba2/mamba_4lay_23-06_18-33.pt')
 
 checkpoint3 = torch.load('../checkpoints/mamba2/mamba2_3lay_22-06_16-09.pt')
-checkpoint4 = torch.load('../checkpoints/mamba2/mamba2_4lay_22-06_17-16.pt')
+checkpoint4 = torch.load('../checkpoints/mamba2/mamba2_4lay_23-06_16-48.pt')
 
 print(checkpoint['time_tot'])
 print(checkpoint2['time_tot'])
 print(checkpoint3['time_tot'])
 print(checkpoint4['time_tot'])
+print(checkpoint4.keys())
 '''args.mlp_cls = 'identity'
 model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls).to(device)
 model_train.load_state_dict(checkpoint['model_state_dict'])
@@ -64,5 +65,5 @@ plt.ylim(2.7, 3.2)
 plt.title('All layers')
 
 plt.legend()
-plt.savefig('figs/mamba2_comparison.pdf')
+#plt.savefig('figs/mamba2_comparison.pdf')
 plt.show()
