@@ -67,19 +67,16 @@ else:
 
 if args.last_layer == 'identity':
     args.last_layer = nn.Identity()
-    args.output_head = True
 elif args.last_layer == 'pointer':
     args.last_layer = Bandau_Pointer(args.d_model, args.city_count)
-    args.output_head = False
 elif args.last_layer == 'dot_pointer':
     args.last_layer = Dot_Pointer(args.d_model, args.city_count)
-    args.output_head = False
 else:
     raise ValueError('Last layer must be either (identity, pointer, dot_pointer)')
 
 #load train and baseline model, where baseline is used to reduce variance in loss function as per the REINFORCE algorithm. 
-model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.mamba2,args.last_layer,args.output_head).to(device)
-model_baseline = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.mamba2,args.last_layer,args.output_head).to(device)
+model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.mamba2,args.last_layer).to(device)
+model_baseline = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.mamba2,args.last_layer).to(device)
 loss_fn = nn.CrossEntropyLoss()
 optimizer = Adam(model_train.parameters(), lr=1e-4)
 
