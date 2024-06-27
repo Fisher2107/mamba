@@ -5,7 +5,7 @@ from torch.optim import Adam
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 import time
-from model import MambaFull, generate_data, seq2seq_generate_tour, compute_tour_length
+from model import MambaFull, generate_data, seq2seq_generate_tour, compute_tour_length, Bandau_Pointer, Dot_Pointer
 from datetime import datetime
 import argparse
 
@@ -31,6 +31,7 @@ parser.add_argument('--recycle_data', type=int, default=0, help='Recycle data')
 parser.add_argument('--model_name', type=str, default='Full', help='Model name')
 parser.add_argument('--mamba2', type=bool, default=False, help='choose if mamba2 is used')
 parser.add_argument('--reverse', type=bool, default=False, help='Reverse even model layers')
+parser.add_argument('--last_layer', type=str, default='identity', help='Last layer is a pointer layer')
 
 # Define model parameters and hyperparameters
 class DotDict(dict):
@@ -62,14 +63,23 @@ else:
     else:
         args.B = torch.randn(args.d_model // 2, 2).to(device) * args.fourier_scale
 
-name_to_model_maps = {
-    'Full': MambaFull,
-    'Pointer': None,
-}
+#name_to_model_maps = {'Full': MambaFull,'Pointer': None,}
+
+if args.last_layer == 'identity':
+    args.last_layer = nn.Identity()
+    args.output_head = True
+elif args.last_layer == 'pointer':
+    args.last_layer = Bandau_Pointer(args.d_model, args.city_count)
+    args.output_head = False
+elif args.last_layer == 'dot_pointer':
+    args.last_layer = Dot_Pointer(args.d_model, args.city_count)
+    args.output_head = False
+else:
+    raise ValueError('Last layer must be either (identity, pointer, dot_pointer)')
 
 #load train and baseline model, where baseline is used to reduce variance in loss function as per the REINFORCE algorithm. 
-model_train = name_to_model_maps[args.model_name](args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls, B = args.B, reverse=args.reverse,mamba2=args.mamba2).to(device)
-model_baseline = name_to_model_maps[args.model_name](args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls, B = args.B, reverse=args.reverse,mamba2=args.mamba2).to(device)
+model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.mamba2,args.last_layer,args.output_head).to(device)
+model_baseline = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.mamba2,args.last_layer,args.output_head).to(device)
 loss_fn = nn.CrossEntropyLoss()
 optimizer = Adam(model_train.parameters(), lr=1e-4)
 

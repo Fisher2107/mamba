@@ -163,7 +163,17 @@ class input_mapping(nn.Module):
 
 
 class MambaFull(nn.Module):
-    def __init__(self,d_model,city_count,nb_layers,coord_dim=2,mlp_cls='identity',norm_f=nn.LayerNorm,B=None,reverse=False,mamba2=False):
+    def __init__(self,
+    d_model,
+    city_count,
+    nb_layers,
+    coord_dim=2,
+    mlp_cls='identity',
+    B=None,
+    reverse=False,
+    mamba2=False,
+    last_layer=nn.Identity(),
+    output_head=True):#Set output_head to False if we use a last layer that is a pointer network
         super().__init__()
         self.d_model=d_model
         self.city_count=city_count
@@ -174,7 +184,7 @@ class MambaFull(nn.Module):
             self.mlp_cls = nn.Identity
         else:
             raise ValueError('mlp_cls must be either "gatedmlp" or "identity"')
-        self.norm_f = norm_f(d_model)
+        self.norm_f = nn.LayerNorm(d_model)
 
         self.embedding = input_mapping(B,d_model,coord_dim=coord_dim)
         if mamba2:
@@ -189,8 +199,10 @@ class MambaFull(nn.Module):
                         fused_add_norm=True,
                         residual_in_fp32=True,
                         )   for _ in range(nb_layers)])
-        
-        self.output_head = nn.Linear(d_model,city_count, bias=False)
+        if output_head:
+            self.output_head = nn.Linear(d_model,city_count, bias=False)
+        else:
+            self.output_head = nn.Identity()
         self.reverse = reverse
 
     def forward(self,x):
@@ -214,6 +226,7 @@ class MambaFull(nn.Module):
             residual_in_fp32=True,
             is_rms_norm=True
         )
+        x = last_layer(x)
         logits = self.output_head(x)
         #mask vistited cities
         return logits
@@ -248,3 +261,31 @@ def seq2seq_generate_tour(device,model,inputs,deterministic=False):
     tours = torch.stack(tours, dim=1).to(device)
     sumLogProbOfActions = torch.stack(sumLogProbOfActions, dim=1).sum(dim=1).to(device)
     return tours, sumLogProbOfActions
+
+class Bandau_Pointer(nn.Module):
+    def __init__(self, d_model,city_count):
+        super().__init__()
+        self.d_model=d_model
+        self.city_count=city_count
+        self.W1 = nn.Linear(d_model, d_model, bias=False)
+        self.W2 = nn.Linear(d_model, d_model, bias=False)
+        self.V = nn.Linear(d_model, 1, bias=False)
+    def forward(self,x):
+        key = self.W1(x[:,:city_count,:])#(bsz,city_count,d_model)
+        query = self.W2(x[:,-1,:].unsqueeze(1))#(bsz,1,d_model)
+        energy = self.V(torch.tanh(key + query)).squeeze(-1)
+        return energy #returns a tensor of size (bsz,city_count)
+
+class Dot_Pointer(nn.Module):
+    def __init__(self, d_model,city_count):
+        super().__init__()
+        self.d_model=d_model
+        self.city_count=city_count
+        self.W1 = nn.Linear(d_model, d_model, bias=False)
+        self.W2 = nn.Linear(d_model, d_model, bias=False)
+        self.V = nn.Linear(1, 1, bias=False)
+    def forward(self,x):
+        key = self.W1(x[:,:city_count,:]).reshape(bsz,d_model,city_count)
+        query = self.W2(x[:,-1,:].unsqueeze(1))#(bsz,1,d_model)
+        energy = self.V(query@key/(d_model**0.5)).squeeze(-1)
+        return energy #returns a tensor of size (bsz,city_count)

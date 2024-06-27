@@ -26,7 +26,7 @@ checkpoint= torch.load('../checkpoints/mamba2/mamba_3lay_22-06_18-55.pt')
 checkpoint2 = torch.load('../checkpoints/mamba2/mamba_4lay_23-06_18-33.pt')
 
 checkpoint3 = torch.load('../checkpoints/mamba2/mamba2_3lay_22-06_16-09.pt')
-checkpoint4 = torch.load('../checkpoints/mamba2/mamba2_4lay_23-06_16-48.pt')
+checkpoint4 = torch.load('../checkpoints/mamba2/mamba2_4lay_24-06_11-45.pt')
 
 print(checkpoint['time_tot'])
 print(checkpoint2['time_tot'])
@@ -65,5 +65,5 @@ plt.ylim(2.7, 3.2)
 plt.title('All layers')
 
 plt.legend()
-#plt.savefig('figs/mamba2_comparison.pdf')
+plt.savefig('figs/mamba2_comparison.pdf')
 plt.show()
