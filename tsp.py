@@ -65,15 +65,6 @@ else:
 
 #name_to_model_maps = {'Full': MambaFull,'Pointer': None,}
 
-if args.last_layer == 'identity':
-    args.last_layer = nn.Identity()
-elif args.last_layer == 'pointer':
-    args.last_layer = Bandau_Pointer(args.d_model, args.city_count)
-elif args.last_layer == 'dot_pointer':
-    args.last_layer = Dot_Pointer(args.d_model, args.city_count)
-else:
-    raise ValueError('Last layer must be either (identity, pointer, dot_pointer)')
-
 #load train and baseline model, where baseline is used to reduce variance in loss function as per the REINFORCE algorithm. 
 model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.mamba2,args.last_layer).to(device)
 model_baseline = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.mamba2,args.last_layer).to(device)
@@ -182,7 +173,8 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
 
     # Save checkpoint every 10,000 epochs
     if L_train < mean_tour_length_best or epoch % 10 == 0:
-        mean_tour_length_best = L_train
+        if L_train < mean_tour_length_best:
+            mean_tour_length_best = L_train
 
         # Append to filename
         filename = f"file_{date_time}.pt"

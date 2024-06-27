@@ -172,7 +172,7 @@ class MambaFull(nn.Module):
     B=None,
     reverse=False,
     mamba2=False,
-    last_layer=nn.Identity()):
+    last_layer='identity'):
         super().__init__()
         self.d_model=d_model
         self.city_count=city_count
@@ -198,8 +198,17 @@ class MambaFull(nn.Module):
                         fused_add_norm=True,
                         residual_in_fp32=True,
                         )   for _ in range(nb_layers)])
-        self.last_layer = last_layer
-        if last_layer==nn.Identity():#Set output_head to False if we use a last layer that is a pointer network
+
+        if last_layer == 'identity':
+            self.last_layer = nn.Identity()
+        elif last_layer == 'pointer':
+            self.last_layer = Bandau_Pointer(d_model, city_count)
+        elif last_layer == 'dot_pointer':
+            self.last_layer = Dot_Pointer(d_model, city_count)
+        else:
+            raise ValueError("Last layer must be either ('identity', 'pointer', 'dot_pointer')")
+
+        if last_layer=='identity':#Set output_head to False if we use a last layer that is a pointer network
             self.output_head = nn.Linear(d_model,city_count, bias=False)
         else:
             self.output_head = nn.Identity()
@@ -287,5 +296,5 @@ class Dot_Pointer(nn.Module):
     def forward(self,x):
         key = self.W1(x[:,:self.city_count,:]).reshape(bsz,self.d_model,self.city_count)
         query = self.W2(x[:,-1,:].unsqueeze(1))#(bsz,1,d_model)
-        energy = self.V(query@key/(self.d_model**0.5)).squeeze(-1)
+        energy = self.V(nn.Softmax(dim=-1)(query@key/(self.d_model**0.5))).squeeze(-1)
         return energy.unsqueeze(1) #returns a tensor of size (bsz,1,city_count)
