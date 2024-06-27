@@ -272,7 +272,7 @@ class Bandau_Pointer(nn.Module):
         self.W2 = nn.Linear(d_model, d_model, bias=False)
         self.V = nn.Linear(d_model, 1, bias=False)
     def forward(self,x):
-        key = self.W1(x[:,:city_count,:])#(bsz,city_count,d_model)
+        key = self.W1(x[:,:self.city_count,:])#(bsz,city_count,d_model)
         query = self.W2(x[:,-1,:].unsqueeze(1))#(bsz,1,d_model)
         energy = self.V(torch.tanh(key + query)).squeeze(-1)
         return energy #returns a tensor of size (bsz,city_count)
@@ -286,7 +286,7 @@ class Dot_Pointer(nn.Module):
         self.W2 = nn.Linear(d_model, d_model, bias=False)
         self.V = nn.Linear(1, 1, bias=False)
     def forward(self,x):
-        key = self.W1(x[:,:city_count,:]).reshape(bsz,d_model,city_count)
+        key = self.W1(x[:,:self.city_count,:]).reshape(bsz,self.d_model,self.city_count)
         query = self.W2(x[:,-1,:].unsqueeze(1))#(bsz,1,d_model)
-        energy = self.V(query@key/(d_model**0.5)).squeeze(-1)
+        energy = self.V(query@key/(self.d_model**0.5)).squeeze(-1)
         return energy #returns a tensor of size (bsz,city_count)
