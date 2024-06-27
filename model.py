@@ -204,6 +204,7 @@ class MambaFull(nn.Module):
         else:
             self.output_head = nn.Identity()
         self.reverse = reverse
+        self.last_layer = last_layer
 
     def forward(self,x):
         x = self.embedding(x)
