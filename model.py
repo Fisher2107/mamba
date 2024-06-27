@@ -226,7 +226,7 @@ class MambaFull(nn.Module):
             residual_in_fp32=True,
             is_rms_norm=True
         )
-        x = last_layer(x)
+        x = self.last_layer(x)
         logits = self.output_head(x)
         #mask vistited cities
         return logits
