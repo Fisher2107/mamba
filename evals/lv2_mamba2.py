@@ -39,10 +39,10 @@ model_train.load_state_dict(checkpoint['model_state_dict'])
 model_train.eval()'''
 
 
-mean_tour_length_list = [tensor.cpu().numpy() for tensor in checkpoint['mean_tour_length_list']]
-mean_tour_length_list2 = [tensor.cpu().numpy() for tensor in checkpoint2['mean_tour_length_list']]
-mean_tour_length_list3 = [tensor.cpu().numpy() for tensor in checkpoint3['mean_tour_length_list']]
-mean_tour_length_list4 = [tensor.cpu().numpy() for tensor in checkpoint4['mean_tour_length_list']]
+mean_tour_length_list = [tensor.cpu().numpy() for tensor in checkpoint['mean_tour_length_list']][:1000]
+mean_tour_length_list2 = [tensor.cpu().numpy() for tensor in checkpoint2['mean_tour_length_list']][:1000]
+mean_tour_length_list3 = [tensor.cpu().numpy() for tensor in checkpoint3['mean_tour_length_list']][:1000]
+mean_tour_length_list4 = [tensor.cpu().numpy() for tensor in checkpoint4['mean_tour_length_list']][:1000]
 
 
 
@@ -57,11 +57,10 @@ exact = 2.8630127906799316
 
 plt.axhline(y=greedy, color='r', linestyle='--', label='Greedy Solver')
 plt.axhline(y=exact, color='g', linestyle='--', label='Exact Solver')
-
 # Add labels to the axes
 plt.xlabel('Epoch')
 plt.ylabel('Mean Tour Length')
-plt.ylim(2.7, 3.2)
+plt.ylim(2.85, 3.2)
 plt.title('All layers')
 
 plt.legend()
