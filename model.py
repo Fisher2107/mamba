@@ -292,9 +292,12 @@ class Dot_Pointer(nn.Module):
         self.city_count=city_count
         self.W1 = nn.Linear(d_model, d_model, bias=False)
         self.W2 = nn.Linear(d_model, d_model, bias=False)
-        self.V = nn.Linear(1, 1, bias=False)
+        self.V = nn.Linear(d_model, city_count, bias=False)
     def forward(self,x):
         key = self.W1(x[:,:self.city_count,:]).reshape(-1,self.d_model,self.city_count)
-        query = self.W2(x[:,-1,:].unsqueeze(1))#(bsz,1,self.d_model)
-        energy = self.V(nn.Softmax(dim=-1)(query@key/(self.d_model**0.5))).squeeze(-1)
+        query = self.W2(x[:,-1,:].unsqueeze(1))#(bsz,1,d_model)
+        value = self.V(x[:,:self.city_count,:])#(bsz,city_count,city_count)
+        print(key.shape,query.shape)
+        attention_mat = (nn.Softmax(dim=-1)((query@key)/(self.d_model**0.5)))#(bsz,1,city_count)
+        energy = attention_mat@value
         return energy.unsqueeze(1) #returns a tensor of size (bsz,1,city_count)
