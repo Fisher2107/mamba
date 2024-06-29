@@ -14,7 +14,7 @@ coord_dim = 2
 city_count = 5
 test_size=2000
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-test_data_loc=f'../data/start_2/test_rand_{test_size}_{city_count}_{coord_dim}.pt'
+test_data_loc=f'../data/start_2/{test_size}_{city_count}_{coord_dim}.pt'
 test_data = torch.load(test_data_loc).to(device)
 
 class DotDict(dict):

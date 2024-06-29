@@ -32,6 +32,7 @@ parser.add_argument('--model_name', type=str, default='Full', help='Model name')
 parser.add_argument('--mamba2', type=bool, default=False, help='choose if mamba2 is used')
 parser.add_argument('--reverse', type=bool, default=False, help='Reverse even model layers')
 parser.add_argument('--last_layer', type=str, default='identity', help='Last layer is a pointer layer')
+parser.add_argument('--test_folder_name', type=str, default=None, help='Name of folder where test data is stored')
 
 # Define model parameters and hyperparameters
 class DotDict(dict):
@@ -45,7 +46,11 @@ args=DotDict()
 parsed_args = parser.parse_args()
 for key, value in vars(parsed_args).items():
     setattr(args, key, value)
-args.test_data_loc=f'data/start_{args.start}/test_rand_{args.test_size}_{args.city_count}_{args.coord_dim}.pt'
+
+if args.test_folder_name is None:
+    args.test_data_loc=f'data/start_{args.start}/{args.test_size}_{args.city_count}_{args.coord_dim}.pt'
+else:
+    args.test_data_loc=f'data/{args.test_folder_name}/{args.test_size}_{args.city_count}_{args.coord_dim}.pt'
 
 #Load checkpoint
 if args.checkpoint is not None:

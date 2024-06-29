@@ -14,7 +14,7 @@ coord_dim = 2
 city_count = 5
 test_size=2000
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-test_data_loc=f'../data/start_2/test_rand_{test_size}_{city_count}_{coord_dim}.pt'
+test_data_loc=f'../data/start_2/{test_size}_{city_count}_{coord_dim}.pt'
 test_data = torch.load(test_data_loc).to(device)
 
 class DotDict(dict):
@@ -27,8 +27,15 @@ checkpoint2 = torch.load('../checkpoints/start/Linear_mlp_5start_20-06_18-38.pt'
 
 checkpoint3 = torch.load('../checkpoints/start/Linear_mlp_randstart_20-06_19-04.pt')
 checkpoint4 = torch.load('../checkpoints/start/Linear_mlp_0start_20-06_19-42.pt')
-args = checkpoint3['args']
-print(args)
+
+args1 = checkpoint['args']['nb_layers']
+args2 = checkpoint2['args']['nb_layers']
+args3 = checkpoint3['args']['nb_layers']
+args4 = checkpoint4['args']['nb_layers']
+print(args1)
+print(args2)
+print(args3)
+print(args4)
 '''args.mlp_cls = 'identity'
 model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls).to(device)
 model_train.load_state_dict(checkpoint['model_state_dict'])
@@ -46,7 +53,7 @@ plt.plot(mean_tour_length_list3, label='Start random')
 plt.plot(mean_tour_length_list4, label='Start 0')
 
 greedy = greedy_tsp(test_data)[0].item()
-exact = exact_solver(test_data).item()
+exact = exact_solver(test_data,device='cuda').item()
 print(greedy)
 print(exact)
 
@@ -60,5 +67,5 @@ plt.ylabel('Mean Tour Length')
 plt.ylim(2.1, 2.64)
 
 plt.legend()
-plt.savefig('figs/mean_tour_length_start.pdf')
+#plt.savefig('figs/mean_tour_length_start.pdf')
 plt.show()
