@@ -19,7 +19,7 @@ parser.add_argument('--nb_layers', type=int, default=4, help='Number of layers i
 parser.add_argument('--mlp_cls', type=str, default='gatedmlp', help='Type of mlp to use')#set as 'identity' or 'gatedmlp'
 parser.add_argument('--city_count', type=int, default=5, help='Number of cities')
 parser.add_argument('--fourier_scale', type=float, default=None, help='Fourier scale')#If set as None a standard Linear map is used else a gaussian fourier feature mapping is used
-parser.add_argument('--start', type=int, default=2, help='Start token')
+parser.add_argument('--start', type=float, default=2, help='Start token')
 
 parser.add_argument('--nb_epochs', type=int, default=500, help='Number of epochs')
 parser.add_argument('--nb_batch_per_epoch', type=int, default=10, help='Number of batches per epoch')
@@ -47,8 +47,8 @@ parsed_args = parser.parse_args()
 for key, value in vars(parsed_args).items():
     setattr(args, key, value)
 
-if args.test_folder_name is None:
-    args.test_data_loc=f'data/start_{args.start}/{args.test_size}_{args.city_count}_{args.coord_dim}.pt'
+if args.test_folder_name is None and (args.start).is_integer():
+    args.test_data_loc=f'data/start_{int(args.start)}/{args.test_size}_{args.city_count}_{args.coord_dim}.pt'
 else:
     args.test_data_loc=f'data/{args.test_folder_name}/{args.test_size}_{args.city_count}_{args.coord_dim}.pt'
 
