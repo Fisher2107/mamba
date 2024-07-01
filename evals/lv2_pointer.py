@@ -21,7 +21,7 @@ class DotDict(dict):
     def __init__(self, **kwds):
         self.update(kwds)
         self.__dict__ = self
-
+plt.style.use('bmh')
 checkpoint= torch.load('../checkpoints/pointer/mamba2_1l_ident_27-06_18-08.pt')
 checkpoint2 = torch.load('../checkpoints/pointer/mamba2_1l_band_27-06_19-30.pt')
 

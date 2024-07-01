@@ -9,6 +9,7 @@ from model import MambaFull
 import torch
 import torch.nn
 import matplotlib.pyplot as plt
+import numpy as np
 
 coord_dim = 2
 city_count = 5
@@ -16,7 +17,7 @@ test_size=2000
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 test_data_loc=f'../data/start_2/{test_size}_{city_count}_{coord_dim}.pt'
 test_data = torch.load(test_data_loc).to(device)
-
+plt.style.use('bmh')
 class DotDict(dict):
     def __init__(self, **kwds):
         self.update(kwds)
@@ -37,14 +38,19 @@ model_train.eval()'''
 mean_tour_length_list = [tensor.cpu().numpy() for tensor in checkpoint['mean_tour_length_list']]
 mean_tour_length_list2 = [tensor.cpu().numpy() for tensor in checkpoint2['mean_tour_length_list']]
 mean_tour_length_list3 = [tensor.cpu().numpy() for tensor in checkpoint3['mean_tour_length_list']]
-print(checkpoint['epoch'])
-print(checkpoint['time_tot'])
+
+varience = np.var([mean_tour_length_list[297],
+                mean_tour_length_list2[297],
+                mean_tour_length_list3[297]])
+
+print('varience  ', varience) # 1.4686546e-05
+
 plt.plot(mean_tour_length_list)
 plt.plot(mean_tour_length_list2)
 plt.plot(mean_tour_length_list3)
 
 greedy = greedy_tsp(test_data)[0].item()
-exact = exact_solver(test_data).item()
+exact = exact_solver(test_data,device='cuda').item()
 print(greedy)
 print(exact)
 
@@ -58,5 +64,5 @@ plt.xlabel('Epoch')
 plt.ylabel('Mean Tour Length')
 
 plt.legend()
-#plt.savefig('figs/mean_tour_length_RL2.pdf')
+plt.savefig('figs/mean_tour_length_RL2.pdf')
 plt.show()

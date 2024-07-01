@@ -171,6 +171,7 @@ class MambaFull(nn.Module):
     mlp_cls='identity',
     B=None,
     reverse=False,
+    reverse_start=False,
     mamba2=False,
     last_layer='identity'):
         super().__init__()
@@ -214,9 +215,12 @@ class MambaFull(nn.Module):
         else:
             self.output_head = nn.Identity()
         self.reverse = reverse
+        self.reverse_start = reverse_start
 
     def forward(self,x):
         x = self.embedding(x)
+        if self.reverse_start:
+            x = torch.flip(x,[1])
 
         residual=None
         for i,layer in enumerate(self.layers):

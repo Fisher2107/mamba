@@ -31,6 +31,7 @@ parser.add_argument('--recycle_data', type=int, default=0, help='Recycle data')
 parser.add_argument('--model_name', type=str, default='Full', help='Model name')
 parser.add_argument('--mamba2', type=bool, default=False, help='choose if mamba2 is used')
 parser.add_argument('--reverse', type=bool, default=False, help='Reverse even model layers')
+parser.add_argument('--reverse_start', type=bool, default=False, help='Set to True if you want to reverse the input')
 parser.add_argument('--last_layer', type=str, default='identity', help='Last layer is a pointer layer')
 parser.add_argument('--test_folder_name', type=str, default=None, help='Name of folder where test data is stored')
 
@@ -71,8 +72,8 @@ else:
 #name_to_model_maps = {'Full': MambaFull,'Pointer': None,}
 
 #load train and baseline model, where baseline is used to reduce variance in loss function as per the REINFORCE algorithm. 
-model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.mamba2,args.last_layer).to(device)
-model_baseline = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.mamba2,args.last_layer).to(device)
+model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer).to(device)
+model_baseline = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer).to(device)
 loss_fn = nn.CrossEntropyLoss()
 optimizer = Adam(model_train.parameters(), lr=1e-4)
 
