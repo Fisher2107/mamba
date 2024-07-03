@@ -17,9 +17,9 @@
 module load cuda/12.1.1
 
 # Activate the conda environment for CUDA
-source /exports/csce/eddie/inf/groups/dawg/miniconda3/bin/activate base
+source /exports/eddie/scratch/s2517783/miniconda3/bin/activate base
 cd /exports/eddie/scratch/s2517783/mamba
 conda activate tspp
 
 cp run.sh jobs/run_job.sh
-bash run.sh
+source run.sh
