@@ -17,17 +17,20 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 test_data_loc=f'../data/start_2/{test_size}_{city_count}_{coord_dim}.pt'
 test_data = torch.load(test_data_loc).to(device)
 
+plt.style.use('bmh')
+
 class DotDict(dict):
     def __init__(self, **kwds):
         self.update(kwds)
         self.__dict__ = self
 
+checkpoint= torch.load('../checkpoints/reverse10/mamba2_03-07_02-44.pt')
 
-checkpoint= torch.load('../checkpoints/reverse/Linear_reverse4_21-06_17-02.pt')
-checkpoint2 = torch.load('../checkpoints/start/Linear_mlp_2start_again_21-06_12-51.pt')
+checkpoint2 = torch.load('../checkpoints/reverse10/mamba2_reverse_03-07_00-27.pt')
 
-#checkpoint3 = torch.load('../checkpoints/reverse/Linear_mlp_randreverse_20-06_19-04.pt')
-#checkpoint4 = torch.load('../checkpoints/reverse/Linear_mlp_0start_20-06_19-42.pt')
+checkpoint3 = torch.load('../checkpoints/reverse10/mamba2_reversestart_02-07_22-09.pt')
+
+
 args = checkpoint['args']
 print(args)
 '''args.mlp_cls = 'identity'
@@ -37,17 +40,16 @@ model_train.eval()'''
 
 
 mean_tour_length_list = [tensor.cpu().numpy() for tensor in checkpoint['mean_tour_length_list']]
-mean_tour_length_list2 = [tensor.cpu().numpy() for tensor in checkpoint2['mean_tour_length_list'][:1000]]
-#mean_tour_length_list3 = [tensor.cpu().numpy() for tensor in checkpoint3['mean_tour_length_list']]
-#mean_tour_length_list4 = [tensor.cpu().numpy() for tensor in checkpoint4['mean_tour_length_list']]
+mean_tour_length_list2 = [tensor.cpu().numpy() for tensor in checkpoint2['mean_tour_length_list']]
+mean_tour_length_list3 = [tensor.cpu().numpy() for tensor in checkpoint3['mean_tour_length_list']]
 
-plt.plot(mean_tour_length_list, label='Reverse')
-plt.plot(mean_tour_length_list2, label='Non-Reverse')
-#plt.plot(mean_tour_length_list3, label='Start random')
-#plt.plot(mean_tour_length_list4, label='Start 0')
+
+plt.plot(mean_tour_length_list, label='Reverse 3')
+plt.plot(mean_tour_length_list2, label='RS 3')
+plt.plot(mean_tour_length_list3, label='Standard 3')
 
 greedy = greedy_tsp(test_data)[0].item()
-exact = exact_solver(test_data).item()
+exact = exact_solver(test_data,device='cuda').item()
 print(greedy)
 print(exact)
 
@@ -58,9 +60,8 @@ plt.axhline(y=exact, color='g', linestyle='--', label='Exact Solver')
 # Add labels to the axes
 plt.xlabel('Epoch')
 plt.ylabel('Mean Tour Length')
-plt.ylim(2.1, 2.64)
-plt.title('4 layers')
+plt.title('All layers')
 
 plt.legend()
-plt.savefig('figs/reverse_exp_4lay.pdf')
+plt.savefig('figs/10_city/reverse_3l.pdf')
 plt.show()

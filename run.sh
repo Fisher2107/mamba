@@ -22,6 +22,10 @@
 #python tsp.py --save_loc 'checkpoints/pointer_dim/mamba2_4l_32' --nb_layers 4 --mamba2 True  --reverse True --d_model 32 --city_count 10 --nb_epochs 2000 --last_layer 'pointer'
 
 #Reverse10 Experiments
-python tsp.py --save_loc 'checkpoints/reverse10/mamba2_reversestart' --nb_layers 3  --reverse_start True --nb_epochs 2000 --city_count 10
-python tsp.py --save_loc 'checkpoints/reverse10/mamba2_reverse' --nb_layers 3  --reverse True --nb_epochs 2000 --city_count 10
-python tsp.py --save_loc 'checkpoints/reverse10/mamba2_reverse' --nb_layers 3 --nb_epochs 2000 --city_count 10
+python tsp.py --save_loc 'checkpoints/reverse10/mamba2_reversestart_128' --nb_layers 3  --reverse_start True --nb_epochs 2000 --city_count 10 --d_model 128
+python tsp.py --save_loc 'checkpoints/reverse10/mamba2_reverse_128' --nb_layers 3  --reverse True --nb_epochs 2000 --city_count 10 --d_model 128
+python tsp.py --save_loc 'checkpoints/reverse10/mamba2_128' --nb_layers 3 --nb_epochs 2000 --city_count 10 --d_model 128
+
+python tsp.py --save_loc 'checkpoints/reverse10/mamba2_reversestart_128_point' --nb_layers 3  --reverse_start True --nb_epochs 2000 --city_count 10 --d_model 128 --last_layer 'pointer'
+python tsp.py --save_loc 'checkpoints/reverse10/mamba2_reverse_128_point' --nb_layers 3  --reverse True --nb_epochs 2000 --city_count 10 --d_model 128 --last_layer 'pointer'
+python tsp.py --save_loc 'checkpoints/reverse10/mamba2_128_point' --nb_layers 3 --nb_epochs 2000 --city_count 10 --d_model 128 --last_layer 'pointer'
