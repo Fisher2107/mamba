@@ -1,47 +1,47 @@
 #!/bin/bash
 
-# 1st arg - job name
-# 2nd arg - runtime
+# 1st arg - runtime in hours of each job
 
-# Define the job script file name based on the first argument
-job_script="jobs/${1}${2}.sh"
+# Counter for job number
+job_count=1
 
-# clear file contents
-> "$job_script"
+# Read run.sh line by line
+while IFS= read -r line
+do
+    # Check if the line starts with "python"
+    if [[ $line == python* ]]
+    then
+        # Create a new job script for each Python command
+        job_file="jobs/job_${job_count}.sh"
+        
+        # Write the job script
+        cat << EOF > "$job_file"
+#!/bin/bash
+#$ -N job_${job_count}
+#$ -wd /exports/eddie/scratch/s2517783/mamba
+#$ -l h_rt=${1}:00:00
+#$ -q gpu
+#$ -pe gpu-a100 1
+#$ -l h_vmem=80G
+#$ -l rl9=true
 
-# Create the job script file
-echo "#!/bin/bash" >> "$job_script"
-echo "" >> "$job_script"
+. /etc/profile.d/modules.sh
+. /exports/applications/support/set_qlogin_environment.sh
 
-echo "# Grid Engine options" >> "$job_script"
-echo "#\$ -N ${1}  # Name of the job" >> "$job_script"
-echo "#\$ -wd /exports/eddie/scratch/s2517783/mamba # Run the job from the scratch directory" >> "$job_script"
-echo "#\$ -l h_rt=${2}:00:00  # Request a runtime" >> "$job_script"
-echo "#\$ -q gpu          # Submit the job to the gpu queue" >> "$job_script"
-echo "#\$ -pe gpu-a100 1  # Request NNODE A100 GPUs" >> "$job_script"
-echo "#\$ -l h_vmem=80G    # Request memory per core" >> "$job_script"
-echo "#\$ -l rl9=true    # rocky linux update" >> "$job_script"
-echo "" >> "$job_script"
+module load cuda/12.1.1
 
-echo "# Load the module system" >> "$job_script"
-echo ". /etc/profile.d/modules.sh" >> "$job_script"
-echo ". /exports/applications/support/set_qlogin_environment.sh" >> "$job_script"
-echo "" >> "$job_script"
+source /exports/eddie/scratch/s2517783/miniconda3/bin/activate base
+cd /exports/eddie/scratch/s2517783/mamba
+conda activate tspp
 
-echo "# Load the CUDA module" >> "$job_script"
-echo "module load cuda/12.1.1" >> "$job_script"
-echo "" >> "$job_script"
+$line
+EOF
 
-echo "# Activate the conda environment for CUDA" >> "$job_script"
-echo "source /exports/csce/eddie/inf/groups/dawg/miniconda3/bin/activate base" >> "$job_script"
+        # Make the job script executable
+        chmod +x "$job_file"
+        # Increment job count
+        ((job_count++))
+    fi
+done < run.sh
 
-echo "cd /exports/eddie/scratch/s2517783/mamba" >> "$job_script"
-
-echo "conda activate tspp" >> "$job_script"
-echo "" >> "$job_script"
-
-# Copy run.sh to jobs directory with new name
-echo "cp run.sh jobs/run_${1}.sh" >> "$job_script"
-
-# Add command to run the inner script
-echo "bash run.sh" >> "$job_script"
+echo "Created and submitted ${job_count} jobs."
