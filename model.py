@@ -225,7 +225,7 @@ class MambaFull(nn.Module):
         residual=None
         for i,layer in enumerate(self.layers):
             if self.reverse == True and i>0:
-                x , residual = layer(torch.flip(x,[1]),residual)
+                x , residual = layer(torch.flip(x,[1]),torch.flip(residual,[1]))
             else:
                 x , residual = layer(x,residual)
 

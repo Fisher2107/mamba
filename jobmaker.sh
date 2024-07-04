@@ -12,12 +12,12 @@ do
     if [[ $line == python* ]]
     then
         # Create a new job script for each Python command
-        job_file="jobs/job_${job_count}.sh"
+        job_file="jobs/job_${job_count}_v2.sh"
         
         # Write the job script
         cat << EOF > "$job_file"
 #!/bin/bash
-#$ -N job_${job_count}
+#$ -N job_${job_count}_v2
 #$ -wd /exports/eddie/scratch/s2517783/mamba
 #$ -l h_rt=${1}:00:00
 #$ -q gpu
@@ -36,7 +36,6 @@ conda activate tspp
 
 $line
 EOF
-
         # Make the job script executable
         chmod +x "$job_file"
         # Increment job count
@@ -44,4 +43,5 @@ EOF
     fi
 done < run.sh
 
-echo "Created and submitted ${job_count} jobs."
+((job_count--))
+echo "Created ${job_count} jobs."
