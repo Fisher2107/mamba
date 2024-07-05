@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # 1st arg - runtime in hours of each job
+# 2nd arg - job name
+# 3rf arg - memory in GB
 
 # Counter for job number
 job_count=1
@@ -12,17 +14,17 @@ do
     if [[ $line == python* ]]
     then
         # Create a new job script for each Python command
-        job_file="jobs/job_${job_count}_v2.sh"
+        job_file="jobs/${2}_${job_count}_v2.sh"
         
         # Write the job script
         cat << EOF > "$job_file"
 #!/bin/bash
-#$ -N job_${job_count}_v2
+#$ -N ${2}_${job_count}_v2
 #$ -wd /exports/eddie/scratch/s2517783/mamba
 #$ -l h_rt=${1}:00:00
 #$ -q gpu
 #$ -pe gpu-a100 1
-#$ -l h_vmem=80G
+#$ -l h_vmem=${3}G
 #$ -l rl9=true
 
 . /etc/profile.d/modules.sh

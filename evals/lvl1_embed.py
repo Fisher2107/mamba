@@ -27,9 +27,9 @@ checkpoint2 = torch.load('../checkpoints/embed/fourier2_19-06_13-46.pt')
 
 checkpoint3 = torch.load('../checkpoints/embed/Linear_mlp_4lay_20-06_13-11.pt')
 checkpoint4 = torch.load('../checkpoints/embed/fourier2_mlp_19-06_12-11.pt')
-args = checkpoint3['args']
-print(checkpoint3['mean_tour_length_list'][-10:-1])
-print(args)
+
+checkpointlist = [checkpoint, checkpoint2, checkpoint3, checkpoint4]
+print([i['args'] for i in checkpointlist])
 '''args.mlp_cls = 'identity'
 model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls).to(device)
 model_train.load_state_dict(checkpoint['model_state_dict'])
@@ -61,5 +61,5 @@ plt.ylabel('Mean Tour Length')
 plt.ylim(2.1, 2.64)
 
 plt.legend()
-plt.savefig('figs/mean_tour_length_embed2.pdf')
+#plt.savefig('figs/mean_tour_length_embed2.pdf')
 plt.show()

@@ -24,15 +24,17 @@ class DotDict(dict):
         self.update(kwds)
         self.__dict__ = self
 
-checkpoint= torch.load('../checkpoints/reverse10/mamba2_03-07_02-44.pt')
+checkpoint= torch.load('../checkpoints/bugged/reverse10/mamba2_03-07_02-44.pt')
+checkpoint2 = torch.load('../checkpoints/bugged/reverse10/mamba2_reverse_03-07_00-27.pt')
+checkpoint3 = torch.load('../checkpoints/bugged/reverse10/mamba2_reversestart_02-07_22-09.pt')
 
-checkpoint2 = torch.load('../checkpoints/reverse10/mamba2_reverse_03-07_00-27.pt')
+checkpoint4 = torch.load('../checkpoints/reverse10/fixed_04-07_12-32.pt')
+checkpoint5 = torch.load('../checkpoints/reverse10/fixed_reverse_04-07_11-19.pt')
+checkpoint6 = torch.load('../checkpoints/reverse10/fixed_reversestart_04-07_10-13.pt')
 
-checkpoint3 = torch.load('../checkpoints/reverse10/mamba2_reversestart_02-07_22-09.pt')
+checkpointlist = [checkpoint, checkpoint2, checkpoint3, checkpoint4, checkpoint5, checkpoint6]
+print([i['args']['d_model'] for i in checkpointlist])
 
-
-args = checkpoint['args']
-print(args)
 '''args.mlp_cls = 'identity'
 model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls).to(device)
 model_train.load_state_dict(checkpoint['model_state_dict'])
@@ -42,14 +44,21 @@ model_train.eval()'''
 mean_tour_length_list = [tensor.cpu().numpy() for tensor in checkpoint['mean_tour_length_list']]
 mean_tour_length_list2 = [tensor.cpu().numpy() for tensor in checkpoint2['mean_tour_length_list']]
 mean_tour_length_list3 = [tensor.cpu().numpy() for tensor in checkpoint3['mean_tour_length_list']]
+mean_tour_length_list4 = [tensor.cpu().numpy() for tensor in checkpoint4['mean_tour_length_list']]
+mean_tour_length_list5 = [tensor.cpu().numpy() for tensor in checkpoint5['mean_tour_length_list']]
+mean_tour_length_list6 = [tensor.cpu().numpy() for tensor in checkpoint6['mean_tour_length_list']]
 
 
-plt.plot(mean_tour_length_list, label='Reverse 3')
-plt.plot(mean_tour_length_list2, label='RS 3')
-plt.plot(mean_tour_length_list3, label='Standard 3')
 
-greedy = greedy_tsp(test_data)[0].item()
-exact = exact_solver(test_data,device='cuda').item()
+plt.plot(mean_tour_length_list, label='Standard')
+plt.plot(mean_tour_length_list2, label='Bugged Reverse')
+plt.plot(mean_tour_length_list3, label='RS')
+#plt.plot(mean_tour_length_list4, label='Fixed Standard')
+plt.plot(mean_tour_length_list5, label='Fixed Reverse')
+#plt.plot(mean_tour_length_list6, label='Fixed RS')
+
+greedy = 3.1791656017303467
+exact = 2.8630127906799316
 print(greedy)
 print(exact)
 
@@ -63,5 +72,5 @@ plt.ylabel('Mean Tour Length')
 plt.title('All layers')
 
 plt.legend()
-plt.savefig('figs/10_city/reverse_3l.pdf')
+#plt.savefig('figs/10_city/reverse_3l.pdf')
 plt.show()

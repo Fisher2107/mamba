@@ -22,18 +22,22 @@ class DotDict(dict):
         self.update(kwds)
         self.__dict__ = self
 
-checkpoint= torch.load('../checkpoints/reverse/Linear_reverse4_21-06_17-02.pt')
+checkpoint= torch.load('../checkpoints/bugged/reverse/Linear_reverse4_21-06_17-02.pt')
 checkpoint2 = torch.load('../checkpoints/start/Linear_mlp_2start_again_21-06_12-51.pt')
 
-checkpoint3 = torch.load('../checkpoints/reverse/Linear_reverse3_21-06_15-12.pt')
-checkpoint4 = torch.load('../checkpoints/reverse/Linear_3_21-06_16-30.pt')
+checkpoint3 = torch.load('../checkpoints/bugged/reverse/Linear_reverse3_21-06_15-12.pt')
+checkpoint4 = torch.load('../checkpoints/bugged/reverse/Linear_3_21-06_16-30.pt')
 
-checkpoint5 = torch.load('../checkpoints/reverse/Linear_reverse5_21-06_17-44.pt')
-checkpoint6 = torch.load('../checkpoints/reverse/Linear_5_21-06_18-35.pt')
+checkpoint5 = torch.load('../checkpoints/bugged/reverse/Linear_reverse5_21-06_17-44.pt')
+checkpoint6 = torch.load('../checkpoints/bugged/reverse/Linear_5_21-06_18-35.pt')
 
-checkpoint7 = torch.load('../checkpoints/reverse/mamba2_reversestart_3l_01-07_10-43.pt')
-checkpoint8 = torch.load('../checkpoints/reverse/mamba2_reversestart_4l_01-07_11-20.pt')
-checkpoint9 = torch.load('../checkpoints/reverse/mamba2_reversestart_5l_01-07_12-03.pt')
+checkpoint7 = torch.load('../checkpoints/bugged/reverse/mamba2_reversestart_3l_01-07_10-43.pt')
+checkpoint8 = torch.load('../checkpoints/bugged/reverse/mamba2_reversestart_4l_01-07_11-20.pt')
+checkpoint9 = torch.load('../checkpoints/bugged/reverse/mamba2_reversestart_5l_01-07_12-03.pt')
+
+checpoint10 = torch.load('../checkpoints/reverse/fixed_04-07_10-12.pt')
+checkpoint11 = torch.load('../checkpoints/reverse/fixed_reverse_04-07_09-06.pt')
+checkpoint12 = torch.load('../checkpoints/reverse/fixed_reversestart_04-07_09-06.pt')
 
 args = checkpoint5['args']
 print(args)
@@ -52,17 +56,23 @@ mean_tour_length_list6 = [tensor.cpu().numpy() for tensor in checkpoint6['mean_t
 mean_tour_length_list7 = [tensor.cpu().numpy() for tensor in checkpoint7['mean_tour_length_list']]
 mean_tour_length_list8 = [tensor.cpu().numpy() for tensor in checkpoint8['mean_tour_length_list']]
 mean_tour_length_list9 = [tensor.cpu().numpy() for tensor in checkpoint9['mean_tour_length_list']]
+mean_tour_length_list10 = [tensor.cpu().numpy() for tensor in checpoint10['mean_tour_length_list']]
+mean_tour_length_list11 = [tensor.cpu().numpy() for tensor in checkpoint11['mean_tour_length_list']]
+mean_tour_length_list12 = [tensor.cpu().numpy() for tensor in checkpoint12['mean_tour_length_list']]
 
 
-plt.plot(mean_tour_length_list3, label='Reverse 3')
-plt.plot(mean_tour_length_list, label='Reverse 4')
-plt.plot(mean_tour_length_list5, label='Reverse 5')
+plt.plot(mean_tour_length_list3, label='Bugged Reverse 3')
+#plt.plot(mean_tour_length_list, label='Reverse 4')
+#plt.plot(mean_tour_length_list5, label='Reverse 5')
 plt.plot(mean_tour_length_list4, label='Standard 3')
-plt.plot(mean_tour_length_list2, label='Standard 4')
-plt.plot(mean_tour_length_list6, label='Standard 5')
+#plt.plot(mean_tour_length_list2, label='Standard 4')
+#plt.plot(mean_tour_length_list6, label='Standard 5')
 plt.plot(mean_tour_length_list7, label='RS 3')
-plt.plot(mean_tour_length_list8, label='RS 4')
-plt.plot(mean_tour_length_list9, label='RS 5')
+#plt.plot(mean_tour_length_list8, label='RS 4')
+#plt.plot(mean_tour_length_list9, label='RS 5')
+plt.plot(mean_tour_length_list10, label='Fixed Reverse')
+plt.plot(mean_tour_length_list11, label='Fixed Standard')
+plt.plot(mean_tour_length_list12, label='Fixed RS')
 
 greedy = greedy_tsp(test_data)[0].item()
 exact = exact_solver(test_data,device='cuda').item()
