@@ -86,7 +86,7 @@ def get_hip_version(rocm_dir):
 
     for line in raw_output.split("\n"):
         if "HIP version" in line:
-            rocm_version = parse(line.split()[-1].replace("-", "+")) # local version is not parsed correctly
+            rocm_version = parse(line.split()[-1].rstrip('-').replace('-', '+')) # local version is not parsed correctly
             return line, rocm_version
 
     return None, None
@@ -95,7 +95,7 @@ def get_hip_version(rocm_dir):
 def get_torch_hip_version():
 
     if torch.version.hip:
-        return parse(torch.version.hip.split()[-1].replace("-", "+"))
+        return parse(torch.version.hip.split()[-1].rstrip('-').replace('-', '+'))
     else:
         return None
 
@@ -199,23 +199,6 @@ if not SKIP_CUDA_BUILD:
 
     if HIP_BUILD:
 
-        try:
-            # set warp size based on gcn architecure 
-            gcn_arch_name = torch.cuda.get_device_properties(0).gcnArchName
-            if "gfx10" in gcn_arch_name or "gfx11" in gcn_arch_name:
-                # radeon
-                warp_size = 32
-            else:
-                # instinct
-                warp_size = 64
-        except AttributeError as e:
-            # fall back to crude method to set warp size
-            device_name = torch.cuda.get_device_properties(0).name
-            if 'instinct' in device_name.lower():
-                warp_size = 64
-            else:
-                warp_size = 32
-
         extra_compile_args = {
             "cxx": ["-O3", "-std=c++17"],
             "nvcc": [
@@ -224,9 +207,7 @@ if not SKIP_CUDA_BUILD:
                 f"--offload-arch={os.getenv('HIP_ARCHITECTURES', 'native')}",
                 "-U__CUDA_NO_HALF_OPERATORS__",
                 "-U__CUDA_NO_HALF_CONVERSIONS__",
-                "-DCK_FMHA_FWD_FAST_EXP2=1",
                 "-fgpu-flush-denormals-to-zero",
-                f"-DROCM_WARP_SIZE={warp_size}"
             ]
             + cc_flag,
         }
@@ -385,7 +366,7 @@ setup(
     else {
         "bdist_wheel": CachedWheelsCommand,
     },
-    python_requires=">=3.7",
+    python_requires=">=3.8",
     install_requires=[
         "torch",
         "packaging",
@@ -393,6 +374,6 @@ setup(
         "einops",
         "triton",
         "transformers",
-        # "causal_conv1d>=1.2.0",
+        # "causal_conv1d>=1.4.0",
     ],
 )
