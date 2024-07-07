@@ -192,13 +192,15 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
     L_baseline = L_baseline_total / args.test_size
 
     #print(f'Epoch {epoch}, test tour length train: {L_train}, test tour length baseline: {L_baseline}, time one epoch: {time_one_epoch}, time tot: {time_tot}')
-    wandb.log({"epoch": epoch,
-     "test_tour length train": L_train,
-     "test_tour length baseline": L_baseline,
-     "time one epoch": time_one_epoch,
-     "time tot": time_tot,
-     "train_tour length train": L_train_train_total,
-     "train_length baseline": L_baseline_train_total})
+    wandb.log({
+        "epoch": epoch,
+        "test_tour length train": float(L_train),
+        "test_tour length baseline": float(L_baseline),
+        "time one epoch": float(time_one_epoch),
+        "time tot": float(time_tot),
+        "train_tour length train": float(L_train_train_total),
+        "train_length baseline": float(L_baseline_train_total)
+    })
 
     mean_tour_length_list.append(L_train)
     # evaluate train model and baseline and update if train model is better
