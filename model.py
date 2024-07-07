@@ -187,7 +187,7 @@ class MambaFull(nn.Module):
         self.norm_f = nn.LayerNorm(d_model)
 
         self.embedding = input_mapping(B,d_model,coord_dim=coord_dim)
-        if d_model%32 != 0: raise ValueError('d_model must be a multiple of 32')
+        if d_model%16 != 0: raise ValueError('d_model must be a multiple of 16')
         if mamba2:
             self.mixer_cls = partial(Mamba2,d_model,headdim=d_model//4)
         else:

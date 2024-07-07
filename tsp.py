@@ -77,10 +77,10 @@ args['x_flipped']=False
 if args.reverse_start and not args.reverse:
     args['x_flipped']=True
 elif args.reverse_start and args.reverse:
-    if nb_layers%2!=0:
+    if args.nb_layers%2!=0:
         args['x_flipped']=True
 elif args.reverse and not args.reverse_start:
-    if nb_layers%2==0:
+    if args.nb_layers%2==0:
         args['x_flipped']=True
 run = wandb.init(
     # Set the project where this run will be logged
