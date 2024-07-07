@@ -1,0 +1,20 @@
+wandb: Currently logged in as: umutcanhalil10 (umutcanhalil10-University of Edinburgh). Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /exports/eddie/scratch/s2517783/mamba/wandb/run-20240707_175258-o47em094
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run toasty-dream-13
+wandb: ⭐️ View project at https://wandb.ai/umutcanhalil10-University%20of%20Edinburgh/Mamba
+wandb: 🚀 View run at https://wandb.ai/umutcanhalil10-University%20of%20Edinburgh/Mamba/runs/o47em094
+Traceback (most recent call last):
+  File "/exports/eddie/scratch/s2517783/mamba/tsp.py", line 93, in <module>
+    model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer).to(device)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/exports/eddie/scratch/s2517783/mamba/model.py", line 190, in __init__
+    if d_model%32 != 0: raise ValueError('d_model must be a multiple of 32')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: d_model must be a multiple of 32
+wandb: - 0.008 MB of 0.008 MB uploadedwandb: \ 0.008 MB of 0.015 MB uploadedwandb: | 0.015 MB of 0.015 MB uploadedwandb: 🚀 View run toasty-dream-13 at: https://wandb.ai/umutcanhalil10-University%20of%20Edinburgh/Mamba/runs/o47em094
+wandb: ⭐️ View project at: https://wandb.ai/umutcanhalil10-University%20of%20Edinburgh/Mamba
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20240707_175258-o47em094/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.

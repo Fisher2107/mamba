@@ -1,0 +1,101 @@
+wandb_version: 1
+
+bsz:
+  desc: null
+  value: 600
+d_model:
+  desc: null
+  value: 64
+coord_dim:
+  desc: null
+  value: 2
+nb_layers:
+  desc: null
+  value: 3
+mlp_cls:
+  desc: null
+  value: gatedmlp
+city_count:
+  desc: null
+  value: 10
+fourier_scale:
+  desc: null
+  value: null
+start:
+  desc: null
+  value: 2
+nb_epochs:
+  desc: null
+  value: 2000
+nb_batch_per_epoch:
+  desc: null
+  value: 10
+test_size:
+  desc: null
+  value: 2000
+save_loc:
+  desc: null
+  value: checkpoints/mamba2/pointer64
+checkpoint:
+  desc: null
+  value: null
+recycle_data:
+  desc: null
+  value: 0
+model_name:
+  desc: null
+  value: Full
+mamba2:
+  desc: null
+  value: true
+reverse:
+  desc: null
+  value: false
+reverse_start:
+  desc: null
+  value: false
+last_layer:
+  desc: null
+  value: pointer
+test_folder_name:
+  desc: null
+  value: null
+test_data_loc:
+  desc: null
+  value: data/start_2/2000_10_2.pt
+B:
+  desc: null
+  value: null
+x_flipped:
+  desc: null
+  value: false
+_wandb:
+  desc: null
+  value:
+    python_version: 3.12.4
+    cli_version: 0.17.4
+    framework: huggingface
+    huggingface_version: 4.42.3
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1720364136
+    t:
+      1:
+      - 1
+      - 11
+      - 49
+      - 55
+      2:
+      - 1
+      - 11
+      - 49
+      - 55
+      3:
+      - 16
+      - 23
+      4: 3.12.4
+      5: 0.17.4
+      6: 4.42.3
+      8:
+      - 5
+      13: linux-x86_64

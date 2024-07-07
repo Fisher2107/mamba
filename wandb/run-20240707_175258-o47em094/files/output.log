@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/exports/eddie/scratch/s2517783/mamba/tsp.py", line 93, in <module>
+    model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer).to(device)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/exports/eddie/scratch/s2517783/mamba/model.py", line 190, in __init__
+    if d_model%32 != 0: raise ValueError('d_model must be a multiple of 32')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: d_model must be a multiple of 32
