@@ -72,22 +72,21 @@ else:
         args.B = torch.randn(args.d_model // 2, 2).to(device) * args.fourier_scale
 
 
-# Convert args to a dictionary to be logged by wandb
-args_dict = vars(args)
-args_dict['x_flipped']=False
+
+args['x_flipped']=False
 if args.reverse_start and not args.reverse:
-    args_dict['x_flipped']=True
+    args['x_flipped']=True
 elif args.reverse_start and args.reverse:
     if nb_layers%2!=0:
-        args_dict['x_flipped']=True
+        args['x_flipped']=True
 elif args.reverse and not args.reverse_start:
     if nb_layers%2==0:
-        args_dict['x_flipped']=True
+        args['x_flipped']=True
 run = wandb.init(
     # Set the project where this run will be logged
     project="Mamba",
     # Track hyperparameters and run metadata
-    config=args_dict,
+    config=args,
 )
 
 #load train and baseline model, where baseline is used to reduce variance in loss function as per the REINFORCE algorithm. 
@@ -194,12 +193,12 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
 
     #print(f'Epoch {epoch}, test tour length train: {L_train}, test tour length baseline: {L_baseline}, time one epoch: {time_one_epoch}, time tot: {time_tot}')
     wandb.log({"epoch": epoch,
-     "test_tour length train": {L_train},
-     "test_tour length baseline": {L_baseline},
-     "time one epoch": {time_one_epoch},
-     "time tot": {time_tot},
-     "train_tour length train": {L_train_train_total},
-     "train_length baseline": {L_baseline_train_total}})
+     "test_tour length train": L_train,
+     "test_tour length baseline": L_baseline,
+     "time one epoch": time_one_epoch,
+     "time tot": time_tot,
+     "train_tour length train": L_train_train_total,
+     "train_length baseline": L_baseline_train_total})
 
     mean_tour_length_list.append(L_train)
     # evaluate train model and baseline and update if train model is better
