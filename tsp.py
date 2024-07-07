@@ -193,7 +193,6 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
 
     #print(f'Epoch {epoch}, test tour length train: {L_train}, test tour length baseline: {L_baseline}, time one epoch: {time_one_epoch}, time tot: {time_tot}')
     wandb.log({
-        "epoch": epoch,
         "test_tour length train": float(L_train),
         "test_tour length baseline": float(L_baseline),
         "time one epoch": float(time_one_epoch),
