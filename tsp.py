@@ -8,8 +8,10 @@ import time
 from model import MambaFull, generate_data, seq2seq_generate_tour, compute_tour_length, Bandau_Pointer, Dot_Pointer
 from datetime import datetime
 import argparse
+import wandb
 
-
+#login to wandb
+wandb.login()
 #parser
 parser = argparse.ArgumentParser(description='Train Mamba model')
 parser.add_argument('--bsz', type=int, default=600, help='Batch size')
@@ -32,7 +34,7 @@ parser.add_argument('--model_name', type=str, default='Full', help='Model name')
 parser.add_argument('--mamba2', type=bool, default=False, help='choose if mamba2 is used')
 parser.add_argument('--reverse', type=bool, default=False, help='Reverse even model layers')
 parser.add_argument('--reverse_start', type=bool, default=False, help='Set to True if you want to reverse the input')
-parser.add_argument('--last_layer', type=str, default='identity', help='Last layer is a pointer layer')
+parser.add_argument('--last_layer', type=str, default='identity', help='Select whether the last layer is identity or pointer')
 parser.add_argument('--test_folder_name', type=str, default=None, help='Name of folder where test data is stored')
 
 # Define model parameters and hyperparameters
@@ -69,7 +71,28 @@ else:
     else:
         args.B = torch.randn(args.d_model // 2, 2).to(device) * args.fourier_scale
 
-#name_to_model_maps = {'Full': MambaFull,'Pointer': None,}
+
+# Convert args to a dictionary to be logged by wandb
+args_dict = vars(args)
+# Remove 'B' from args_dict if it exists
+if 'B' in args_dict:
+    del args_dict['B']
+#
+args_dict['x_flipped']=False
+if args.reverse_start and not args.reverse:
+    args_dict['x_flipped']=True
+elif args.reverse_start and args.reverse:
+    if nb_layers%2!=0:
+        args_dict['x_flipped']=True
+elif args.reverse and not args.reverse_start:
+    if nb_layers%2==0:
+        args_dict['x_flipped']=True
+run = wandb.init(
+    # Set the project where this run will be logged
+    project="Mamba",
+    # Track hyperparameters and run metadata
+    config=args_dict,
+)
 
 #load train and baseline model, where baseline is used to reduce variance in loss function as per the REINFORCE algorithm. 
 model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer).to(device)
@@ -123,6 +146,8 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
     model_train.train()
     i= 0 # Tracks the number of steps before we generate new data
     start = time.time()
+    L_train_train_total = 0
+    L_baseline_train_total = 0
     for step in range(args.nb_batch_per_epoch):
 
         if i == 0:
@@ -138,6 +163,8 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
         with torch.no_grad():
             L_train = compute_tour_length(inputs, tours_train)
             L_baseline = compute_tour_length(inputs, tours_baseline)
+            L_train_train_total += L_train.sum()
+            L_baseline_train_total += L_baseline.sum()
         #print(f"L_train requires_grad: {L_train.requires_grad}")
 
         # backprop     
@@ -170,6 +197,13 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
     L_baseline = L_baseline_total / args.test_size
 
     print(f'Epoch {epoch}, test tour length train: {L_train}, test tour length baseline: {L_baseline}, time one epoch: {time_one_epoch}, time tot: {time_tot}')
+    wandb.log({"epoch": epoch,
+     "test_tour length train": {L_train},
+     "test_tour length baseline": {L_baseline},
+     "time one epoch": {time_one_epoch},
+     "time tot": {time_tot},
+     "train_tour length train": {L_train_train_total},
+     "train_length baseline": {L_baseline_train_total}})
 
     mean_tour_length_list.append(L_train)
     # evaluate train model and baseline and update if train model is better

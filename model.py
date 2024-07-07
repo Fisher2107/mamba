@@ -204,7 +204,7 @@ class MambaFull(nn.Module):
         if last_layer == 'identity':
             self.last_layer = nn.Identity()
         elif last_layer == 'pointer':
-            self.last_layer = Bandau_Pointer(d_model, city_count)
+            self.last_layer = Bandau_Pointer(d_model, city_count,nb_layers,reverse,reverse_start)
         elif last_layer == 'dot_pointer':
             self.last_layer = Dot_Pointer(d_model, city_count)
         else:
@@ -277,14 +277,27 @@ def seq2seq_generate_tour(device,model,inputs,deterministic=False):
     return tours, sumLogProbOfActions
 
 class Bandau_Pointer(nn.Module):
-    def __init__(self, d_model,city_count):
+    def __init__(self, d_model,city_count,nb_layers,reverse,reverse_start):
         super().__init__()
         self.d_model=d_model
         self.city_count=city_count
         self.W1 = nn.Linear(d_model, d_model, bias=False)
         self.W2 = nn.Linear(d_model, d_model, bias=False)
         self.V = nn.Linear(d_model, 1, bias=False)
+        
+        self.x_flipped=False
+        if reverse_start and not reverse:
+            self.x_flipped=True
+        elif reverse_start and reverse:
+            if nb_layers%2!=0:
+                self.x_flipped=True
+        elif reverse and not reverse_start:
+            if nb_layers%2==0:
+                self.x_flipped=True
+            
     def forward(self,x):
+        if self.x_flipped:
+            x = torch.flip(x,[1])
         key = self.W1(x[:,:self.city_count,:])#(bsz,city_count,d_model)
         query = self.W2(x[:,-1,:].unsqueeze(1))#(bsz,1,d_model)
         energy = self.V(torch.tanh(key + query)).squeeze(-1)
