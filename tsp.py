@@ -74,10 +74,6 @@ else:
 
 # Convert args to a dictionary to be logged by wandb
 args_dict = vars(args)
-# Remove 'B' from args_dict if it exists
-if 'B' in args_dict:
-    del args_dict['B']
-#
 args_dict['x_flipped']=False
 if args.reverse_start and not args.reverse:
     args_dict['x_flipped']=True
@@ -196,7 +192,7 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
     L_train = L_train_total / args.test_size
     L_baseline = L_baseline_total / args.test_size
 
-    print(f'Epoch {epoch}, test tour length train: {L_train}, test tour length baseline: {L_baseline}, time one epoch: {time_one_epoch}, time tot: {time_tot}')
+    #print(f'Epoch {epoch}, test tour length train: {L_train}, test tour length baseline: {L_baseline}, time one epoch: {time_one_epoch}, time tot: {time_tot}')
     wandb.log({"epoch": epoch,
      "test_tour length train": {L_train},
      "test_tour length baseline": {L_baseline},
