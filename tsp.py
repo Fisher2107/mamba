@@ -5,10 +5,11 @@ from torch.optim import Adam
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 import time
-from model import MambaFull, generate_data, seq2seq_generate_tour, compute_tour_length, Bandau_Pointer, Dot_Pointer
+from model import MambaFull, generate_data, seq2seq_generate_tour, compute_tour_length, Bandau_Pointer, Dot_Pointer, train_step
 from datetime import datetime
 import argparse
 import wandb
+from torch.profiler import profile, record_function, ProfilerActivity
 
 #login to wandb
 wandb.login()
@@ -36,6 +37,7 @@ parser.add_argument('--reverse', type=bool, default=False, help='Reverse even mo
 parser.add_argument('--reverse_start', type=bool, default=False, help='Set to True if you want to reverse the input')
 parser.add_argument('--last_layer', type=str, default='identity', help='Select whether the last layer is identity or pointer')
 parser.add_argument('--test_folder_name', type=str, default=None, help='Name of folder where test data is stored')
+parser.add_argument('--profiler', type=bool, default=False, help='Set to True if you want to profile the model')
 
 # Define model parameters and hyperparameters
 class DotDict(dict):
@@ -82,9 +84,13 @@ elif args.reverse_start and args.reverse:
 elif args.reverse and not args.reverse_start:
     if args.nb_layers%2==0:
         args['x_flipped']=True
+
+project_name = 'Mamba'
+if args.profiler:
+    project_name = 'Mamba_profiler'
 run = wandb.init(
     # Set the project where this run will be logged
-    project="Mamba",
+    project=project_name,
     # Track hyperparameters and run metadata
     config=args,
 )
@@ -151,22 +157,15 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
             i=args.recycle_data
         else: i-=1
 
-        # list that will contain Long tensors of shape (bsz,) that gives the idx of the cities chosen at time t
-        tours_train, sumLogProbOfActions = seq2seq_generate_tour(device,model_train,inputs,deterministic=False)
-        tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,deterministic=False)
-        #get the length of the tours
-        with torch.no_grad():
-            L_train = compute_tour_length(inputs, tours_train)
-            L_baseline = compute_tour_length(inputs, tours_baseline)
-            L_train_train_total += L_train.sum()
-            L_baseline_train_total += L_baseline.sum()
-        #print(f"L_train requires_grad: {L_train.requires_grad}")
-
-        # backprop     
-        loss = torch.mean( (L_train - L_baseline)* sumLogProbOfActions )
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
+        if args.profiler and epoch>3:
+            with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], record_shapes=True) as prof:
+                with record_function("model_inference"):
+                    L_train_train_total, L_train_baseline = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total)
+                prof.step()  # Denotes step end
+            print('Epoch:', epoch, ' Step:', step)
+            print(prof.key_averages().table(sort_by="cuda_time_total"))
+        else:
+            L_train_train_total, L_train_baseline = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total)
         
     time_one_epoch = time.time()-start
     time_tot = time.time()-start_training_time + tot_time_ckpt

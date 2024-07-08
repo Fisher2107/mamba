@@ -14,12 +14,12 @@ do
     if [[ $line == python* ]]
     then
         # Create a new job script for each Python command
-        job_file="jobs/${2}_${job_count}.sh"
+        job_file="jobs/job_${2}_${job_count}.sh"
         
         # Write the job script
         cat << EOF > "$job_file"
 #!/bin/bash
-#$ -N ${2}_${job_count}
+#$ -N job_${2}_${job_count}
 #$ -wd /exports/eddie/scratch/s2517783/mamba
 #$ -l h_rt=${1}:00:00
 #$ -q gpu

@@ -48,7 +48,7 @@ checkpoint5 = torch.load('../checkpoints/embed2/linear_10city_3l_05-07_18-18.pt'
 #10city 4layer
 checkpoint = torch.load('../checkpoints/embed2/fourier1_10city_4l_06-07_00-17.pt')
 checkpoint2 = torch.load('../checkpoints/embed2/fourier2_10city_4l_06-07_03-17.pt')
-checkpoint3 = torch.load('../checkpoints/embed2/fourier10_10city_4l_06-07_06-11.pt')
+checkpoint3 = torch.load('../checkpoints/embed2/fourier5_10city_4l_06-07_22-45.pt')
 checkpoint4 = torch.load('../checkpoints/embed2/fourier10_10city_4l_06-07_06-11.pt')
 checkpoint5 = torch.load('../checkpoints/embed2/linear_10city_4l_05-07_17-11.pt')
 

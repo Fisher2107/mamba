@@ -276,6 +276,26 @@ def seq2seq_generate_tour(device,model,inputs,deterministic=False):
     sumLogProbOfActions = torch.stack(sumLogProbOfActions, dim=1).sum(dim=1).to(device)
     return tours, sumLogProbOfActions
 
+def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total):
+    # list that will contain Long tensors of shape (bsz,) that gives the idx of the cities chosen at time t
+    tours_train, sumLogProbOfActions = seq2seq_generate_tour(device,model_train,inputs,deterministic=False)
+    tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,deterministic=False)
+    #get the length of the tours
+    with torch.no_grad():
+        L_train = compute_tour_length(inputs, tours_train)
+        L_baseline = compute_tour_length(inputs, tours_baseline)
+        L_train_train_total += L_train.sum()
+        L_baseline_train_total += L_baseline.sum()
+    #print(f"L_train requires_grad: {L_train.requires_grad}")
+
+    # backprop     
+    loss = torch.mean( (L_train - L_baseline)* sumLogProbOfActions )
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+
+    return L_train_train_total, L_baseline_train_total
+
 class Bandau_Pointer(nn.Module):
     def __init__(self, d_model,city_count,nb_layers,reverse,reverse_start):
         super().__init__()
