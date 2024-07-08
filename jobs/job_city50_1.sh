@@ -18,4 +18,4 @@ conda activate tspp
 
 source ~/.bashrc
 
-python tsp.py --save_loc 'checkpoints/city50/mamba2' --nb_layers 3  --nb_epochs 2000 --mamba2 True --city_count 50 --nb_batch_per_epoch 40
+python tsp.py --save_loc 'checkpoints/city50/mamba2' --nb_layers 3  --nb_epochs 2000 --mamba2 True --city_count 50 --nb_batch_per_epoch 40 --bsz 300
