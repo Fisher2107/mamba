@@ -22,7 +22,7 @@ parser.add_argument('--nb_layers', type=int, default=4, help='Number of layers i
 parser.add_argument('--mlp_cls', type=str, default='gatedmlp', help='Type of mlp to use')#set as 'identity' or 'gatedmlp'
 parser.add_argument('--city_count', type=int, default=5, help='Number of cities')
 parser.add_argument('--fourier_scale', type=float, default=None, help='Fourier scale')#If set as None a standard Linear map is used else a gaussian fourier feature mapping is used
-parser.add_argument('--start', type=float, default=2, help='Start token')
+parser.add_argument('--start', type=float, default=2.0, help='Start token')
 
 parser.add_argument('--nb_epochs', type=int, default=500, help='Number of epochs')
 parser.add_argument('--nb_batch_per_epoch', type=int, default=10, help='Number of batches per epoch')
@@ -158,14 +158,15 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
         else: i-=1
 
         if args.profiler and epoch>3:
-            with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], record_shapes=True) as prof:
+            with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], record_shapes=True,profile_memory=True, with_stack=True) as prof:
                 with record_function("model_inference"):
-                    L_train_train_total, L_train_baseline = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total)
+                    L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total)
                 prof.step()  # Denotes step end
             print('Epoch:', epoch, ' Step:', step)
             print(prof.key_averages().table(sort_by="cuda_time_total"))
+            prof.export_chrome_trace(f'{args.save_loc}.json')
         else:
-            L_train_train_total, L_train_baseline = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total)
+            L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total)
         
     time_one_epoch = time.time()-start
     time_tot = time.time()-start_training_time + tot_time_ckpt
@@ -197,7 +198,7 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
         "time one epoch": float(time_one_epoch),
         "time tot": float(time_tot),
         "train_tour length train": float(L_train_train_total),
-        "train_length baseline": float(L_baseline_train_total)
+        "train_tour length baseline": float(L_baseline_train_total)
     })
 
     mean_tour_length_list.append(L_train)
