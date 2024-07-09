@@ -201,10 +201,12 @@ class MambaFull(nn.Module):
                         residual_in_fp32=True,
                         )   for _ in range(nb_layers)])
 
+        self.pointer = False
         if last_layer == 'identity':
             self.last_layer = nn.Identity()
         elif last_layer == 'pointer':
-            self.last_layer = Bandau_Pointer(d_model, city_count,nb_layers,reverse,reverse_start)
+            self.last_layer = Bandau_Pointer(d_model,nb_layers,reverse,reverse_start)
+            self.pointer = True
         elif last_layer == 'dot_pointer':
             self.last_layer = Dot_Pointer(d_model, city_count)
         else:
@@ -217,7 +219,8 @@ class MambaFull(nn.Module):
         self.reverse = reverse
         self.reverse_start = reverse_start
 
-    def forward(self,x):
+    #only include city_count if you want to override the default city_count and you are use last_layer='pointer'
+    def forward(self,x,city_count=None):
         x = self.embedding(x)
         if self.reverse_start:
             x = torch.flip(x,[1])
@@ -240,12 +243,18 @@ class MambaFull(nn.Module):
             residual_in_fp32=True,
             is_rms_norm=True
         )
-        x = self.last_layer(x)
+
+        print('before ',x.shape)
+        if self.pointer:
+            x = self.last_layer(x,city_count)
+        else:
+            x = self.last_layer(x)
+
         logits = self.output_head(x)
         #mask vistited cities
         return logits
 
-def seq2seq_generate_tour(device,model,inputs,deterministic=False):
+def seq2seq_generate_tour(device,model,inputs,lastlayer,deterministic=False):
     # Mask is used to prevent the model from choosing the same city twice
     bsz = inputs.shape[0]
     city_count = inputs.shape[1] - 1
@@ -256,9 +265,11 @@ def seq2seq_generate_tour(device,model,inputs,deterministic=False):
     sumLogProbOfActions = []
     #Construct tour recursively
     for i in range(city_count):
-        #print(i)
-        outputs = model(inputs)[:,-1,:]
-        #print(outputs[0])
+        if lastlayer=='pointer':
+            outputs = model(inputs,city_count)[:,-1,:]
+        else:
+            outputs = model(inputs)[:,-1,:]
+        print(outputs.shape)
         outputs = outputs.masked_fill_(mask == 0, -float('inf'))
         #print(outputs[0])
         outputs = nn.Softmax(dim=1)(outputs)
@@ -278,8 +289,12 @@ def seq2seq_generate_tour(device,model,inputs,deterministic=False):
 
 def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total):
     # list that will contain Long tensors of shape (bsz,) that gives the idx of the cities chosen at time t
-    tours_train, sumLogProbOfActions = seq2seq_generate_tour(device,model_train,inputs,deterministic=False)
-    tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,deterministic=False)
+    lastlayer = 'identity'
+    if model_train.pointer:
+        lastlayer = 'pointer'
+    tours_train, sumLogProbOfActions = seq2seq_generate_tour(device,model_train,inputs,lastlayer=lastlayer,deterministic=False)
+    tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=False)
+
     #get the length of the tours
     with torch.no_grad():
         L_train = compute_tour_length(inputs, tours_train)
@@ -297,10 +312,9 @@ def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_tr
     return L_train_train_total, L_baseline_train_total
 
 class Bandau_Pointer(nn.Module):
-    def __init__(self, d_model,city_count,nb_layers,reverse,reverse_start):
+    def __init__(self, d_model,nb_layers,reverse,reverse_start):
         super().__init__()
         self.d_model=d_model
-        self.city_count=city_count
         self.W1 = nn.Linear(d_model, d_model, bias=False)
         self.W2 = nn.Linear(d_model, d_model, bias=False)
         self.V = nn.Linear(d_model, 1, bias=False)
@@ -315,10 +329,10 @@ class Bandau_Pointer(nn.Module):
             if nb_layers%2==0:
                 self.x_flipped=True
             
-    def forward(self,x):
+    def forward(self,x,city_count):
         if self.x_flipped:
             x = torch.flip(x,[1])
-        key = self.W1(x[:,:self.city_count,:])#(bsz,city_count,d_model)
+        key = self.W1(x[:,:city_count,:])#(bsz,city_count,d_model)
         query = self.W2(x[:,-1,:].unsqueeze(1))#(bsz,1,d_model)
         energy = self.V(torch.tanh(key + query)).squeeze(-1)
         return energy.unsqueeze(1) #returns a tensor of size (bsz,1,city_count)
@@ -327,7 +341,6 @@ class Dot_Pointer(nn.Module):
     def __init__(self, d_model,city_count):
         super().__init__()
         self.d_model=d_model
-        self.city_count=city_count
         self.W1 = nn.Linear(d_model, d_model, bias=False)
         self.W2 = nn.Linear(d_model, d_model, bias=False)
         self.V = nn.Linear(d_model, city_count, bias=False)

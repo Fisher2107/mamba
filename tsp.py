@@ -23,6 +23,8 @@ parser.add_argument('--mlp_cls', type=str, default='gatedmlp', help='Type of mlp
 parser.add_argument('--city_count', type=int, default=5, help='Number of cities')
 parser.add_argument('--fourier_scale', type=float, default=None, help='Fourier scale')#If set as None a standard Linear map is used else a gaussian fourier feature mapping is used
 parser.add_argument('--start', type=float, default=2.0, help='Start token')
+parser.add_argument('--city_range', type=str, default='0,0', help='Range of cities to be used when generating data')
+parser.add_argument('--wandb', action='store_false', help='Set to False if you do not want to log to wandb')
 
 parser.add_argument('--nb_epochs', type=int, default=500, help='Number of epochs')
 parser.add_argument('--nb_batch_per_epoch', type=int, default=10, help='Number of batches per epoch')
@@ -74,7 +76,7 @@ else:
         args.B = torch.randn(args.d_model // 2, 2).to(device) * args.fourier_scale
 
 
-
+args.city_range = tuple(map(int, args.city_range.split(',')))
 args['x_flipped']=False
 if args.reverse_start and not args.reverse:
     args['x_flipped']=True
@@ -85,15 +87,18 @@ elif args.reverse and not args.reverse_start:
     if args.nb_layers%2==0:
         args['x_flipped']=True
 
-project_name = 'Mamba'
-if args.profiler:
-    project_name = 'Mamba_profiler'
-run = wandb.init(
-    # Set the project where this run will be logged
-    project=project_name,
-    # Track hyperparameters and run metadata
-    config=args,
-)
+print(args.wandb)
+print(args.city_range)
+if args.wandb:
+    project_name = 'Mamba'
+    if args.profiler:
+        project_name = 'Mamba_profiler'
+    run = wandb.init(
+        # Set the project where this run will be logged
+        project=project_name,
+        # Track hyperparameters and run metadata
+        config=args,
+    )
 
 #load train and baseline model, where baseline is used to reduce variance in loss function as per the REINFORCE algorithm. 
 model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer).to(device)
@@ -147,17 +152,24 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
     model_train.train()
     i= 0 # Tracks the number of steps before we generate new data
     start = time.time()
+    #L_train_train is the average tour length of the train model on the train data
     L_train_train_total = 0
     L_baseline_train_total = 0
     for step in range(args.nb_batch_per_epoch):
 
         if i == 0:
             #Inputs will have size (bsz, seq_len, coord_dim)
-            inputs = generate_data(device, args.bsz, args.city_count, args.coord_dim,start=args.start)
+            if args.city_range==(0,0):
+                print('hello')
+                inputs = generate_data(device, args.bsz, args.city_count, args.coord_dim,start=args.start)
+            else:
+                generate_city_count = np.random.randint(args.city_range[0],args.city_range[1]+1)
+                print('Generated city count: ',generate_city_count)
+                inputs = generate_data(device, args.bsz, generate_city_count, args.coord_dim,start=args.start)
             i=args.recycle_data
         else: i-=1
 
-        if args.profiler and epoch>3:
+        if args.profiler and epoch>args.nb_epochs-2:
             with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], record_shapes=True,profile_memory=True, with_stack=True) as prof:
                 with record_function("model_inference"):
                     L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total)
@@ -175,13 +187,14 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
     # Evaluate train model and baseline
     ###################
     model_train.eval()
+    #L_train is the average tour length of the train model on the test data
     L_train_total = 0
     L_baseline_total = 0
     
     # Compute tour for model and baseline for test data, making it sure its split to not overload the gpu
     for test_data_batch in test_data_batches:
-        tour_train, _ = seq2seq_generate_tour(device, model_train, test_data_batch, deterministic=True)
-        tour_baseline, _ = seq2seq_generate_tour(device, model_baseline, test_data_batch, deterministic=True)
+        tour_train, _ = seq2seq_generate_tour(device, model_train,test_data_batch, lastlayer=args.last_layer,deterministic=True)
+        tour_baseline, _ = seq2seq_generate_tour(device, model_baseline, test_data_batch, lastlayer=args.last_layer, deterministic=True)
 
         # Get the lengths of the tours and add to the accumulators
         L_train_total += compute_tour_length(test_data_batch, tour_train).sum()
@@ -192,20 +205,33 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
     L_baseline = L_baseline_total / args.test_size
 
     #print(f'Epoch {epoch}, test tour length train: {L_train}, test tour length baseline: {L_baseline}, time one epoch: {time_one_epoch}, time tot: {time_tot}')
-    wandb.log({
-        "test_tour length train": float(L_train),
-        "test_tour length baseline": float(L_baseline),
-        "time one epoch": float(time_one_epoch),
-        "time tot": float(time_tot),
-        "train_tour length train": float(L_train_train_total),
-        "train_tour length baseline": float(L_baseline_train_total)
-    })
+    if args.wandb:
+        wandb.log({
+            "test_tour length train": float(L_train),
+            "test_tour length baseline": float(L_baseline),
+            "time one epoch": float(time_one_epoch),
+            "time tot": float(time_tot),
+            "train_tour length train": float(L_train_train_total),
+            "train_tour length baseline": float(L_baseline_train_total)
+        })
 
     mean_tour_length_list.append(L_train)
-    # evaluate train model and baseline and update if train model is better
-    if L_train < L_baseline:
-        model_baseline.load_state_dict( model_train.state_dict() )
-        best_time = time_tot
+    #If our city range does not vary our test set is a good indicator of the performance of our model
+    #however if there exists a city range we have to create a new test set to evaluate the model to update the baseline
+    #this new test set is created by generating a random number of cities within the city range
+    #Not yet implemented, will complete if needed
+    if True:# city_range==[0,0]:
+        # evaluate train model and baseline and update if train model is better
+        if L_train < L_baseline:
+            model_baseline.load_state_dict( model_train.state_dict() )
+            best_time = time_tot
+    else:
+        #create a new dev set to evaluate the model and to see if the train model is better than the baseline
+        L_train_dev_total = 0
+        L_baseline_dev_total = 0
+
+
+
 
     # Save checkpoint every 10,000 epochs
     if L_train < mean_tour_length_best or epoch % 10 == 0:
