@@ -160,11 +160,9 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
         if i == 0:
             #Inputs will have size (bsz, seq_len, coord_dim)
             if args.city_range==(0,0):
-                print('hello')
                 inputs = generate_data(device, args.bsz, args.city_count, args.coord_dim,start=args.start)
             else:
                 generate_city_count = np.random.randint(args.city_range[0],args.city_range[1]+1)
-                print('Generated city count: ',generate_city_count)
                 inputs = generate_data(device, args.bsz, generate_city_count, args.coord_dim,start=args.start)
             i=args.recycle_data
         else: i-=1

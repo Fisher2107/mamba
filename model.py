@@ -244,7 +244,6 @@ class MambaFull(nn.Module):
             is_rms_norm=True
         )
 
-        print('before ',x.shape)
         if self.pointer:
             x = self.last_layer(x,city_count)
         else:
@@ -269,7 +268,7 @@ def seq2seq_generate_tour(device,model,inputs,lastlayer,deterministic=False):
             outputs = model(inputs,city_count)[:,-1,:]
         else:
             outputs = model(inputs)[:,-1,:]
-        print(outputs.shape)
+        #print(outputs.shape)
         outputs = outputs.masked_fill_(mask == 0, -float('inf'))
         #print(outputs[0])
         outputs = nn.Softmax(dim=1)(outputs)
