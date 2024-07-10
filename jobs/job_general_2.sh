@@ -1,7 +1,7 @@
 #!/bin/bash
 #$ -N job_general_2
 #$ -wd /exports/eddie/scratch/s2517783/mamba
-#$ -l h_rt=10:00:00
+#$ -l h_rt=8:00:00
 #$ -q gpu
 #$ -pe gpu-a100 1
 #$ -l h_vmem=80G
@@ -18,4 +18,4 @@ conda activate tspp
 
 source ~/.bashrc
 
-python tsp.py --save_loc 'checkpoints/pointer_generalisation/5_10' --nb_layers 3  --nb_epochs 2000 --city_count 10 --last_layer 'pointer' --city_range '5,10' --wandb
+python tsp.py --save_loc 'checkpoints/pointer_generalisation/5_10' --nb_layers 3  --nb_epochs 2000 --city_count 10 --last_layer 'pointer' --city_range '5,10'

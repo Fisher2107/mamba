@@ -16,4 +16,6 @@ source /exports/eddie/scratch/s2517783/miniconda3/bin/activate base
 cd /exports/eddie/scratch/s2517783/mamba
 conda activate tspp
 
-python tsp.py --save_loc 'checkpoints/mamba2/mamba1' --nb_layers 3  --nb_epochs 2000 --city_count 10
+source ~/.bashrc
+
+python tsp.py --save_loc 'checkpoints/mamba1_vs_2/mamba1' --nb_layers 3  --nb_epochs 2000 --city_count 10
