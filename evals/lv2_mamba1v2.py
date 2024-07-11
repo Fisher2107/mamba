@@ -27,8 +27,11 @@ class DotDict(dict):
 checkpoint= torch.load('../checkpoints/mamba1_vs_2/mamba1_07-07_10-14.pt')
 checkpoint2 = torch.load('../checkpoints/mamba1_vs_2/mamba2_07-07_11-15.pt')
 
-#checkpoint3 = torch.load('../checkpoints/mamba1_vs_2/mamba1_07-07_10-14.pt')
-#checkpoint4 = torch.load('../checkpoints/mamba1_vs_2/mamba1_07-07_10-14.pt')
+checkpoint3 = torch.load('../checkpoints/mamba1_vs_2/mamba1_10-07_23-05.pt')
+checkpoint4 = torch.load('../checkpoints/mamba1_vs_2/mamba2_10-07_18-29.pt')
+
+checkpoint5 = torch.load('../checkpoints/mamba1_vs_2/mamba1_10-07_23-10.pt')
+checkpoint6 = torch.load('../checkpoints/mamba1_vs_2/mamba2_10-07_23-06.pt')
 
 print(checkpoint['args']['d_model'])
 print(checkpoint['time_tot'])
@@ -46,15 +49,19 @@ model_train.eval()'''
 
 mean_tour_length_list = [tensor.cpu().numpy() for tensor in checkpoint['mean_tour_length_list']]
 mean_tour_length_list2 = [tensor.cpu().numpy() for tensor in checkpoint2['mean_tour_length_list']]
-#mean_tour_length_list3 = [tensor.cpu().numpy() for tensor in checkpoint3['mean_tour_length_list']][:1000]
-#mean_tour_length_list4 = [tensor.cpu().numpy() for tensor in checkpoint4['mean_tour_length_list']][:1000]
+mean_tour_length_list3 = [tensor.cpu().numpy() for tensor in checkpoint3['mean_tour_length_list']]
+mean_tour_length_list4 = [tensor.cpu().numpy() for tensor in checkpoint4['mean_tour_length_list']]
+mean_tour_length_list5 = [tensor.cpu().numpy() for tensor in checkpoint5['mean_tour_length_list']]
+mean_tour_length_list6 = [tensor.cpu().numpy() for tensor in checkpoint6['mean_tour_length_list']]
 
 
 
-plt.plot(mean_tour_length_list, label='m')
-plt.plot(mean_tour_length_list2, label='m2')
-#plt.plot(mean_tour_length_list3, label='m2 3')
-#plt.plot(mean_tour_length_list4, label='m2 4')
+plt.plot(mean_tour_length_list, label='mamba_run1')
+plt.plot(mean_tour_length_list3, label='mamba_run2')
+plt.plot(mean_tour_length_list5, label='mamba_run3')
+plt.plot(mean_tour_length_list2, label='mamba2_run1')
+plt.plot(mean_tour_length_list4, label='mamba2_run2')
+plt.plot(mean_tour_length_list6, label='mamba2_run3')
 
 greedy = 3.1791656017303467
 exact = 2.8630127906799316

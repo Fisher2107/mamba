@@ -39,8 +39,9 @@ parser.add_argument('--reverse', type=bool, default=False, help='Reverse even mo
 parser.add_argument('--reverse_start', type=bool, default=False, help='Set to True if you want to reverse the input')
 parser.add_argument('--last_layer', type=str, default='identity', help='Select whether the last layer is identity or pointer')
 parser.add_argument('--test_folder_name', type=str, default=None, help='Name of folder where test data is stored')
-parser.add_argument('--profiler', type=bool, default=False, help='Set to True if you want to profile the model')
 
+parser.add_argument('--profiler', type=bool, default=False, help='Set to True if you want to profile the model')
+parser.add_argument('--memory_snapshot', type=bool, default=False, help='Set to True if you want to profile the model')
 # Define model parameters and hyperparameters
 class DotDict(dict):
     def __init__(self, **kwds):
@@ -99,6 +100,9 @@ if args.wandb:
         # Track hyperparameters and run metadata
         config=args,
     )
+
+if args.memory_snapshot:
+    torch.cuda.memory._record_memory_history()
 
 #load train and baseline model, where baseline is used to reduce variance in loss function as per the REINFORCE algorithm. 
 model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer).to(device)
@@ -249,3 +253,7 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
             'time_to_reach_best': best_time,
         }
         torch.save(checkpoint, f'{args.save_loc}_{date_time}.pt' )
+
+if args.memory_snapshot:
+    torch.cuda.memory._dump_snapshot(f'{args.save_loc}_memory_snapshot.pickle')
+    torch.cuda.memory._record_memory_history(enabled=None)

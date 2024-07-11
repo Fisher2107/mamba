@@ -6,3 +6,4 @@ build/
 *_hip.*
 wandb/
 checkpoints/**/**/*.json
+checkpoints/**/**/*.pickle
