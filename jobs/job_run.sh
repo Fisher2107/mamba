@@ -19,6 +19,6 @@ module load cuda/12.1.1
 # Activate the conda environment for CUDA
 source /exports/eddie/scratch/s2517783/miniconda3/bin/activate base
 cd /exports/eddie/scratch/s2517783/mamba
-conda activate tspp
+conda activate tsp
 
 source tsp_gpustats.py
