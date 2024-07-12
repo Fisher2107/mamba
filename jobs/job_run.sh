@@ -21,4 +21,4 @@ source /exports/eddie/scratch/s2517783/miniconda3/bin/activate base
 cd /exports/eddie/scratch/s2517783/mamba
 conda activate tsp
 
-source tsp_gpustats.py
+python tsp_gpustats.py

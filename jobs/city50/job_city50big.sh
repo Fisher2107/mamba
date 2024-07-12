@@ -14,8 +14,6 @@ module load cuda/12.1.1
 
 source /exports/eddie/scratch/s2517783/miniconda3/bin/activate base
 cd /exports/eddie/scratch/s2517783/mamba
-conda activate tspp
-
-source ~/.bashrc
+conda activate tsp
 
 python tsp.py --save_loc 'checkpoints/city50/mamba2_rev_recy_150' --nb_layers 3  --nb_epochs 2000 --mamba2 True --city_count 50 --nb_batch_per_epoch 40 --recycle_data 10 --bsz 180 --last_layer 'pointer' --reverse True

@@ -10,7 +10,7 @@ from datetime import datetime
 import argparse
 import wandb
 from torch.profiler import profile, record_function, ProfilerActivity
-import pynvml
+
 
 #login to wandb
 wandb.login()
