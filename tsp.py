@@ -10,6 +10,7 @@ from datetime import datetime
 import argparse
 import wandb
 from torch.profiler import profile, record_function, ProfilerActivity
+import pynvml
 
 #login to wandb
 wandb.login()
@@ -24,7 +25,7 @@ parser.add_argument('--city_count', type=int, default=5, help='Number of cities'
 parser.add_argument('--fourier_scale', type=float, default=None, help='Fourier scale')#If set as None a standard Linear map is used else a gaussian fourier feature mapping is used
 parser.add_argument('--start', type=float, default=2.0, help='Start token')
 parser.add_argument('--city_range', type=str, default='0,0', help='Range of cities to be used when generating data')
-parser.add_argument('--wandb', action='store_false', help='Set to False if you do not want to log to wandb')
+parser.add_argument('--wandb', action='store_false', help='Call argument if you do not want to log to wandb')
 
 parser.add_argument('--nb_epochs', type=int, default=500, help='Number of epochs')
 parser.add_argument('--nb_batch_per_epoch', type=int, default=10, help='Number of batches per epoch')
@@ -42,6 +43,7 @@ parser.add_argument('--test_folder_name', type=str, default=None, help='Name of 
 
 parser.add_argument('--profiler', type=bool, default=False, help='Set to True if you want to profile the model')
 parser.add_argument('--memory_snapshot', type=bool, default=False, help='Set to True if you want to profile the model')
+parser.add_argument('--pynvml', type=bool, default=False, help='Set to True if you want to profile the model')
 # Define model parameters and hyperparameters
 class DotDict(dict):
     def __init__(self, **kwds):
