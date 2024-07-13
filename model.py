@@ -286,22 +286,28 @@ def seq2seq_generate_tour(device,model,inputs,lastlayer,deterministic=False):
     sumLogProbOfActions = torch.stack(sumLogProbOfActions, dim=1).sum(dim=1).to(device)
     return tours, sumLogProbOfActions
 
-def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total):
+def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger=False):
     # list that will contain Long tensors of shape (bsz,) that gives the idx of the cities chosen at time t
     lastlayer = 'identity'
     if model_train.pointer:
         lastlayer = 'pointer'
+    if gpu_logger: gpu_logger.log_event('generating tours of train model')
     tours_train, sumLogProbOfActions = seq2seq_generate_tour(device,model_train,inputs,lastlayer=lastlayer,deterministic=False)
+    if gpu_logger: gpu_logger.log_event('generating tours of baseline model')
     tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=False)
 
+    
     #get the length of the tours
     with torch.no_grad():
+        if gpu_logger: gpu_logger.log_event('computing tour length of train model')
         L_train = compute_tour_length(inputs, tours_train)
+        if gpu_logger: gpu_logger.log_event('computing tour length of baseline model')
         L_baseline = compute_tour_length(inputs, tours_baseline)
         L_train_train_total += L_train.sum()
         L_baseline_train_total += L_baseline.sum()
     #print(f"L_train requires_grad: {L_train.requires_grad}")
 
+    if gpu_logger: gpu_logger.log_event('computing loss and backprop')
     # backprop     
     loss = torch.mean( (L_train - L_baseline)* sumLogProbOfActions )
     optimizer.zero_grad()

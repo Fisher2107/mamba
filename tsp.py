@@ -44,6 +44,7 @@ parser.add_argument('--test_folder_name', type=str, default=None, help='Name of 
 parser.add_argument('--profiler', type=bool, default=False, help='Set to True if you want to profile the model')
 parser.add_argument('--memory_snapshot', type=bool, default=False, help='Set to True if you want to profile the model')
 parser.add_argument('--pynvml', type=bool, default=False, help='Set to True if you want to profile the model')
+parser.add_argument('--gpu_id', type=int, default=-1, help='The GPU ID to get information')
 # Define model parameters and hyperparameters
 class DotDict(dict):
     def __init__(self, **kwds):
@@ -90,8 +91,6 @@ elif args.reverse and not args.reverse_start:
     if args.nb_layers%2==0:
         args['x_flipped']=True
 
-print(args.wandb)
-print(args.city_range)
 if args.wandb:
     project_name = 'Mamba'
     if args.profiler:
@@ -103,6 +102,14 @@ if args.wandb:
         config=args,
     )
 
+if args.pynvml:
+    if args.gpu_id == -1:
+        raise ValueError("Please provide a GPU ID")
+    from gpu_stats import GPULogger
+    gpu_logger = GPULogger(args.gpu_id)
+    pynvml.nvmlInit()
+
+
 if args.memory_snapshot:
     torch.cuda.memory._record_memory_history()
 
@@ -112,7 +119,7 @@ model_baseline = MambaFull(args.d_model, args.city_count, args.nb_layers, args.c
 loss_fn = nn.CrossEntropyLoss()
 optimizer = Adam(model_train.parameters(), lr=1e-4)
 
-
+# Load checkpoint
 if checkpoint:
     if 'model_baseline_state_dict' in checkpoint.keys():
         model_train.load_state_dict(checkpoint['model_train_state_dict'])
@@ -143,7 +150,7 @@ model_baseline.eval()
 total_params = sum(p.numel() for p in model_train.parameters())
 print(f"Total number of parameters: {total_params}")
 
-
+# Load test data
 test_data = torch.load(args.test_data_loc).to(device)
 test_data_batches = torch.split(test_data, args.bsz)
 
@@ -152,6 +159,9 @@ print(args)
 start_training_time = time.time()
 now = datetime.now()
 date_time = now.strftime("%d-%m_%H-%M")
+
+if args.pynvml:
+    gpu_logger.start_gpu_logging(f'{args.save_loc}_gpu_stats.csv', duration_seconds=3600, interval_ms=10)
 
 # Training loop
 for epoch in tqdm(range(start_epoch,args.nb_epochs)):
@@ -162,8 +172,9 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
     L_train_train_total = 0
     L_baseline_train_total = 0
     for step in range(args.nb_batch_per_epoch):
-
+        if args.pynvml: gpu_logger.log_event(f'Epoch {epoch}, Step {step} start')
         if i == 0:
+            if args.pynvml: gpu_logger.log_event(f'Generating data')
             #Inputs will have size (bsz, seq_len, coord_dim)
             if args.city_range==(0,0):
                 inputs = generate_data(device, args.bsz, args.city_count, args.coord_dim,start=args.start)
@@ -176,13 +187,13 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
         if args.profiler and epoch>args.nb_epochs-2:
             with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], record_shapes=True,profile_memory=True, with_stack=True) as prof:
                 with record_function("model_inference"):
-                    L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total)
+                    L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger)
                 prof.step()  # Denotes step end
             print('Epoch:', epoch, ' Step:', step)
             print(prof.key_averages().table(sort_by="cuda_time_total"))
             prof.export_chrome_trace(f'{args.save_loc}.json')
         else:
-            L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total)
+            L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger)
         
     time_one_epoch = time.time()-start
     time_tot = time.time()-start_training_time + tot_time_ckpt
@@ -196,10 +207,12 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
     L_baseline_total = 0
     
     # Compute tour for model and baseline for test data, making it sure its split to not overload the gpu
-    for test_data_batch in test_data_batches:
+    for batch_num,test_data_batch in enumerate(test_data_batches):
+        if args.pynvml: gpu_logger.log_event(f'Epoch {epoch}, Generating tour on test data batch {batch_num}')
         tour_train, _ = seq2seq_generate_tour(device, model_train,test_data_batch, lastlayer=args.last_layer,deterministic=True)
         tour_baseline, _ = seq2seq_generate_tour(device, model_baseline, test_data_batch, lastlayer=args.last_layer, deterministic=True)
 
+        if args.pynvml: gpu_logger.log_event(f'Epoch {epoch}, computing tour length on test data batch {batch_num}')
         # Get the lengths of the tours and add to the accumulators
         L_train_total += compute_tour_length(test_data_batch, tour_train).sum()
         L_baseline_total += compute_tour_length(test_data_batch, tour_baseline).sum()
@@ -207,6 +220,7 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
     # Compute the average tour lengths
     L_train = L_train_total / args.test_size
     L_baseline = L_baseline_total / args.test_size
+    if args.pynvml: gpu_logger.log_event(f'Epoch {epoch} saving checkpoint and updating baseline if train is better')
 
     #print(f'Epoch {epoch}, test tour length train: {L_train}, test tour length baseline: {L_baseline}, time one epoch: {time_one_epoch}, time tot: {time_tot}')
     if args.wandb:
@@ -255,6 +269,10 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
             'time_to_reach_best': best_time,
         }
         torch.save(checkpoint, f'{args.save_loc}_{date_time}.pt' )
+
+if args.pynvml: 
+    gpu_logger.stop_logging()
+    gpu_logger.export_events(f'{args.save_loc}_events.csv')
 
 if args.memory_snapshot:
     torch.cuda.memory._dump_snapshot(f'{args.save_loc}_memory_snapshot.pickle')
