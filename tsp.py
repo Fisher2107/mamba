@@ -105,10 +105,9 @@ if args.wandb:
 if args.pynvml:
     if args.gpu_id == -1:
         raise ValueError("Please provide a GPU ID")
+    print('gpu id= ',args.gpu_id)
     from gpu_stats import GPULogger
     gpu_logger = GPULogger(args.gpu_id)
-    pynvml.nvmlInit()
-
 
 if args.memory_snapshot:
     torch.cuda.memory._record_memory_history()
