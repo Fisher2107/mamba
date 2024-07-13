@@ -30,19 +30,20 @@ class GPULogger:
     def get_gpu_stats(self):
         util = pynvml.nvmlDeviceGetUtilizationRates(self.handle)
         mem_info = pynvml.nvmlDeviceGetMemoryInfo(self.handle)
-        return util.gpu, mem_info.used / mem_info.total * 100
+        power = pynvml.nvmlDeviceGetPowerUsage(self.handle) / 1000  # Convert to Watts
+        return util.gpu, mem_info.used / mem_info.total * 100, power
 
     def log_gpu_stats(self, interval_ms):
         while not self.stop_flag.is_set():
             timestamp = datetime.now().isoformat()
-            utilization, memory_usage = self.get_gpu_stats()
-            self.gpu_stats_queue.put((timestamp, utilization, memory_usage))
+            utilization, memory_usage, power = self.get_gpu_stats()
+            self.gpu_stats_queue.put((timestamp, utilization, memory_usage, power))
             self.stop_flag.wait(timeout=interval_ms / 1000)
 
     def write_gpu_stats(self, output_file):
         with open(output_file, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow(['Timestamp', 'GPU Utilization', 'Memory Usage'])
+            writer.writerow(['Timestamp', 'GPU Utilization', 'Memory Usage', 'Power Usage (W)'])
             
             while not (self.stop_flag.is_set() and self.gpu_stats_queue.empty()):
                 stats = []

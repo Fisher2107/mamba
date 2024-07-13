@@ -3,11 +3,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load GPU stats
-gpu_stats = pd.read_csv('../../checkpoints/gpu/mamba2_10_recy5_gpu_stats.csv')
+gpu_stats = pd.read_csv('../../checkpoints/gpu/mamba2_10_recy5_gpu_stats_13-07_21-49.csv')
 gpu_stats['Timestamp'] = pd.to_datetime(gpu_stats['Timestamp'])
 
 # Load events
-events = pd.read_csv('../../checkpoints/gpu/mamba2_10_recy5_events.csv')
+events = pd.read_csv('../../checkpoints/gpu/mamba2_10_recy5_events_13-07_21-49.csv')
 events['Timestamp'] = pd.to_datetime(events['Timestamp'])
 
 # Calculate seconds from start
@@ -48,11 +48,11 @@ for ax in [ax1, ax2]:
 # Set x-axis to show time in seconds
 for ax in [ax1, ax2]:
     ax.set_xlim(0, max(gpu_stats['Seconds'].max(), events['Seconds'].max()))
-    ax.set_xlim(39, 41)
+    ax.set_xlim(37, 45)
     ax.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, p: f"{x:.0f}s"))
 
 plt.tight_layout()
-plt.savefig('gpu_stats_with_events2.pdf')
+plt.savefig('gpu_stats_with_events2_fine.pdf')
 plt.show()
 
 print("Visualization completed. The plot has been saved as 'gpu_stats_with_events.png'.")
