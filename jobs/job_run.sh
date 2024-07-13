@@ -11,7 +11,7 @@
 
 # Load the module system
 . /etc/profile.d/modules.sh
-. /exports/applications/support/set_qlogin_environment.sh
+source /exports/applications/support/set_qlogin_environment.sh
 
 # Load the CUDA module
 module load cuda/12.1.1
@@ -21,4 +21,4 @@ source /exports/eddie/scratch/s2517783/miniconda3/bin/activate base
 cd /exports/eddie/scratch/s2517783/mamba
 conda activate tsp
 
-python tsp_gpustats.py
+python tsp_gpustats.py --gpu_id $CUDA_VISIBLE_DEVICES

@@ -1,5 +1,11 @@
 import pynvml
+import argparse
 
+
+#Take in one argument
+parser = argparse.ArgumentParser(description='Get GPU information')
+parser.add_argument('--gpu_id', type=int, help='The GPU ID to get information for')
+gpu_id = parser.parse_args().gpu_id
 pynvml.nvmlInit()
 
 def get_gpu_count():
@@ -16,6 +22,7 @@ gpu_count = get_gpu_count()
 
 # Open a file in write mode
 with open('gpu_info.txt', 'w') as f:
+    f.write(gpu_id)
     f.write(f"Number of GPUs detected: {gpu_count}\n")
 
     # Write information for each GPU to the file
