@@ -25,42 +25,40 @@ class GPULogger:
         self.writing_thread = None
         self.gpu_id = gpu_id
         self.stop_flag = Event()
+        self.handle = pynvml.nvmlDeviceGetHandleByIndex(gpu_id)
 
     def get_gpu_stats(self):
-        handle = pynvml.nvmlDeviceGetHandleByIndex(self.gpu_id)
-        util = pynvml.nvmlDeviceGetUtilizationRates(handle)
-        mem_info = pynvml.nvmlDeviceGetMemoryInfo(handle)
+        util = pynvml.nvmlDeviceGetUtilizationRates(self.handle)
+        mem_info = pynvml.nvmlDeviceGetMemoryInfo(self.handle)
         return util.gpu, mem_info.used / mem_info.total * 100
 
-    def log_gpu_stats(self, duration_seconds, interval_ms):
-        end_time = time.time() + duration_seconds
-        while time.time() < end_time and not self.stop_flag.is_set():
+    def log_gpu_stats(self, interval_ms):
+        while not self.stop_flag.is_set():
             timestamp = datetime.now().isoformat()
             utilization, memory_usage = self.get_gpu_stats()
             self.gpu_stats_queue.put((timestamp, utilization, memory_usage))
-            time.sleep(interval_ms / 1000)
+            self.stop_flag.wait(timeout=interval_ms / 1000)
 
     def write_gpu_stats(self, output_file):
         with open(output_file, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
             writer.writerow(['Timestamp', 'GPU Utilization', 'Memory Usage'])
             
-            while not self.stop_flag.is_set():
-                try:
-                    stats = self.gpu_stats_queue.get(timeout=1)  # Wait for up to 1 second for an item
-                except queue.Empty:
-                    continue
-                except Exception as e:
-                    self.log_event(f"Error writing GPU stats: {e}")
-                    break
+            while not (self.stop_flag.is_set() and self.gpu_stats_queue.empty()):
+                stats = []
+                while not self.gpu_stats_queue.empty():
+                    stats.append(self.gpu_stats_queue.get())
                 
-                writer.writerow(stats)
-                csvfile.flush()
-                os.fsync(csvfile.fileno())  # Ensure data is written to disk
+                if stats:
+                    writer.writerows(stats)
+                    csvfile.flush()
+                    os.fsync(csvfile.fileno())
+                
+                self.stop_flag.wait(timeout=1)  # Wait for 1 second before next write
 
-    def start_gpu_logging(self, output_file, duration_seconds, interval_ms):
+    def start_gpu_logging(self, output_file, interval_ms):
         self.stop_flag.clear()
-        self.logging_thread = Thread(target=self.log_gpu_stats, args=(duration_seconds, interval_ms))
+        self.logging_thread = Thread(target=self.log_gpu_stats, args=(interval_ms,))
         self.writing_thread = Thread(target=self.write_gpu_stats, args=(output_file,))
         self.logging_thread.start()
         self.writing_thread.start()
@@ -76,9 +74,6 @@ class GPULogger:
             self.writing_thread.join()
         pynvml.nvmlShutdown()
 
-    def get_events(self):
-        return list(self.event_queue.queue)
-    
     def export_events(self, output_file):
         with open(output_file, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)

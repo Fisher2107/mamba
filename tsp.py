@@ -161,7 +161,7 @@ now = datetime.now()
 date_time = now.strftime("%d-%m_%H-%M")
 
 if args.pynvml:
-    gpu_logger.start_gpu_logging(f'{args.save_loc}_gpu_stats.csv', duration_seconds=3600, interval_ms=10)
+    gpu_logger.start_gpu_logging(f'{args.save_loc}_gpu_stats.csv', interval_ms=100)
 
 # Training loop
 for epoch in tqdm(range(start_epoch,args.nb_epochs)):
