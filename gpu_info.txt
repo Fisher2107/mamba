@@ -1,0 +1,5 @@
+Number of GPUs detected: 4
+GPU 0: NVIDIA A100 80GB PCIe, Total Memory: 80.00 GB
+GPU 1: NVIDIA A100 80GB PCIe, Total Memory: 80.00 GB
+GPU 2: NVIDIA A100 80GB PCIe, Total Memory: 80.00 GB
+GPU 3: NVIDIA A100 80GB PCIe, Total Memory: 80.00 GB

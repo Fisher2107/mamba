@@ -7,7 +7,7 @@ def get_gpu_count():
 
 def get_gpu_info(gpu_id):
     handle = pynvml.nvmlDeviceGetHandleByIndex(gpu_id)
-    name = pynvml.nvmlDeviceGetName(handle).decode('utf-8')
+    name = pynvml.nvmlDeviceGetName(handle)
     total_memory = pynvml.nvmlDeviceGetMemoryInfo(handle).total / (1024 ** 3)  # Convert to GB
     return f"GPU {gpu_id}: {name}, Total Memory: {total_memory:.2f} GB"
 
