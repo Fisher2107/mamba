@@ -22,11 +22,11 @@ gpu_count = get_gpu_count()
 
 # Open a file in write mode
 with open('gpu_info.txt', 'w') as f:
-    f.write(gpu_id)
     f.write(f"Number of GPUs detected: {gpu_count}\n")
 
     # Write information for each GPU to the file
     for i in range(gpu_count):
         f.write(get_gpu_info(i) + '\n')
+    f.write(str(gpu_id))
 
 pynvml.nvmlShutdown()
