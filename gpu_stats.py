@@ -79,7 +79,7 @@ class GPULogger:
     def get_events(self):
         return list(self.event_queue.queue)
     
-     def export_events(self, output_file):
+    def export_events(self, output_file):
         with open(output_file, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
             writer.writerow(['Timestamp', 'Event'])
