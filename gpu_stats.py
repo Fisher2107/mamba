@@ -29,9 +29,9 @@ class GPULogger:
 
     def get_gpu_stats(self):
         util = pynvml.nvmlDeviceGetUtilizationRates(self.handle)
-        mem_info = pynvml.nvmlDeviceGetMemoryInfo(self.handle)
+        mem_info = pynvml.nvmlDeviceGetMemoryInfo(self.handle).used / 1024 ** 3  # Convert to GB
         power = pynvml.nvmlDeviceGetPowerUsage(self.handle) / 1000  # Convert to Watts
-        return util.gpu, mem_info.used / mem_info.total * 100, power
+        return util.gpu, mem_info, power
 
     def log_gpu_stats(self, interval_ms):
         while not self.stop_flag.is_set():

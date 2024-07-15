@@ -1,17 +1,17 @@
 import torch
 from model import generate_data
-test_data = generate_data('cpu', 2000, 5, 2,start=2)
-torch.save(test_data, 'mamba/data/start_2/2000_5_2.pt')
-test_data = generate_data('cpu', 2000, 10, 2,start=2)
-torch.save(test_data, 'mamba/data/start_2/2000_10_2.pt')
+test_data = generate_data('cpu', 2000, 20, 2,start=2)
+torch.save(test_data, 'data/start_2/2000_20_2.pt')
+'''test_data = generate_data('cpu', 2000, 10, 2,start=2)
+torch.save(test_data, 'data/start_2/2000_10_2.pt')
 test_data = generate_data('cpu', 2000, 50, 2,start=2)
-torch.save(test_data, 'mamba/data/start_2/2000_50_2.pt')
+torch.save(test_data, 'data/start_2/2000_50_2.pt')
 test_data = generate_data('cpu', 2000, 100, 2,start=2)
-torch.save(test_data, 'mamba/data/start_2/2000_100_2.pt')
+torch.save(test_data, 'data/start_2/2000_100_2.pt')
 test_data = generate_data('cpu', 2000, 500, 2,start=2)
-torch.save(test_data, 'mamba/data/start_2/2000_500_2.pt')
+torch.save(test_data, 'data/start_2/2000_500_2.pt')
 test_data = generate_data('cpu', 2000, 1000, 2,start=2)
-torch.save(test_data, 'mamba/data/start_2/2000_1000_2.pt')
+torch.save(test_data, 'data/start_2/2000_1000_2.pt')
 
 #Testing Start Tokens
 test_data_loc1 = 'data/start_2/2000_5_2.pt'
@@ -55,5 +55,5 @@ print(test_data1_5[0,-1])
 
 start_data = torch.rand(2000, 1, 2)
 test_data1_rand = torch.cat((test_data1,start_data), dim=1)
-torch.save(test_data1_rand, 'data/start_rand/2000_5_2.pt')
+torch.save(test_data1_rand, 'data/start_rand/2000_5_2.pt')'''
 
