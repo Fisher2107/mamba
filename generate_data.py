@@ -1,7 +1,22 @@
 import torch
-from model import generate_data
-test_data = generate_data('cpu', 2000, 20, 2,start=2)
-torch.save(test_data, 'data/start_2/2000_20_2.pt')
+
+def generate_data(device, batch_size, city_count, coord_dim=2 , start = 2):
+    
+    #The value of start will signify the start of the decoding phase
+    if start == 'rand':
+        return torch.rand(batch_size, city_count+1, coord_dim).to(device)
+    if start == 0:
+        epsilon = 0.02
+        random_data = epsilon + (1 - epsilon) * torch.rand(batch_size, city_count, coord_dim).to(device)
+    else:
+        random_data = torch.rand(batch_size, city_count, coord_dim).to(device)
+    
+    start_data = torch.full((batch_size, 1, coord_dim), start).to(device)
+    return torch.cat((random_data, start_data), dim=1)
+
+
+test_data = generate_data('cpu', 2000, 2000, 2,start=2)
+torch.save(test_data, 'data/start_2/2000_2000_2.pt')
 '''test_data = generate_data('cpu', 2000, 10, 2,start=2)
 torch.save(test_data, 'data/start_2/2000_10_2.pt')
 test_data = generate_data('cpu', 2000, 50, 2,start=2)
