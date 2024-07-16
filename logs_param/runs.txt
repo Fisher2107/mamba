@@ -1,0 +1,9 @@
+python tsp.py --save_loc 'checkpoints/gpu/lay/mamba2_50_lay1' --nb_layers 3  --nb_epochs 5 --city_count 500 --recycle_data 5 --mamba2 True --wandb --bsz 150 --reverse True --d_model 128
+python tsp.py --save_loc 'checkpoints/gpu/lay/mamba2_50_lay1' --nb_layers 3  --nb_epochs 5 --city_count 500 --recycle_data 5 --mamba2 True --wandb --bsz 150 --reverse True --d_model 32 
+python tsp.py --save_loc 'checkpoints/gpu/lay/mamba2_50_lay1' --nb_layers 3  --nb_epochs 5 --city_count 500 --recycle_data 5 --mamba2 True --wandb --bsz 150 --reverse True --d_model 16 
+python tsp.py --save_loc 'checkpoints/gpu/lay/mamba2_50_lay1' --nb_layers 1  --nb_epochs 5 --city_count 100 --recycle_data 5 --mamba2 True --wandb --bsz 150 --reverse True --d_model 64 
+python tsp.py --save_loc 'checkpoints/gpu/lay/mamba2_50_lay1' --nb_layers 2  --nb_epochs 5 --city_count 100 --recycle_data 5 --mamba2 True --wandb --bsz 150 --reverse True --d_model 64 
+python tsp.py --save_loc 'checkpoints/gpu/lay/mamba2_50_lay1' --nb_layers 3  --nb_epochs 5 --city_count 500 --recycle_data 5 --mamba2 True --wandb --bsz 150 --reverse True --d_model 64 
+python tsp.py --save_loc 'checkpoints/gpu/lay/mamba2_50_lay1' --nb_layers 3  --nb_epochs 5 --city_count 10 --recycle_data 5 --mamba2 True --wandb --bsz 150 --reverse True --d_model 64 
+python tsp.py --save_loc 'checkpoints/gpu/lay/mamba2_50_lay1' --nb_layers 3  --nb_epochs 5 --city_count 100 --recycle_data 5 --mamba2 True --wandb --bsz 150 --reverse True --d_model 64
+python tsp.py --save_loc 'checkpoints/gpu/lay/mamba2_50_lay1' --nb_layers 3  --nb_epochs 5 --city_count 50 --recycle_data 5 --mamba2 True --wandb --bsz 150 --reverse True --d_model 64 

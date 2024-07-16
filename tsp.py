@@ -38,7 +38,7 @@ parser.add_argument('--model_name', type=str, default='Full', help='Model name')
 parser.add_argument('--mamba2', type=bool, default=False, help='choose if mamba2 is used')
 parser.add_argument('--reverse', type=bool, default=False, help='Reverse even model layers')
 parser.add_argument('--reverse_start', type=bool, default=False, help='Set to True if you want to reverse the input')
-parser.add_argument('--last_layer', type=str, default='identity', help='Select whether the last layer is identity or pointer')
+parser.add_argument('--last_layer', type=str, default='pointer', help='Select whether the last layer is identity or pointer')
 parser.add_argument('--test_folder_name', type=str, default=None, help='Name of folder where test data is stored')
 
 parser.add_argument('--profiler', type=bool, default=False, help='Set to True if you want to profile the model')
@@ -144,10 +144,13 @@ else:
     model_baseline.load_state_dict(model_train.state_dict())
 
 model_baseline.eval()
-#for name, param in model_train.named_parameters():
-#    print(f"Parameter: {name}, Size: {param.size()}")
-total_params = sum(p.numel() for p in model_train.parameters())
-print(f"Total number of parameters: {total_params}")
+if False:
+    with open(f'logs_param/parameters_{args.last_layer}_{args.city_count}_lay_{args.nb_layers}_dim_{args.d_model}.txt', 'w') as f:
+        for name, param in model_train.named_parameters():
+            f.write(f"Parameter: {name}, Size: {param.size()}\n")
+        total_params = sum(p.numel() for p in model_train.parameters())
+        f.write(f"Total number of parameters: {total_params}\n")
+print('Total number of parameters:', sum(p.numel() for p in model_train.parameters()))
 
 # Load test data
 test_data = torch.load(args.test_data_loc).to(device)
