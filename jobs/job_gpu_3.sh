@@ -1,5 +1,5 @@
 #!/bin/bash
-#$ -N job_gpu_1
+#$ -N job_gpu_3
 #$ -wd /exports/eddie/scratch/s2517783/mamba
 #$ -l h_rt=4:00:00
 #$ -q gpu
@@ -16,8 +16,14 @@ source /exports/eddie/scratch/s2517783/miniconda3/bin/activate base
 cd /exports/eddie/scratch/s2517783/mamba
 conda activate tsp
 
-python tsp.py --save_loc 'checkpoints/gpu/bsz/mamba2_50_bsz50' --nb_layers 3  --nb_epochs 5 --city_count 50 --recycle_data 5 --mamba2 True --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES --wandb --bsz 50 --reverse True
-python tsp.py --save_loc 'checkpoints/gpu/bsz/mamba2_50_bsz30' --nb_layers 3  --nb_epochs 5 --city_count 50 --recycle_data 5 --mamba2 True --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES --wandb --bsz 30 --reverse True
-python tsp.py --save_loc 'checkpoints/gpu/bsz/mamba2_50_bsz40' --nb_layers 3  --nb_epochs 5 --city_count 50 --recycle_data 5 --mamba2 True --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES --wandb --bsz 40 --reverse True
-python tsp.py --save_loc 'checkpoints/gpu/bsz/mamba2_50_bsz75' --nb_layers 3  --nb_epochs 5 --city_count 50 --recycle_data 5 --mamba2 True --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES --wandb --bsz 75 --reverse True
-python tsp.py --save_loc 'checkpoints/gpu/bsz/mamba2_50_bsz125' --nb_layers 3  --nb_epochs 5 --city_count 50 --recycle_data 5 --mamba2 True --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES --wandb --bsz 125 --reverse True
+python tsp.py --save_loc 'checkpoints/gpu/bsz_point/mamba2_50_bsz50' --nb_layers 3  --nb_epochs 5 --city_count 50 --recycle_data 5 --mamba2 True --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES --wandb --bsz 50 --reverse True
+python tsp.py --save_loc 'checkpoints/gpu/bsz_point/mamba2_50_bsz30' --nb_layers 3  --nb_epochs 5 --city_count 50 --recycle_data 5 --mamba2 True --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES --wandb --bsz 30 --reverse True
+python tsp.py --save_loc 'checkpoints/gpu/bsz_point/mamba2_50_bsz40' --nb_layers 3  --nb_epochs 5 --city_count 50 --recycle_data 5 --mamba2 True --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES --wandb --bsz 40 --reverse True
+python tsp.py --save_loc 'checkpoints/gpu/bsz_point/mamba2_50_bsz75' --nb_layers 3  --nb_epochs 5 --city_count 50 --recycle_data 5 --mamba2 True --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES --wandb --bsz 75 --reverse True
+python tsp.py --save_loc 'checkpoints/gpu/bsz_point/mamba2_50_bsz125' --nb_layers 3  --nb_epochs 5 --city_count 50 --recycle_data 5 --mamba2 True --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES --wandb --bsz 125 --reverse True
+
+python tsp.py --save_loc 'checkpoints/gpu/bsz_point_ng/mamba2_50_bsz50' --nb_layers 3  --nb_epochs 5 --city_count 50 --recycle_data 5 --mamba2 True --mlp_cls 'identity' --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES --wandb --bsz 50 --reverse True
+python tsp.py --save_loc 'checkpoints/gpu/bsz_point_ng/mamba2_50_bsz30' --nb_layers 3  --nb_epochs 5 --city_count 50 --recycle_data 5 --mamba2 True --mlp_cls 'identity' --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES --wandb --bsz 30 --reverse True
+python tsp.py --save_loc 'checkpoints/gpu/bsz_point_ng/mamba2_50_bsz40' --nb_layers 3  --nb_epochs 5 --city_count 50 --recycle_data 5 --mamba2 True --mlp_cls 'identity' --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES --wandb --bsz 40 --reverse True
+python tsp.py --save_loc 'checkpoints/gpu/bsz_point_ng/mamba2_50_bsz75' --nb_layers 3  --nb_epochs 5 --city_count 50 --recycle_data 5 --mamba2 True --mlp_cls 'identity' --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES --wandb --bsz 75 --reverse True
+python tsp.py --save_loc 'checkpoints/gpu/bsz_point_ng/mamba2_50_bsz125' --nb_layers 3  --nb_epochs 5 --city_count 50 --recycle_data 5 --mamba2 True --mlp_cls 'identity' --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES --wandb --bsz 125 --reverse True
