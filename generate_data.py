@@ -15,8 +15,10 @@ def generate_data(device, batch_size, city_count, coord_dim=2 , start = 2):
     return torch.cat((random_data, start_data), dim=1)
 
 
-test_data = generate_data('cpu', 2000, 2000, 2,start=2)
-torch.save(test_data, 'data/start_2/2000_2000_2.pt')
+test_data = generate_data('cpu', 2000, 75, 2,start=2)
+torch.save(test_data, 'data/start_2/2000_75_2.pt')
+test_data = generate_data('cpu', 2000, 120, 2,start=2)
+torch.save(test_data, 'data/start_2/2000_120_2.pt')
 '''test_data = generate_data('cpu', 2000, 10, 2,start=2)
 torch.save(test_data, 'data/start_2/2000_10_2.pt')
 test_data = generate_data('cpu', 2000, 50, 2,start=2)
