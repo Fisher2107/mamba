@@ -34,33 +34,33 @@
 #POINT
 ##################
 #bsz
-python vis_gpu_args.py --gpu_stats 'bsz_point/mamba2_50_bsz10_gpu_stats_17-07_04-17' --events 'bsz_point/mamba2_50_bsz10_events_17-07_04-17'  --output_file 'point/bsz/mamab2_50_bsz10.pdf' --x_lim_start 0 --x_lim_end 0
-python vis_gpu_args.py --gpu_stats 'bsz_point/mamba2_50_bsz100_gpu_stats_17-07_04-30' --events 'bsz_point/mamba2_50_bsz100_events_17-07_04-30'  --output_file 'point/bsz/mamab2_50_bsz100.pdf' --x_lim_start 0 --x_lim_end 0
-python vis_gpu_args.py --gpu_stats 'bsz_point/mamba2_50_bsz200_gpu_stats_17-07_04-34' --events 'bsz_point/mamba2_50_bsz200_events_17-07_04-34'  --output_file 'point/bsz/mamab2_50_bsz200.pdf' --x_lim_start 0 --x_lim_end 0
+python vis_gpu_args.py --gpu_stats 'bsz_point/mamba2_50_bsz10_gpu_stats' --events 'bsz_point/mamba2_50_bsz10_events' --output_file 'point/bsz/mamab2_50_bsz10.pdf'  --x_lim_start 0 --x_lim_end 0
+python vis_gpu_args.py --gpu_stats 'bsz_point/mamba2_50_bsz100_gpu_stats' --events 'bsz_point/mamba2_50_bsz100_events' --output_file 'point/bsz/mamab2_50_bsz100.pdf'  --x_lim_start 0 --x_lim_end 0
+python vis_gpu_args.py --gpu_stats 'bsz_point/mamba2_50_bsz200_gpu_stats' --events 'bsz_point/mamba2_50_bsz200_events' --output_file 'point/bsz/mamab2_50_bsz200.pdf'  --x_lim_start 0 --x_lim_end 0
 
 #city_count
-python vis_gpu_args.py --gpu_stats 'city_count_point/mamba2_100_d16_gpu_stats_15-07_16-07' --events 'city_count_point/mamba2_100_d16_events_15-07_16-07'  --output_file 'point/city_count/mamba2_100_d16.pdf' --x_lim_start 0 --x_lim_end 0
-python vis_gpu_args.py --gpu_stats 'city_count_point/mamba2_100_gpu_stats_15-07_15-53' --events 'city_count_point/mamba2_100_events_15-07_15-53'  --output_file 'point/city_count/mamba2_100.pdf' --x_lim_start 0 --x_lim_end 0
+python vis_gpu_args.py --gpu_stats 'city_count_point/mamba2_100_d16_gpu_stats' --events 'city_count_point/mamba2_100_d16_events' --output_file 'point/city_count/mamba2_100_d16.pdf'  --x_lim_start 0 --x_lim_end 0
+python vis_gpu_args.py --gpu_stats 'city_count_point/mamba2_100_gpu_stats' --events 'city_count_point/mamba2_100_events' --output_file 'point/city_count/mamba2_100.pdf'  --x_lim_start 0 --x_lim_end 0
 
 #lay
-python vis_gpu_args.py --gpu_stats 'lay_point/mamba2_50_lay1_gpu_stats_15-07_15-40' --events 'lay_point/mamba2_50_lay1_events_15-07_15-40'  --output_file 'point/lay/mamba2_lay1.pdf' --x_lim_start 0 --x_lim_end 0
-python vis_gpu_args.py --gpu_stats 'lay_point/mamba2_50_lay2_gpu_stats_15-07_15-41' --events 'lay_point/mamba2_50_lay2_events_15-07_15-41'  --output_file 'point/lay/mamba2_lay2.pdf' --x_lim_start 0 --x_lim_end 0
-python vis_gpu_args.py --gpu_stats 'lay_point/mamba2_50_lay3_gpu_stats_15-07_15-43' --events 'lay_point/mamba2_50_lay3_events_15-07_15-43'  --output_file 'point/lay/mamba2_lay3.pdf' --x_lim_start 0 --x_lim_end 0
+python vis_gpu_args.py --gpu_stats 'lay_point/mamba2_50_lay1_gpu_stats' --events 'lay_point/mamba2_50_lay1_events' --output_file 'point/lay/mamba2_lay1.pdf'  --x_lim_start 0 --x_lim_end 0
+python vis_gpu_args.py --gpu_stats 'lay_point/mamba2_50_lay2_gpu_stats' --events 'lay_point/mamba2_50_lay2_events' --output_file 'point/lay/mamba2_lay2.pdf'  --x_lim_start 0 --x_lim_end 0
+python vis_gpu_args.py --gpu_stats 'lay_point/mamba2_50_lay3_gpu_stats' --events 'lay_point/mamba2_50_lay3_events' --output_file 'point/lay/mamba2_lay3.pdf'  --x_lim_start 0 --x_lim_end 0
 #############
 
 #NG
 ##################
 #bsz
-python vis_gpu_args.py --gpu_stats 'bsz_point_ng/mamba2_50_bsz10_gpu_stats_15-07_16-13' --events 'bsz_point_ng/mamba2_50_bsz10_events_15-07_16-13'  --output_file 'point_ng/bsz/mamab2_50_bsz10.pdf' --x_lim_start 0 --x_lim_end 0
-python vis_gpu_args.py --gpu_stats 'bsz_point_ng/mamba2_50_bsz100_gpu_stats_15-07_16-26' --events 'bsz_point_ng/mamba2_50_bsz100_events_15-07_16-26'  --output_file 'point_ng/bsz/mamab2_50_bsz100.pdf' --x_lim_start 0 --x_lim_end 0
-python vis_gpu_args.py --gpu_stats 'bsz_point_ng/mamba2_50_bsz200_gpu_stats_15-07_16-30' --events 'bsz_point_ng/mamba2_50_bsz200_events_15-07_16-30'  --output_file 'point_ng/bsz/mamab2_50_bsz200.pdf' --x_lim_start 0 --x_lim_end 0
+python vis_gpu_args.py --gpu_stats 'bsz_point_ng/mamba2_50_bsz10_gpu_stats' --events 'bsz_point_ng/mamba2_50_bsz10_events' --output_file 'point_ng/bsz/mamab2_50_bsz10.pdf'  --x_lim_start 0 --x_lim_end 0
+python vis_gpu_args.py --gpu_stats 'bsz_point_ng/mamba2_50_bsz100_gpu_stats' --events 'bsz_point_ng/mamba2_50_bsz100_events' --output_file 'point_ng/bsz/mamab2_50_bsz100.pdf'  --x_lim_start 0 --x_lim_end 0
+python vis_gpu_args.py --gpu_stats 'bsz_point_ng/mamba2_50_bsz200_gpu_stats' --events 'bsz_point_ng/mamba2_50_bsz200_events' --output_file 'point_ng/bsz/mamab2_50_bsz200.pdf'  --x_lim_start 0 --x_lim_end 0
 
 #city_count
-python vis_gpu_args.py --gpu_stats 'city_count_point_ng/mamba2_100_d16_gpu_stats_15-07_16-07' --events 'city_count_point_ng/mamba2_100_d16_events_15-07_16-07'  --output_file 'point_ng/city_count/mamba2_100_d16.pdf' --x_lim_start 0 --x_lim_end 0
-python vis_gpu_args.py --gpu_stats 'city_count_point_ng/mamba2_100_gpu_stats_15-07_15-53' --events 'city_count_point_ng/mamba2_100_events_15-07_15-53'  --output_file 'point_ng/city_count/mamba2_100.pdf' --x_lim_start 0 --x_lim_end 0
+python vis_gpu_args.py --gpu_stats 'city_count_point_ng/mamba2_100_d16_gpu_stats' --events 'city_count_point_ng/mamba2_100_d16_events' --output_file 'point_ng/city_count/mamba2_100_d16.pdf'  --x_lim_start 0 --x_lim_end 0
+python vis_gpu_args.py --gpu_stats 'city_count_point_ng/mamba2_100_gpu_stats' --events 'city_count_point_ng/mamba2_100_events' --output_file 'point_ng/city_count/mamba2_100.pdf'  --x_lim_start 0 --x_lim_end 0
 
 #lay
-python vis_gpu_args.py --gpu_stats 'lay_point_ng/mamba2_50_lay1_gpu_stats_15-07_15-40' --events 'lay_point_ng/mamba2_50_lay1_events_15-07_15-40'  --output_file 'point_ng/lay/mamba2_lay1.pdf' --x_lim_start 0 --x_lim_end 0
-python vis_gpu_args.py --gpu_stats 'lay_point_ng/mamba2_50_lay2_gpu_stats_15-07_15-41' --events 'lay_point_ng/mamba2_50_lay2_events_15-07_15-41'  --output_file 'point_ng/lay/mamba2_lay2.pdf' --x_lim_start 0 --x_lim_end 0
-python vis_gpu_args.py --gpu_stats 'lay_point_ng/mamba2_50_lay3_gpu_stats_15-07_15-43' --events 'lay_point_ng/mamba2_50_lay3_events_15-07_15-43'  --output_file 'point_ng/lay/mamba2_lay3.pdf' --x_lim_start 0 --x_lim_end 0
+python vis_gpu_args.py --gpu_stats 'lay_point_ng/mamba2_50_lay1_gpu_stats' --events 'lay_point_ng/mamba2_50_lay1_events' --output_file 'point_ng/lay/mamba2_lay1.pdf'  --x_lim_start 0 --x_lim_end 0
+python vis_gpu_args.py --gpu_stats 'lay_point_ng/mamba2_50_lay2_gpu_stats' --events 'lay_point_ng/mamba2_50_lay2_events' --output_file 'point_ng/lay/mamba2_lay2.pdf'  --x_lim_start 0 --x_lim_end 0
+python vis_gpu_args.py --gpu_stats 'lay_point_ng/mamba2_50_lay3_gpu_stats' --events 'lay_point_ng/mamba2_50_lay3_events' --output_file 'point_ng/lay/mamba2_lay3.pdf'  --x_lim_start 0 --x_lim_end 0
 #############
