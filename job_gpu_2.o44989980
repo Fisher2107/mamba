@@ -1,0 +1,54 @@
+CUDA_VISIBLE_DEVICES: 
+gpu id=  0
+Total number of parameters: 27560
+{'bsz': 50, 'd_model': 16, 'coord_dim': 2, 'nb_layers': 3, 'mlp_cls': 'gatedmlp', 'city_count': 75, 'fourier_scale': None, 'start': 2.0, 'city_range': (0, 0), 'wandb': False, 'nb_epochs': 5, 'nb_batch_per_epoch': 10, 'test_size': 2000, 'save_loc': 'checkpoints/gpu/city_count/mamba2_75_d16', 'checkpoint': None, 'recycle_data': 5, 'model_name': 'Full', 'mamba2': True, 'reverse': True, 'reverse_start': False, 'last_layer': 'identity', 'test_folder_name': None, 'profiler': False, 'memory_snapshot': False, 'pynvml': True, 'gpu_id': 0, 'test_data_loc': 'data/start_2/2000_75_2.pt', 'B': None, 'x_flipped': False}
+gpu id=  0
+Total number of parameters: 84760
+{'bsz': 50, 'd_model': 64, 'coord_dim': 2, 'nb_layers': 1, 'mlp_cls': 'gatedmlp', 'city_count': 5, 'fourier_scale': None, 'start': 2.0, 'city_range': (0, 0), 'wandb': False, 'nb_epochs': 5, 'nb_batch_per_epoch': 10, 'test_size': 2000, 'save_loc': 'checkpoints/gpu/city_count/mamba2_5_lay1', 'checkpoint': None, 'recycle_data': 5, 'model_name': 'Full', 'mamba2': True, 'reverse': True, 'reverse_start': False, 'last_layer': 'identity', 'test_folder_name': None, 'profiler': False, 'memory_snapshot': False, 'pynvml': True, 'gpu_id': 0, 'test_data_loc': 'data/start_2/2000_5_2.pt', 'B': None, 'x_flipped': False}
+gpu id=  0
+Total number of parameters: 85080
+{'bsz': 50, 'd_model': 64, 'coord_dim': 2, 'nb_layers': 1, 'mlp_cls': 'gatedmlp', 'city_count': 10, 'fourier_scale': None, 'start': 2.0, 'city_range': (0, 0), 'wandb': False, 'nb_epochs': 5, 'nb_batch_per_epoch': 10, 'test_size': 2000, 'save_loc': 'checkpoints/gpu/city_count/mamba2_10_lay1', 'checkpoint': None, 'recycle_data': 5, 'model_name': 'Full', 'mamba2': True, 'reverse': True, 'reverse_start': False, 'last_layer': 'identity', 'test_folder_name': None, 'profiler': False, 'memory_snapshot': False, 'pynvml': True, 'gpu_id': 0, 'test_data_loc': 'data/start_2/2000_10_2.pt', 'B': None, 'x_flipped': False}
+gpu id=  0
+Total number of parameters: 85720
+{'bsz': 50, 'd_model': 64, 'coord_dim': 2, 'nb_layers': 1, 'mlp_cls': 'gatedmlp', 'city_count': 20, 'fourier_scale': None, 'start': 2.0, 'city_range': (0, 0), 'wandb': False, 'nb_epochs': 5, 'nb_batch_per_epoch': 10, 'test_size': 2000, 'save_loc': 'checkpoints/gpu/city_count/mamba2_20_lay1', 'checkpoint': None, 'recycle_data': 5, 'model_name': 'Full', 'mamba2': True, 'reverse': True, 'reverse_start': False, 'last_layer': 'identity', 'test_folder_name': None, 'profiler': False, 'memory_snapshot': False, 'pynvml': True, 'gpu_id': 0, 'test_data_loc': 'data/start_2/2000_20_2.pt', 'B': None, 'x_flipped': False}
+gpu id=  0
+Total number of parameters: 87640
+{'bsz': 50, 'd_model': 64, 'coord_dim': 2, 'nb_layers': 1, 'mlp_cls': 'gatedmlp', 'city_count': 50, 'fourier_scale': None, 'start': 2.0, 'city_range': (0, 0), 'wandb': False, 'nb_epochs': 5, 'nb_batch_per_epoch': 10, 'test_size': 2000, 'save_loc': 'checkpoints/gpu/city_count/mamba2_50_lay1', 'checkpoint': None, 'recycle_data': 5, 'model_name': 'Full', 'mamba2': True, 'reverse': True, 'reverse_start': False, 'last_layer': 'identity', 'test_folder_name': None, 'profiler': False, 'memory_snapshot': False, 'pynvml': True, 'gpu_id': 0, 'test_data_loc': 'data/start_2/2000_50_2.pt', 'B': None, 'x_flipped': False}
+gpu id=  0
+Total number of parameters: 90840
+{'bsz': 50, 'd_model': 64, 'coord_dim': 2, 'nb_layers': 1, 'mlp_cls': 'gatedmlp', 'city_count': 100, 'fourier_scale': None, 'start': 2.0, 'city_range': (0, 0), 'wandb': False, 'nb_epochs': 5, 'nb_batch_per_epoch': 10, 'test_size': 2000, 'save_loc': 'checkpoints/gpu/city_count/mamba2_100_lay1', 'checkpoint': None, 'recycle_data': 5, 'model_name': 'Full', 'mamba2': True, 'reverse': True, 'reverse_start': False, 'last_layer': 'identity', 'test_folder_name': None, 'profiler': False, 'memory_snapshot': False, 'pynvml': True, 'gpu_id': 0, 'test_data_loc': 'data/start_2/2000_100_2.pt', 'B': None, 'x_flipped': False}
+gpu id=  0
+Total number of parameters: 89240
+{'bsz': 50, 'd_model': 64, 'coord_dim': 2, 'nb_layers': 1, 'mlp_cls': 'gatedmlp', 'city_count': 75, 'fourier_scale': None, 'start': 2.0, 'city_range': (0, 0), 'wandb': False, 'nb_epochs': 5, 'nb_batch_per_epoch': 10, 'test_size': 2000, 'save_loc': 'checkpoints/gpu/city_count/mamba2_75_lay1', 'checkpoint': None, 'recycle_data': 5, 'model_name': 'Full', 'mamba2': True, 'reverse': True, 'reverse_start': False, 'last_layer': 'identity', 'test_folder_name': None, 'profiler': False, 'memory_snapshot': False, 'pynvml': True, 'gpu_id': 0, 'test_data_loc': 'data/start_2/2000_75_2.pt', 'B': None, 'x_flipped': False}
+gpu id=  0
+Total number of parameters: 260936
+{'bsz': 50, 'd_model': 64, 'coord_dim': 2, 'nb_layers': 3, 'mlp_cls': 'gatedmlp', 'city_count': 75, 'fourier_scale': None, 'start': 2.0, 'city_range': (0, 0), 'wandb': False, 'nb_epochs': 5, 'nb_batch_per_epoch': 10, 'test_size': 2000, 'save_loc': 'checkpoints/gpu/city_count_point/mamba2_75', 'checkpoint': None, 'recycle_data': 5, 'model_name': 'Full', 'mamba2': True, 'reverse': True, 'reverse_start': False, 'last_layer': 'pointer', 'test_folder_name': None, 'profiler': False, 'memory_snapshot': False, 'pynvml': True, 'gpu_id': 0, 'test_data_loc': 'data/start_2/2000_75_2.pt', 'B': None, 'x_flipped': False}
+gpu id=  0
+Total number of parameters: 26888
+{'bsz': 50, 'd_model': 16, 'coord_dim': 2, 'nb_layers': 3, 'mlp_cls': 'gatedmlp', 'city_count': 75, 'fourier_scale': None, 'start': 2.0, 'city_range': (0, 0), 'wandb': False, 'nb_epochs': 5, 'nb_batch_per_epoch': 10, 'test_size': 2000, 'save_loc': 'checkpoints/gpu/city_count_point/mamba2_75_d16', 'checkpoint': None, 'recycle_data': 5, 'model_name': 'Full', 'mamba2': True, 'reverse': True, 'reverse_start': False, 'last_layer': 'pointer', 'test_folder_name': None, 'profiler': False, 'memory_snapshot': False, 'pynvml': True, 'gpu_id': 0, 'test_data_loc': 'data/start_2/2000_75_2.pt', 'B': None, 'x_flipped': False}
+gpu id=  0
+Total number of parameters: 92696
+{'bsz': 50, 'd_model': 64, 'coord_dim': 2, 'nb_layers': 1, 'mlp_cls': 'gatedmlp', 'city_count': 5, 'fourier_scale': None, 'start': 2.0, 'city_range': (0, 0), 'wandb': False, 'nb_epochs': 5, 'nb_batch_per_epoch': 10, 'test_size': 2000, 'save_loc': 'checkpoints/gpu/city_count_point/mamba2_5_lay1', 'checkpoint': None, 'recycle_data': 5, 'model_name': 'Full', 'mamba2': True, 'reverse': True, 'reverse_start': False, 'last_layer': 'pointer', 'test_folder_name': None, 'profiler': False, 'memory_snapshot': False, 'pynvml': True, 'gpu_id': 0, 'test_data_loc': 'data/start_2/2000_5_2.pt', 'B': None, 'x_flipped': False}
+gpu id=  0
+Total number of parameters: 92696
+{'bsz': 50, 'd_model': 64, 'coord_dim': 2, 'nb_layers': 1, 'mlp_cls': 'gatedmlp', 'city_count': 10, 'fourier_scale': None, 'start': 2.0, 'city_range': (0, 0), 'wandb': False, 'nb_epochs': 5, 'nb_batch_per_epoch': 10, 'test_size': 2000, 'save_loc': 'checkpoints/gpu/city_count_point/mamba2_10_lay1', 'checkpoint': None, 'recycle_data': 5, 'model_name': 'Full', 'mamba2': True, 'reverse': True, 'reverse_start': False, 'last_layer': 'pointer', 'test_folder_name': None, 'profiler': False, 'memory_snapshot': False, 'pynvml': True, 'gpu_id': 0, 'test_data_loc': 'data/start_2/2000_10_2.pt', 'B': None, 'x_flipped': False}
+gpu id=  0
+Total number of parameters: 92696
+{'bsz': 50, 'd_model': 64, 'coord_dim': 2, 'nb_layers': 1, 'mlp_cls': 'gatedmlp', 'city_count': 20, 'fourier_scale': None, 'start': 2.0, 'city_range': (0, 0), 'wandb': False, 'nb_epochs': 5, 'nb_batch_per_epoch': 10, 'test_size': 2000, 'save_loc': 'checkpoints/gpu/city_count_point/mamba2_20_lay1', 'checkpoint': None, 'recycle_data': 5, 'model_name': 'Full', 'mamba2': True, 'reverse': True, 'reverse_start': False, 'last_layer': 'pointer', 'test_folder_name': None, 'profiler': False, 'memory_snapshot': False, 'pynvml': True, 'gpu_id': 0, 'test_data_loc': 'data/start_2/2000_20_2.pt', 'B': None, 'x_flipped': False}
+gpu id=  0
+Total number of parameters: 92696
+{'bsz': 50, 'd_model': 64, 'coord_dim': 2, 'nb_layers': 1, 'mlp_cls': 'gatedmlp', 'city_count': 50, 'fourier_scale': None, 'start': 2.0, 'city_range': (0, 0), 'wandb': False, 'nb_epochs': 5, 'nb_batch_per_epoch': 10, 'test_size': 2000, 'save_loc': 'checkpoints/gpu/city_count_point/mamba2_50_lay1', 'checkpoint': None, 'recycle_data': 5, 'model_name': 'Full', 'mamba2': True, 'reverse': True, 'reverse_start': False, 'last_layer': 'pointer', 'test_folder_name': None, 'profiler': False, 'memory_snapshot': False, 'pynvml': True, 'gpu_id': 0, 'test_data_loc': 'data/start_2/2000_50_2.pt', 'B': None, 'x_flipped': False}
+gpu id=  0
+Total number of parameters: 92696
+{'bsz': 50, 'd_model': 64, 'coord_dim': 2, 'nb_layers': 1, 'mlp_cls': 'gatedmlp', 'city_count': 100, 'fourier_scale': None, 'start': 2.0, 'city_range': (0, 0), 'wandb': False, 'nb_epochs': 5, 'nb_batch_per_epoch': 10, 'test_size': 2000, 'save_loc': 'checkpoints/gpu/city_count_point/mamba2_100_lay1', 'checkpoint': None, 'recycle_data': 5, 'model_name': 'Full', 'mamba2': True, 'reverse': True, 'reverse_start': False, 'last_layer': 'pointer', 'test_folder_name': None, 'profiler': False, 'memory_snapshot': False, 'pynvml': True, 'gpu_id': 0, 'test_data_loc': 'data/start_2/2000_100_2.pt', 'B': None, 'x_flipped': False}
+gpu id=  0
+Total number of parameters: 92696
+{'bsz': 50, 'd_model': 64, 'coord_dim': 2, 'nb_layers': 1, 'mlp_cls': 'gatedmlp', 'city_count': 75, 'fourier_scale': None, 'start': 2.0, 'city_range': (0, 0), 'wandb': False, 'nb_epochs': 5, 'nb_batch_per_epoch': 10, 'test_size': 2000, 'save_loc': 'checkpoints/gpu/city_count_point/mamba2_75_lay1', 'checkpoint': None, 'recycle_data': 5, 'model_name': 'Full', 'mamba2': True, 'reverse': True, 'reverse_start': False, 'last_layer': 'pointer', 'test_folder_name': None, 'profiler': False, 'memory_snapshot': False, 'pynvml': True, 'gpu_id': 0, 'test_data_loc': 'data/start_2/2000_75_2.pt', 'B': None, 'x_flipped': False}
+gpu id=  0
+gpu id=  0
+gpu id=  0
+gpu id=  0
+gpu id=  0
+gpu id=  0
+gpu id=  0
+gpu id=  0
