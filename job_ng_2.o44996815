@@ -1,0 +1,3 @@
+CUDA_VISIBLE_DEVICES: 
+Total number of parameters: 113096
+{'bsz': 150, 'd_model': 64, 'coord_dim': 2, 'nb_layers': 3, 'mlp_cls': 'identity', 'city_count': 50, 'fourier_scale': None, 'start': 2.0, 'city_range': (0, 0), 'wandb': True, 'nb_epochs': 100, 'nb_batch_per_epoch': 40, 'test_size': 2000, 'save_loc': 'checkpoints/mamba_ng/city50/lay3_bsz150_bpe10', 'checkpoint': None, 'recycle_data': 0, 'model_name': 'Full', 'mamba2': True, 'reverse': True, 'reverse_start': False, 'last_layer': 'pointer', 'test_folder_name': None, 'profiler': False, 'memory_snapshot': False, 'pynvml': False, 'gpu_id': -1, 'test_data_loc': 'data/start_2/2000_50_2.pt', 'B': None, 'x_flipped': False}
