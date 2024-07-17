@@ -108,6 +108,8 @@ if args.pynvml:
     print('gpu id= ',args.gpu_id)
     from gpu_stats import GPULogger
     gpu_logger = GPULogger(args.gpu_id)
+else:
+    gpu_logger=None
 
 if args.memory_snapshot:
     torch.cuda.memory._record_memory_history()
