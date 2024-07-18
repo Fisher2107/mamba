@@ -14,8 +14,6 @@ module load cuda/12.1.1
 
 source /exports/eddie/scratch/s2517783/miniconda3/bin/activate base
 cd /exports/eddie/scratch/s2517783/mamba
-conda activate tspp
+conda activate tsp
 
-source ~/.bashrc
-
-python tsp.py --save_loc 'checkpoints/big/16_G_city10'         --nb_layers 3  --nb_epochs 4  --mamba2 True --city_count 10 --nb_batch_per_epoch 40 --bsz 1200 --last_layer 'pointer' --reverse True --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES --d_model 16
+python tsp.py --save_loc 'checkpoints/big/16_G_city10'         --nb_layers 3  --nb_epochs 4  --mamba2 True --city_count 10 --nb_batch_per_epoch 40 --bsz 1200 --last_layer 'pointer' --reverse True --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES --wandb --d_model 16
