@@ -26,7 +26,7 @@ def generate_data(device, batch_size, city_count, coord_dim=2 , start = 2):
     start_data = torch.full((batch_size, 1, coord_dim), start).to(device)
     return torch.cat((random_data, start_data), dim=1)
 
-def compute_tour_length(x, tour,remove_start_token=True): 
+def compute_tour_length(x, tour,remove_start_token=True,get_tour_only=True): 
     """
     Compute the length of a batch of tours
     Inputs : x of size (bsz, city_count+1, 2) batch of tsp tour instances
@@ -54,7 +54,11 @@ def compute_tour_length(x, tour,remove_start_token=True):
     # Sum the distances to get the total length of each tour
     L = torch.sum(distances, dim=1)
 
-    return L
+    if get_tour_only:
+        return L
+    #this will both return the tour and the length
+    else:
+        return L, distances
 
 def plot_tsp(x_coord, x_path, plot_concorde=False, plot_dist_pair=False):
     """
@@ -253,7 +257,7 @@ class MambaFull(nn.Module):
         #mask vistited cities
         return logits
 
-def seq2seq_generate_tour(device,model,inputs,lastlayer,deterministic=False):
+def seq2seq_generate_tour(device,model,inputs,lastlayer,deterministic=False,sum_logactions=True):
     # Mask is used to prevent the model from choosing the same city twice
     bsz = inputs.shape[0]
     city_count = inputs.shape[1] - 1
@@ -261,7 +265,7 @@ def seq2seq_generate_tour(device,model,inputs,lastlayer,deterministic=False):
     # list that will contain Long tensors of shape (bsz,) that gives the idx of the cities chosen at time t
     tours = []
     # list that will contain Float tensors of shape (bsz,) that gives the log probs of the choices made at time t
-    sumLogProbOfActions = []
+    LogProbOfActions = []
     #Construct tour recursively
     for i in range(city_count):
         if lastlayer=='pointer':
@@ -279,40 +283,57 @@ def seq2seq_generate_tour(device,model,inputs,lastlayer,deterministic=False):
             next_city = Categorical(outputs).sample()
         #print(next_city[0])
         tours.append(next_city)
-        sumLogProbOfActions.append(torch.log(outputs[torch.arange(bsz), next_city]) )
+        LogProbOfActions.append(torch.log(outputs[torch.arange(bsz), next_city]) )
         mask[torch.arange(bsz), next_city] = 0
         inputs = torch.cat((inputs, inputs[torch.arange(bsz), next_city, :].unsqueeze(1)), dim=1)
     tours = torch.stack(tours, dim=1).to(device)
-    sumLogProbOfActions = torch.stack(sumLogProbOfActions, dim=1).sum(dim=1).to(device)
-    return tours, sumLogProbOfActions
-
-def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger=False):
+    if sum_logactions:
+        sumLogProbOfActions = torch.stack(LogProbOfActions, dim=1).sum(dim=1).to(device)
+        return tours, sumLogProbOfActions
+    else:
+        return tours, LogProbOfActions
+    
+def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,action):
     # list that will contain Long tensors of shape (bsz,) that gives the idx of the cities chosen at time t
     lastlayer = 'identity'
     if model_train.pointer:
         lastlayer = 'pointer'
-    if gpu_logger: gpu_logger.log_event('generating tours of train model')
-    tours_train, sumLogProbOfActions = seq2seq_generate_tour(device,model_train,inputs,lastlayer=lastlayer,deterministic=False)
-    if gpu_logger: gpu_logger.log_event('generating tours of baseline model')
-    tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=False)
-
     
-    #get the length of the tours
-    with torch.no_grad():
-        if gpu_logger: gpu_logger.log_event('computing tour length of train model')
-        L_train = compute_tour_length(inputs, tours_train)
-        if gpu_logger: gpu_logger.log_event('computing tour length of baseline model')
-        L_baseline = compute_tour_length(inputs, tours_baseline)
-        L_train_train_total += L_train.sum()
-        L_baseline_train_total += L_baseline.sum()
-    #print(f"L_train requires_grad: {L_train.requires_grad}")
+    if action == 'tour':
+        if gpu_logger: gpu_logger.log_event('generating tours of train model')
+        tours_train, sumLogProbOfActions = seq2seq_generate_tour(device,model_train,inputs,lastlayer=lastlayer,deterministic=False)
+        if gpu_logger: gpu_logger.log_event('generating tours of baseline model')
+        tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=False)
 
-    if gpu_logger: gpu_logger.log_event('computing loss and backprop')
-    # backprop     
-    loss = torch.mean( (L_train - L_baseline)* sumLogProbOfActions )
-    optimizer.zero_grad()
-    loss.backward()
-    optimizer.step()
+        
+        #get the length of the tours
+        with torch.no_grad():
+            if gpu_logger: gpu_logger.log_event('computing tour length of train model')
+            L_train = compute_tour_length(inputs, tours_train)
+            if gpu_logger: gpu_logger.log_event('computing tour length of baseline model')
+            L_baseline = compute_tour_length(inputs, tours_baseline)
+            L_train_train_total += L_train.sum()
+            L_baseline_train_total += L_baseline.sum()
+        #print(f"L_train requires_grad: {L_train.requires_grad}")
+
+        if gpu_logger: gpu_logger.log_event('computing loss and backprop')
+        # backprop     
+        loss = torch.mean( (L_train - L_baseline)* sumLogProbOfActions )
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+    elif action == 'next_city':
+        tours_train, LogProbOfActions = seq2seq_generate_tour(device,model_train,inputs,lastlayer=lastlayer,deterministic=False,sum_logactions=False)
+        tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=False,sum_logactions=False)
+
+        #get the length of the tours
+        with torch.no_grad():
+            L_train, L_train_action = compute_tour_length(inputs, tours_train,get_tour_only=False)
+            L_baseline, L_train_action = compute_tour_length(inputs, tours_baseline,get_tour_only=False)
+             
+    else:
+        raise ValueError('action must be either "tour" or "next_city"')
 
     return L_train_train_total, L_baseline_train_total
 

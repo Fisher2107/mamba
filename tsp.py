@@ -26,6 +26,7 @@ parser.add_argument('--fourier_scale', type=float, default=None, help='Fourier s
 parser.add_argument('--start', type=float, default=2.0, help='Start token')
 parser.add_argument('--city_range', type=str, default='0,0', help='Range of cities to be used when generating data')
 parser.add_argument('--wandb', action='store_false', help='Call argument if you do not want to log to wandb')
+parser.add_argument('--action', type=str, default='tour', help="Select if action is defined to be 'tour' or 'next_city'")
 
 parser.add_argument('--nb_epochs', type=int, default=500, help='Number of epochs')
 parser.add_argument('--nb_batch_per_epoch', type=int, default=10, help='Number of batches per epoch')
@@ -92,12 +93,13 @@ elif args.reverse and not args.reverse_start:
         args['x_flipped']=True
 
 if args.wandb:
-    project_name = 'Mamba'
+    project_name = 'Mamba_big'
     if args.profiler:
         project_name = 'Mamba_profiler'
     run = wandb.init(
         # Set the project where this run will be logged
         project=project_name,
+        name=args.save_loc.split('/')[-1],
         # Track hyperparameters and run metadata
         config=args,
     )
@@ -191,13 +193,13 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
         if args.profiler and epoch>args.nb_epochs-2:
             with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], record_shapes=True,profile_memory=True, with_stack=True) as prof:
                 with record_function("model_inference"):
-                    L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger)
+                    L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,args.action)
                 prof.step()  # Denotes step end
             print('Epoch:', epoch, ' Step:', step)
             print(prof.key_averages().table(sort_by="cuda_time_total"))
             prof.export_chrome_trace(f'{args.save_loc}.json')
         else:
-            L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger)
+            L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,args.action)
         
     time_one_epoch = time.time()-start
     time_tot = time.time()-start_training_time + tot_time_ckpt

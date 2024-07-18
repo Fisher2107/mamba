@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 plt.style.use('bmh')
 
-def generate_plot(csv_file):
+def generate_plot(csv_file,output,fit_line=True):
     x_values = [10, 20, 30, 40, 50, 75, 100, 125, 150, 200]
     y_values = []
     
@@ -14,11 +14,11 @@ def generate_plot(csv_file):
     
 
     #least squares fit
-    '''z64 = np.polyfit(x_values, y_values_64, 2)
-    x_range = np.arange(0, 200, 0.1)
-    plt.plot(x_range, np.polyval(z64, x_range), label='quad fit dim = 64')
-
-    print('quad fit dim = 16:', z16)'''
+    if fit_line:
+        z = np.polyfit(x_values, y_values, 1)
+        x_range = np.arange(0, 400, 0.1)
+        plt.plot(x_range, np.polyval(z, x_range), label='linear fit')
+        print('linear fit:', z)
 
     #plot
     plt.plot(x_values, y_values, marker='o', label='dim = 64')
@@ -26,7 +26,7 @@ def generate_plot(csv_file):
     plt.ylabel('Memory Usage (GB)')
     plt.title('Memory Usage by Batch Size')
     plt.legend()
-    plt.savefig('../figs/scale/bsz_memory_usage_ng.pdf')
+    plt.savefig(output)
     #plt.show()
 
 # No point
@@ -64,4 +64,6 @@ csv_file_ng = ['../../checkpoints/gpu/bsz_point_ng/mamba2_50_bsz10_gpu_stats.csv
             '../../checkpoints/gpu/bsz_point_ng/mamba2_50_bsz125_gpu_stats.csv',
             '../../checkpoints/gpu/bsz_point_ng/mamba2_50_bsz150_gpu_stats.csv', 
             '../../checkpoints/gpu/bsz_point_ng/mamba2_50_bsz200_gpu_stats.csv']
-generate_plot(csv_file_ng)
+
+generate_plot(csv_file,output='../figs/scale/bsz_memory_usage_extended.pdf')
+generate_plot(csv_file_ng,output='../figs/scale/bsz_memory_usage_ng_extended.pdf')
