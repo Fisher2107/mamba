@@ -303,7 +303,7 @@ def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_tr
         if gpu_logger: gpu_logger.log_event('generating tours of train model')
         tours_train, sumLogProbOfActions = seq2seq_generate_tour(device,model_train,inputs,lastlayer=lastlayer,deterministic=False)
         if gpu_logger: gpu_logger.log_event('generating tours of baseline model')
-        tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=False)
+        tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=True)
 
         
         #get the length of the tours
@@ -324,7 +324,7 @@ def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_tr
         optimizer.step()
 
     elif action == 'next_city':
-        tours_train, LogProbOfActions = seq2seq_generate_tour(device,model_train,inputs,lastlayer=lastlayer,deterministic=False,sum_logactions=False)
+        tours_train, _ = seq2seq_generate_tour(device,model_train,inputs,lastlayer=lastlayer,deterministic=False,sum_logactions=False)
         tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=False,sum_logactions=False)
 
         #get the length of the tours
