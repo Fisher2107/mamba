@@ -1,0 +1,801 @@
+Timestamp,Event
+2024-07-19T18:59:08.309750,"Epoch 0, Step 0 start"
+2024-07-19T18:59:08.309762,Generating data
+2024-07-19T18:59:26.798472,"Epoch 0, Step 1 start"
+2024-07-19T18:59:26.798488,Generating data
+2024-07-19T18:59:26.835245,"Epoch 0, Step 2 start"
+2024-07-19T18:59:26.835256,Generating data
+2024-07-19T18:59:26.897578,"Epoch 0, Step 3 start"
+2024-07-19T18:59:26.897588,Generating data
+2024-07-19T18:59:26.960239,"Epoch 0, Step 4 start"
+2024-07-19T18:59:26.960249,Generating data
+2024-07-19T18:59:27.024787,"Epoch 0, Step 5 start"
+2024-07-19T18:59:27.024799,Generating data
+2024-07-19T18:59:27.089699,"Epoch 0, Step 6 start"
+2024-07-19T18:59:27.089716,Generating data
+2024-07-19T18:59:27.154066,"Epoch 0, Step 7 start"
+2024-07-19T18:59:27.154078,Generating data
+2024-07-19T18:59:27.217132,"Epoch 0, Step 8 start"
+2024-07-19T18:59:27.217144,Generating data
+2024-07-19T18:59:27.281613,"Epoch 0, Step 9 start"
+2024-07-19T18:59:27.281626,Generating data
+2024-07-19T18:59:27.344989,"Epoch 0, Step 10 start"
+2024-07-19T18:59:27.345000,Generating data
+2024-07-19T18:59:27.410866,"Epoch 0, Step 11 start"
+2024-07-19T18:59:27.410880,Generating data
+2024-07-19T18:59:27.474060,"Epoch 0, Step 12 start"
+2024-07-19T18:59:27.474073,Generating data
+2024-07-19T18:59:27.538014,"Epoch 0, Step 13 start"
+2024-07-19T18:59:27.538026,Generating data
+2024-07-19T18:59:27.601927,"Epoch 0, Step 14 start"
+2024-07-19T18:59:27.601941,Generating data
+2024-07-19T18:59:27.667173,"Epoch 0, Step 15 start"
+2024-07-19T18:59:27.667183,Generating data
+2024-07-19T18:59:27.732930,"Epoch 0, Step 16 start"
+2024-07-19T18:59:27.732942,Generating data
+2024-07-19T18:59:27.798162,"Epoch 0, Step 17 start"
+2024-07-19T18:59:27.798173,Generating data
+2024-07-19T18:59:27.863206,"Epoch 0, Step 18 start"
+2024-07-19T18:59:27.863224,Generating data
+2024-07-19T18:59:27.928780,"Epoch 0, Step 19 start"
+2024-07-19T18:59:27.928791,Generating data
+2024-07-19T18:59:27.994159,"Epoch 0, Step 20 start"
+2024-07-19T18:59:27.994170,Generating data
+2024-07-19T18:59:28.059085,"Epoch 0, Step 21 start"
+2024-07-19T18:59:28.059095,Generating data
+2024-07-19T18:59:28.123806,"Epoch 0, Step 22 start"
+2024-07-19T18:59:28.123819,Generating data
+2024-07-19T18:59:28.188323,"Epoch 0, Step 23 start"
+2024-07-19T18:59:28.188333,Generating data
+2024-07-19T18:59:28.252569,"Epoch 0, Step 24 start"
+2024-07-19T18:59:28.252582,Generating data
+2024-07-19T18:59:28.316499,"Epoch 0, Step 25 start"
+2024-07-19T18:59:28.316509,Generating data
+2024-07-19T18:59:28.380239,"Epoch 0, Step 26 start"
+2024-07-19T18:59:28.380250,Generating data
+2024-07-19T18:59:28.445523,"Epoch 0, Step 27 start"
+2024-07-19T18:59:28.445539,Generating data
+2024-07-19T18:59:28.509132,"Epoch 0, Step 28 start"
+2024-07-19T18:59:28.509144,Generating data
+2024-07-19T18:59:28.574065,"Epoch 0, Step 29 start"
+2024-07-19T18:59:28.574084,Generating data
+2024-07-19T18:59:28.639598,"Epoch 0, Step 30 start"
+2024-07-19T18:59:28.639616,Generating data
+2024-07-19T18:59:28.703643,"Epoch 0, Step 31 start"
+2024-07-19T18:59:28.703657,Generating data
+2024-07-19T18:59:28.769086,"Epoch 0, Step 32 start"
+2024-07-19T18:59:28.769099,Generating data
+2024-07-19T18:59:28.834133,"Epoch 0, Step 33 start"
+2024-07-19T18:59:28.834145,Generating data
+2024-07-19T18:59:28.899047,"Epoch 0, Step 34 start"
+2024-07-19T18:59:28.899058,Generating data
+2024-07-19T18:59:28.964408,"Epoch 0, Step 35 start"
+2024-07-19T18:59:28.964420,Generating data
+2024-07-19T18:59:29.029761,"Epoch 0, Step 36 start"
+2024-07-19T18:59:29.029771,Generating data
+2024-07-19T18:59:29.094265,"Epoch 0, Step 37 start"
+2024-07-19T18:59:29.094276,Generating data
+2024-07-19T18:59:29.158328,"Epoch 0, Step 38 start"
+2024-07-19T18:59:29.158338,Generating data
+2024-07-19T18:59:29.222654,"Epoch 0, Step 39 start"
+2024-07-19T18:59:29.222667,Generating data
+2024-07-19T18:59:29.287594,"Epoch 1, Step 0 start"
+2024-07-19T18:59:29.287603,Generating data
+2024-07-19T18:59:29.351807,"Epoch 1, Step 1 start"
+2024-07-19T18:59:29.351819,Generating data
+2024-07-19T18:59:29.415872,"Epoch 1, Step 2 start"
+2024-07-19T18:59:29.415886,Generating data
+2024-07-19T18:59:29.480107,"Epoch 1, Step 3 start"
+2024-07-19T18:59:29.480122,Generating data
+2024-07-19T18:59:29.545598,"Epoch 1, Step 4 start"
+2024-07-19T18:59:29.545612,Generating data
+2024-07-19T18:59:29.609846,"Epoch 1, Step 5 start"
+2024-07-19T18:59:29.609859,Generating data
+2024-07-19T18:59:29.674888,"Epoch 1, Step 6 start"
+2024-07-19T18:59:29.674901,Generating data
+2024-07-19T18:59:29.739039,"Epoch 1, Step 7 start"
+2024-07-19T18:59:29.739051,Generating data
+2024-07-19T18:59:29.804455,"Epoch 1, Step 8 start"
+2024-07-19T18:59:29.804465,Generating data
+2024-07-19T18:59:29.870028,"Epoch 1, Step 9 start"
+2024-07-19T18:59:29.870040,Generating data
+2024-07-19T18:59:29.935973,"Epoch 1, Step 10 start"
+2024-07-19T18:59:29.935985,Generating data
+2024-07-19T18:59:29.999781,"Epoch 1, Step 11 start"
+2024-07-19T18:59:29.999793,Generating data
+2024-07-19T18:59:30.066392,"Epoch 1, Step 12 start"
+2024-07-19T18:59:30.066409,Generating data
+2024-07-19T18:59:30.130374,"Epoch 1, Step 13 start"
+2024-07-19T18:59:30.130388,Generating data
+2024-07-19T18:59:30.194902,"Epoch 1, Step 14 start"
+2024-07-19T18:59:30.194915,Generating data
+2024-07-19T18:59:30.258916,"Epoch 1, Step 15 start"
+2024-07-19T18:59:30.258930,Generating data
+2024-07-19T18:59:30.324232,"Epoch 1, Step 16 start"
+2024-07-19T18:59:30.324245,Generating data
+2024-07-19T18:59:30.387924,"Epoch 1, Step 17 start"
+2024-07-19T18:59:30.387937,Generating data
+2024-07-19T18:59:30.453177,"Epoch 1, Step 18 start"
+2024-07-19T18:59:30.453192,Generating data
+2024-07-19T18:59:30.516319,"Epoch 1, Step 19 start"
+2024-07-19T18:59:30.516330,Generating data
+2024-07-19T18:59:30.581882,"Epoch 1, Step 20 start"
+2024-07-19T18:59:30.581895,Generating data
+2024-07-19T18:59:30.646957,"Epoch 1, Step 21 start"
+2024-07-19T18:59:30.646974,Generating data
+2024-07-19T18:59:30.713172,"Epoch 1, Step 22 start"
+2024-07-19T18:59:30.713188,Generating data
+2024-07-19T18:59:30.777266,"Epoch 1, Step 23 start"
+2024-07-19T18:59:30.777281,Generating data
+2024-07-19T18:59:30.841679,"Epoch 1, Step 24 start"
+2024-07-19T18:59:30.841693,Generating data
+2024-07-19T18:59:30.908723,"Epoch 1, Step 25 start"
+2024-07-19T18:59:30.908739,Generating data
+2024-07-19T18:59:30.983688,"Epoch 1, Step 26 start"
+2024-07-19T18:59:30.983719,Generating data
+2024-07-19T18:59:31.050403,"Epoch 1, Step 27 start"
+2024-07-19T18:59:31.050434,Generating data
+2024-07-19T18:59:31.117182,"Epoch 1, Step 28 start"
+2024-07-19T18:59:31.117214,Generating data
+2024-07-19T18:59:31.182999,"Epoch 1, Step 29 start"
+2024-07-19T18:59:31.183024,Generating data
+2024-07-19T18:59:31.250942,"Epoch 1, Step 30 start"
+2024-07-19T18:59:31.250972,Generating data
+2024-07-19T18:59:31.316169,"Epoch 1, Step 31 start"
+2024-07-19T18:59:31.316195,Generating data
+2024-07-19T18:59:31.371989,"Epoch 1, Step 32 start"
+2024-07-19T18:59:31.372000,Generating data
+2024-07-19T18:59:31.436078,"Epoch 1, Step 33 start"
+2024-07-19T18:59:31.436090,Generating data
+2024-07-19T18:59:31.499993,"Epoch 1, Step 34 start"
+2024-07-19T18:59:31.500006,Generating data
+2024-07-19T18:59:31.564773,"Epoch 1, Step 35 start"
+2024-07-19T18:59:31.564786,Generating data
+2024-07-19T18:59:31.629967,"Epoch 1, Step 36 start"
+2024-07-19T18:59:31.629980,Generating data
+2024-07-19T18:59:31.694005,"Epoch 1, Step 37 start"
+2024-07-19T18:59:31.694018,Generating data
+2024-07-19T18:59:31.758449,"Epoch 1, Step 38 start"
+2024-07-19T18:59:31.758459,Generating data
+2024-07-19T18:59:31.823308,"Epoch 1, Step 39 start"
+2024-07-19T18:59:31.823321,Generating data
+2024-07-19T18:59:31.889422,"Epoch 2, Step 0 start"
+2024-07-19T18:59:31.889430,Generating data
+2024-07-19T18:59:31.953949,"Epoch 2, Step 1 start"
+2024-07-19T18:59:31.953961,Generating data
+2024-07-19T18:59:32.018431,"Epoch 2, Step 2 start"
+2024-07-19T18:59:32.018442,Generating data
+2024-07-19T18:59:32.083241,"Epoch 2, Step 3 start"
+2024-07-19T18:59:32.083253,Generating data
+2024-07-19T18:59:32.148054,"Epoch 2, Step 4 start"
+2024-07-19T18:59:32.148064,Generating data
+2024-07-19T18:59:32.212264,"Epoch 2, Step 5 start"
+2024-07-19T18:59:32.212276,Generating data
+2024-07-19T18:59:32.276289,"Epoch 2, Step 6 start"
+2024-07-19T18:59:32.276299,Generating data
+2024-07-19T18:59:32.340291,"Epoch 2, Step 7 start"
+2024-07-19T18:59:32.340301,Generating data
+2024-07-19T18:59:32.405935,"Epoch 2, Step 8 start"
+2024-07-19T18:59:32.405948,Generating data
+2024-07-19T18:59:32.469739,"Epoch 2, Step 9 start"
+2024-07-19T18:59:32.469752,Generating data
+2024-07-19T18:59:32.534429,"Epoch 2, Step 10 start"
+2024-07-19T18:59:32.534441,Generating data
+2024-07-19T18:59:32.598556,"Epoch 2, Step 11 start"
+2024-07-19T18:59:32.598567,Generating data
+2024-07-19T18:59:32.663514,"Epoch 2, Step 12 start"
+2024-07-19T18:59:32.663524,Generating data
+2024-07-19T18:59:32.728399,"Epoch 2, Step 13 start"
+2024-07-19T18:59:32.728409,Generating data
+2024-07-19T18:59:32.795423,"Epoch 2, Step 14 start"
+2024-07-19T18:59:32.795437,Generating data
+2024-07-19T18:59:32.859985,"Epoch 2, Step 15 start"
+2024-07-19T18:59:32.859996,Generating data
+2024-07-19T18:59:32.924746,"Epoch 2, Step 16 start"
+2024-07-19T18:59:32.924757,Generating data
+2024-07-19T18:59:32.989708,"Epoch 2, Step 17 start"
+2024-07-19T18:59:32.989719,Generating data
+2024-07-19T18:59:33.054242,"Epoch 2, Step 18 start"
+2024-07-19T18:59:33.054254,Generating data
+2024-07-19T18:59:33.118217,"Epoch 2, Step 19 start"
+2024-07-19T18:59:33.118230,Generating data
+2024-07-19T18:59:33.183039,"Epoch 2, Step 20 start"
+2024-07-19T18:59:33.183049,Generating data
+2024-07-19T18:59:33.247967,"Epoch 2, Step 21 start"
+2024-07-19T18:59:33.247979,Generating data
+2024-07-19T18:59:33.311875,"Epoch 2, Step 22 start"
+2024-07-19T18:59:33.311887,Generating data
+2024-07-19T18:59:33.376400,"Epoch 2, Step 23 start"
+2024-07-19T18:59:33.376412,Generating data
+2024-07-19T18:59:33.441429,"Epoch 2, Step 24 start"
+2024-07-19T18:59:33.441448,Generating data
+2024-07-19T18:59:33.505787,"Epoch 2, Step 25 start"
+2024-07-19T18:59:33.505798,Generating data
+2024-07-19T18:59:33.570430,"Epoch 2, Step 26 start"
+2024-07-19T18:59:33.570441,Generating data
+2024-07-19T18:59:33.635306,"Epoch 2, Step 27 start"
+2024-07-19T18:59:33.635317,Generating data
+2024-07-19T18:59:33.699622,"Epoch 2, Step 28 start"
+2024-07-19T18:59:33.699632,Generating data
+2024-07-19T18:59:33.764311,"Epoch 2, Step 29 start"
+2024-07-19T18:59:33.764323,Generating data
+2024-07-19T18:59:33.829017,"Epoch 2, Step 30 start"
+2024-07-19T18:59:33.829030,Generating data
+2024-07-19T18:59:33.893644,"Epoch 2, Step 31 start"
+2024-07-19T18:59:33.893654,Generating data
+2024-07-19T18:59:33.957944,"Epoch 2, Step 32 start"
+2024-07-19T18:59:33.957957,Generating data
+2024-07-19T18:59:34.023094,"Epoch 2, Step 33 start"
+2024-07-19T18:59:34.023107,Generating data
+2024-07-19T18:59:34.087779,"Epoch 2, Step 34 start"
+2024-07-19T18:59:34.087789,Generating data
+2024-07-19T18:59:34.152620,"Epoch 2, Step 35 start"
+2024-07-19T18:59:34.152630,Generating data
+2024-07-19T18:59:34.216453,"Epoch 2, Step 36 start"
+2024-07-19T18:59:34.216465,Generating data
+2024-07-19T18:59:34.281184,"Epoch 2, Step 37 start"
+2024-07-19T18:59:34.281196,Generating data
+2024-07-19T18:59:34.345677,"Epoch 2, Step 38 start"
+2024-07-19T18:59:34.345687,Generating data
+2024-07-19T18:59:34.411674,"Epoch 2, Step 39 start"
+2024-07-19T18:59:34.411685,Generating data
+2024-07-19T18:59:34.475160,"Epoch 3, Step 0 start"
+2024-07-19T18:59:34.475169,Generating data
+2024-07-19T18:59:34.538954,"Epoch 3, Step 1 start"
+2024-07-19T18:59:34.538965,Generating data
+2024-07-19T18:59:34.605927,"Epoch 3, Step 2 start"
+2024-07-19T18:59:34.605947,Generating data
+2024-07-19T18:59:34.672355,"Epoch 3, Step 3 start"
+2024-07-19T18:59:34.672370,Generating data
+2024-07-19T18:59:34.736101,"Epoch 3, Step 4 start"
+2024-07-19T18:59:34.736113,Generating data
+2024-07-19T18:59:34.800460,"Epoch 3, Step 5 start"
+2024-07-19T18:59:34.800474,Generating data
+2024-07-19T18:59:34.865819,"Epoch 3, Step 6 start"
+2024-07-19T18:59:34.865838,Generating data
+2024-07-19T18:59:34.932740,"Epoch 3, Step 7 start"
+2024-07-19T18:59:34.932757,Generating data
+2024-07-19T18:59:34.996640,"Epoch 3, Step 8 start"
+2024-07-19T18:59:34.996654,Generating data
+2024-07-19T18:59:35.061141,"Epoch 3, Step 9 start"
+2024-07-19T18:59:35.061155,Generating data
+2024-07-19T18:59:35.125650,"Epoch 3, Step 10 start"
+2024-07-19T18:59:35.125663,Generating data
+2024-07-19T18:59:35.190630,"Epoch 3, Step 11 start"
+2024-07-19T18:59:35.190644,Generating data
+2024-07-19T18:59:35.254694,"Epoch 3, Step 12 start"
+2024-07-19T18:59:35.254719,Generating data
+2024-07-19T18:59:35.319378,"Epoch 3, Step 13 start"
+2024-07-19T18:59:35.319392,Generating data
+2024-07-19T18:59:35.384177,"Epoch 3, Step 14 start"
+2024-07-19T18:59:35.384189,Generating data
+2024-07-19T18:59:35.449833,"Epoch 3, Step 15 start"
+2024-07-19T18:59:35.449846,Generating data
+2024-07-19T18:59:35.513726,"Epoch 3, Step 16 start"
+2024-07-19T18:59:35.513737,Generating data
+2024-07-19T18:59:35.578109,"Epoch 3, Step 17 start"
+2024-07-19T18:59:35.578120,Generating data
+2024-07-19T18:59:35.643442,"Epoch 3, Step 18 start"
+2024-07-19T18:59:35.643456,Generating data
+2024-07-19T18:59:35.708869,"Epoch 3, Step 19 start"
+2024-07-19T18:59:35.708880,Generating data
+2024-07-19T18:59:35.772853,"Epoch 3, Step 20 start"
+2024-07-19T18:59:35.772864,Generating data
+2024-07-19T18:59:35.837496,"Epoch 3, Step 21 start"
+2024-07-19T18:59:35.837509,Generating data
+2024-07-19T18:59:35.902549,"Epoch 3, Step 22 start"
+2024-07-19T18:59:35.902566,Generating data
+2024-07-19T18:59:35.978891,"Epoch 3, Step 23 start"
+2024-07-19T18:59:35.978919,Generating data
+2024-07-19T18:59:36.045866,"Epoch 3, Step 24 start"
+2024-07-19T18:59:36.045894,Generating data
+2024-07-19T18:59:36.113192,"Epoch 3, Step 25 start"
+2024-07-19T18:59:36.113220,Generating data
+2024-07-19T18:59:36.181019,"Epoch 3, Step 26 start"
+2024-07-19T18:59:36.181044,Generating data
+2024-07-19T18:59:36.244426,"Epoch 3, Step 27 start"
+2024-07-19T18:59:36.244454,Generating data
+2024-07-19T18:59:36.309918,"Epoch 3, Step 28 start"
+2024-07-19T18:59:36.309946,Generating data
+2024-07-19T18:59:36.377764,"Epoch 3, Step 29 start"
+2024-07-19T18:59:36.377781,Generating data
+2024-07-19T18:59:36.434024,"Epoch 3, Step 30 start"
+2024-07-19T18:59:36.434041,Generating data
+2024-07-19T18:59:36.496991,"Epoch 3, Step 31 start"
+2024-07-19T18:59:36.497005,Generating data
+2024-07-19T18:59:36.562427,"Epoch 3, Step 32 start"
+2024-07-19T18:59:36.562441,Generating data
+2024-07-19T18:59:36.628034,"Epoch 3, Step 33 start"
+2024-07-19T18:59:36.628045,Generating data
+2024-07-19T18:59:36.693039,"Epoch 3, Step 34 start"
+2024-07-19T18:59:36.693050,Generating data
+2024-07-19T18:59:36.757410,"Epoch 3, Step 35 start"
+2024-07-19T18:59:36.757423,Generating data
+2024-07-19T18:59:36.822911,"Epoch 3, Step 36 start"
+2024-07-19T18:59:36.822922,Generating data
+2024-07-19T18:59:36.887982,"Epoch 3, Step 37 start"
+2024-07-19T18:59:36.887993,Generating data
+2024-07-19T18:59:36.953300,"Epoch 3, Step 38 start"
+2024-07-19T18:59:36.953316,Generating data
+2024-07-19T18:59:37.018579,"Epoch 3, Step 39 start"
+2024-07-19T18:59:37.018597,Generating data
+2024-07-19T18:59:37.084308,"Epoch 4, Step 0 start"
+2024-07-19T18:59:37.084319,Generating data
+2024-07-19T18:59:37.147949,"Epoch 4, Step 1 start"
+2024-07-19T18:59:37.147961,Generating data
+2024-07-19T18:59:37.213548,"Epoch 4, Step 2 start"
+2024-07-19T18:59:37.213564,Generating data
+2024-07-19T18:59:37.276564,"Epoch 4, Step 3 start"
+2024-07-19T18:59:37.276579,Generating data
+2024-07-19T18:59:37.342074,"Epoch 4, Step 4 start"
+2024-07-19T18:59:37.342085,Generating data
+2024-07-19T18:59:37.407643,"Epoch 4, Step 5 start"
+2024-07-19T18:59:37.407659,Generating data
+2024-07-19T18:59:37.471997,"Epoch 4, Step 6 start"
+2024-07-19T18:59:37.472009,Generating data
+2024-07-19T18:59:37.536465,"Epoch 4, Step 7 start"
+2024-07-19T18:59:37.536479,Generating data
+2024-07-19T18:59:37.600131,"Epoch 4, Step 8 start"
+2024-07-19T18:59:37.600141,Generating data
+2024-07-19T18:59:37.666143,"Epoch 4, Step 9 start"
+2024-07-19T18:59:37.666154,Generating data
+2024-07-19T18:59:37.731395,"Epoch 4, Step 10 start"
+2024-07-19T18:59:37.731411,Generating data
+2024-07-19T18:59:37.796065,"Epoch 4, Step 11 start"
+2024-07-19T18:59:37.796076,Generating data
+2024-07-19T18:59:37.860716,"Epoch 4, Step 12 start"
+2024-07-19T18:59:37.860729,Generating data
+2024-07-19T18:59:37.926530,"Epoch 4, Step 13 start"
+2024-07-19T18:59:37.926541,Generating data
+2024-07-19T18:59:37.990905,"Epoch 4, Step 14 start"
+2024-07-19T18:59:37.990918,Generating data
+2024-07-19T18:59:38.055656,"Epoch 4, Step 15 start"
+2024-07-19T18:59:38.055669,Generating data
+2024-07-19T18:59:38.119495,"Epoch 4, Step 16 start"
+2024-07-19T18:59:38.119509,Generating data
+2024-07-19T18:59:38.184308,"Epoch 4, Step 17 start"
+2024-07-19T18:59:38.184318,Generating data
+2024-07-19T18:59:38.248549,"Epoch 4, Step 18 start"
+2024-07-19T18:59:38.248560,Generating data
+2024-07-19T18:59:38.314484,"Epoch 4, Step 19 start"
+2024-07-19T18:59:38.314496,Generating data
+2024-07-19T18:59:38.377469,"Epoch 4, Step 20 start"
+2024-07-19T18:59:38.377482,Generating data
+2024-07-19T18:59:38.444374,"Epoch 4, Step 21 start"
+2024-07-19T18:59:38.444387,Generating data
+2024-07-19T18:59:38.508104,"Epoch 4, Step 22 start"
+2024-07-19T18:59:38.508116,Generating data
+2024-07-19T18:59:38.573609,"Epoch 4, Step 23 start"
+2024-07-19T18:59:38.573623,Generating data
+2024-07-19T18:59:38.637041,"Epoch 4, Step 24 start"
+2024-07-19T18:59:38.637053,Generating data
+2024-07-19T18:59:38.702519,"Epoch 4, Step 25 start"
+2024-07-19T18:59:38.702532,Generating data
+2024-07-19T18:59:38.767118,"Epoch 4, Step 26 start"
+2024-07-19T18:59:38.767129,Generating data
+2024-07-19T18:59:38.832274,"Epoch 4, Step 27 start"
+2024-07-19T18:59:38.832284,Generating data
+2024-07-19T18:59:38.896077,"Epoch 4, Step 28 start"
+2024-07-19T18:59:38.896088,Generating data
+2024-07-19T18:59:38.962317,"Epoch 4, Step 29 start"
+2024-07-19T18:59:38.962327,Generating data
+2024-07-19T18:59:39.026429,"Epoch 4, Step 30 start"
+2024-07-19T18:59:39.026440,Generating data
+2024-07-19T18:59:39.093588,"Epoch 4, Step 31 start"
+2024-07-19T18:59:39.093606,Generating data
+2024-07-19T18:59:39.156713,"Epoch 4, Step 32 start"
+2024-07-19T18:59:39.156730,Generating data
+2024-07-19T18:59:39.221207,"Epoch 4, Step 33 start"
+2024-07-19T18:59:39.221218,Generating data
+2024-07-19T18:59:39.285376,"Epoch 4, Step 34 start"
+2024-07-19T18:59:39.285386,Generating data
+2024-07-19T18:59:39.350693,"Epoch 4, Step 35 start"
+2024-07-19T18:59:39.350705,Generating data
+2024-07-19T18:59:39.414645,"Epoch 4, Step 36 start"
+2024-07-19T18:59:39.414658,Generating data
+2024-07-19T18:59:39.480892,"Epoch 4, Step 37 start"
+2024-07-19T18:59:39.480907,Generating data
+2024-07-19T18:59:39.545282,"Epoch 4, Step 38 start"
+2024-07-19T18:59:39.545294,Generating data
+2024-07-19T18:59:39.610533,"Epoch 4, Step 39 start"
+2024-07-19T18:59:39.610546,Generating data
+2024-07-19T18:59:39.675217,"Epoch 5, Step 0 start"
+2024-07-19T18:59:39.675226,Generating data
+2024-07-19T18:59:39.739937,"Epoch 5, Step 1 start"
+2024-07-19T18:59:39.739949,Generating data
+2024-07-19T18:59:39.804866,"Epoch 5, Step 2 start"
+2024-07-19T18:59:39.804878,Generating data
+2024-07-19T18:59:39.870676,"Epoch 5, Step 3 start"
+2024-07-19T18:59:39.870690,Generating data
+2024-07-19T18:59:39.934977,"Epoch 5, Step 4 start"
+2024-07-19T18:59:39.934990,Generating data
+2024-07-19T18:59:39.999913,"Epoch 5, Step 5 start"
+2024-07-19T18:59:39.999926,Generating data
+2024-07-19T18:59:40.064626,"Epoch 5, Step 6 start"
+2024-07-19T18:59:40.064638,Generating data
+2024-07-19T18:59:40.129170,"Epoch 5, Step 7 start"
+2024-07-19T18:59:40.129182,Generating data
+2024-07-19T18:59:40.193277,"Epoch 5, Step 8 start"
+2024-07-19T18:59:40.193287,Generating data
+2024-07-19T18:59:40.257622,"Epoch 5, Step 9 start"
+2024-07-19T18:59:40.257634,Generating data
+2024-07-19T18:59:40.323241,"Epoch 5, Step 10 start"
+2024-07-19T18:59:40.323253,Generating data
+2024-07-19T18:59:40.387455,"Epoch 5, Step 11 start"
+2024-07-19T18:59:40.387465,Generating data
+2024-07-19T18:59:40.452543,"Epoch 5, Step 12 start"
+2024-07-19T18:59:40.452555,Generating data
+2024-07-19T18:59:40.516041,"Epoch 5, Step 13 start"
+2024-07-19T18:59:40.516054,Generating data
+2024-07-19T18:59:40.581377,"Epoch 5, Step 14 start"
+2024-07-19T18:59:40.581388,Generating data
+2024-07-19T18:59:40.646381,"Epoch 5, Step 15 start"
+2024-07-19T18:59:40.646390,Generating data
+2024-07-19T18:59:40.711141,"Epoch 5, Step 16 start"
+2024-07-19T18:59:40.711153,Generating data
+2024-07-19T18:59:40.775186,"Epoch 5, Step 17 start"
+2024-07-19T18:59:40.775199,Generating data
+2024-07-19T18:59:40.840705,"Epoch 5, Step 18 start"
+2024-07-19T18:59:40.840717,Generating data
+2024-07-19T18:59:40.906265,"Epoch 5, Step 19 start"
+2024-07-19T18:59:40.906282,Generating data
+2024-07-19T18:59:40.981639,"Epoch 5, Step 20 start"
+2024-07-19T18:59:40.981668,Generating data
+2024-07-19T18:59:41.048618,"Epoch 5, Step 21 start"
+2024-07-19T18:59:41.048647,Generating data
+2024-07-19T18:59:41.115789,"Epoch 5, Step 22 start"
+2024-07-19T18:59:41.115803,Generating data
+2024-07-19T18:59:41.180687,"Epoch 5, Step 23 start"
+2024-07-19T18:59:41.180716,Generating data
+2024-07-19T18:59:41.248343,"Epoch 5, Step 24 start"
+2024-07-19T18:59:41.248360,Generating data
+2024-07-19T18:59:41.313545,"Epoch 5, Step 25 start"
+2024-07-19T18:59:41.313572,Generating data
+2024-07-19T18:59:41.372150,"Epoch 5, Step 26 start"
+2024-07-19T18:59:41.372162,Generating data
+2024-07-19T18:59:41.435744,"Epoch 5, Step 27 start"
+2024-07-19T18:59:41.435755,Generating data
+2024-07-19T18:59:41.500738,"Epoch 5, Step 28 start"
+2024-07-19T18:59:41.500749,Generating data
+2024-07-19T18:59:41.565864,"Epoch 5, Step 29 start"
+2024-07-19T18:59:41.565877,Generating data
+2024-07-19T18:59:41.631009,"Epoch 5, Step 30 start"
+2024-07-19T18:59:41.631021,Generating data
+2024-07-19T18:59:41.695406,"Epoch 5, Step 31 start"
+2024-07-19T18:59:41.695419,Generating data
+2024-07-19T18:59:41.760522,"Epoch 5, Step 32 start"
+2024-07-19T18:59:41.760534,Generating data
+2024-07-19T18:59:41.826087,"Epoch 5, Step 33 start"
+2024-07-19T18:59:41.826100,Generating data
+2024-07-19T18:59:41.890712,"Epoch 5, Step 34 start"
+2024-07-19T18:59:41.890723,Generating data
+2024-07-19T18:59:41.955088,"Epoch 5, Step 35 start"
+2024-07-19T18:59:41.955100,Generating data
+2024-07-19T18:59:42.019865,"Epoch 5, Step 36 start"
+2024-07-19T18:59:42.019877,Generating data
+2024-07-19T18:59:42.084892,"Epoch 5, Step 37 start"
+2024-07-19T18:59:42.084904,Generating data
+2024-07-19T18:59:42.149121,"Epoch 5, Step 38 start"
+2024-07-19T18:59:42.149133,Generating data
+2024-07-19T18:59:42.213214,"Epoch 5, Step 39 start"
+2024-07-19T18:59:42.213227,Generating data
+2024-07-19T18:59:42.278145,"Epoch 6, Step 0 start"
+2024-07-19T18:59:42.278155,Generating data
+2024-07-19T18:59:42.342631,"Epoch 6, Step 1 start"
+2024-07-19T18:59:42.342642,Generating data
+2024-07-19T18:59:42.408246,"Epoch 6, Step 2 start"
+2024-07-19T18:59:42.408257,Generating data
+2024-07-19T18:59:42.472380,"Epoch 6, Step 3 start"
+2024-07-19T18:59:42.472391,Generating data
+2024-07-19T18:59:42.536185,"Epoch 6, Step 4 start"
+2024-07-19T18:59:42.536197,Generating data
+2024-07-19T18:59:42.601344,"Epoch 6, Step 5 start"
+2024-07-19T18:59:42.601354,Generating data
+2024-07-19T18:59:42.666176,"Epoch 6, Step 6 start"
+2024-07-19T18:59:42.666188,Generating data
+2024-07-19T18:59:42.731138,"Epoch 6, Step 7 start"
+2024-07-19T18:59:42.731150,Generating data
+2024-07-19T18:59:42.795220,"Epoch 6, Step 8 start"
+2024-07-19T18:59:42.795233,Generating data
+2024-07-19T18:59:42.860513,"Epoch 6, Step 9 start"
+2024-07-19T18:59:42.860523,Generating data
+2024-07-19T18:59:42.925292,"Epoch 6, Step 10 start"
+2024-07-19T18:59:42.925304,Generating data
+2024-07-19T18:59:42.990061,"Epoch 6, Step 11 start"
+2024-07-19T18:59:42.990073,Generating data
+2024-07-19T18:59:43.054228,"Epoch 6, Step 12 start"
+2024-07-19T18:59:43.054239,Generating data
+2024-07-19T18:59:43.118573,"Epoch 6, Step 13 start"
+2024-07-19T18:59:43.118583,Generating data
+2024-07-19T18:59:43.183072,"Epoch 6, Step 14 start"
+2024-07-19T18:59:43.183084,Generating data
+2024-07-19T18:59:43.248006,"Epoch 6, Step 15 start"
+2024-07-19T18:59:43.248018,Generating data
+2024-07-19T18:59:43.314232,"Epoch 6, Step 16 start"
+2024-07-19T18:59:43.314250,Generating data
+2024-07-19T18:59:43.379138,"Epoch 6, Step 17 start"
+2024-07-19T18:59:43.379152,Generating data
+2024-07-19T18:59:43.444140,"Epoch 6, Step 18 start"
+2024-07-19T18:59:43.444154,Generating data
+2024-07-19T18:59:43.508332,"Epoch 6, Step 19 start"
+2024-07-19T18:59:43.508343,Generating data
+2024-07-19T18:59:43.572972,"Epoch 6, Step 20 start"
+2024-07-19T18:59:43.572983,Generating data
+2024-07-19T18:59:43.637420,"Epoch 6, Step 21 start"
+2024-07-19T18:59:43.637432,Generating data
+2024-07-19T18:59:43.702471,"Epoch 6, Step 22 start"
+2024-07-19T18:59:43.702483,Generating data
+2024-07-19T18:59:43.767923,"Epoch 6, Step 23 start"
+2024-07-19T18:59:43.767935,Generating data
+2024-07-19T18:59:43.832654,"Epoch 6, Step 24 start"
+2024-07-19T18:59:43.832664,Generating data
+2024-07-19T18:59:43.897454,"Epoch 6, Step 25 start"
+2024-07-19T18:59:43.897466,Generating data
+2024-07-19T18:59:43.964598,"Epoch 6, Step 26 start"
+2024-07-19T18:59:43.964610,Generating data
+2024-07-19T18:59:44.030348,"Epoch 6, Step 27 start"
+2024-07-19T18:59:44.030369,Generating data
+2024-07-19T18:59:44.094321,"Epoch 6, Step 28 start"
+2024-07-19T18:59:44.094335,Generating data
+2024-07-19T18:59:44.158300,"Epoch 6, Step 29 start"
+2024-07-19T18:59:44.158314,Generating data
+2024-07-19T18:59:44.223428,"Epoch 6, Step 30 start"
+2024-07-19T18:59:44.223441,Generating data
+2024-07-19T18:59:44.288449,"Epoch 6, Step 31 start"
+2024-07-19T18:59:44.288460,Generating data
+2024-07-19T18:59:44.353437,"Epoch 6, Step 32 start"
+2024-07-19T18:59:44.353450,Generating data
+2024-07-19T18:59:44.417818,"Epoch 6, Step 33 start"
+2024-07-19T18:59:44.417830,Generating data
+2024-07-19T18:59:44.483620,"Epoch 6, Step 34 start"
+2024-07-19T18:59:44.483634,Generating data
+2024-07-19T18:59:44.547989,"Epoch 6, Step 35 start"
+2024-07-19T18:59:44.548001,Generating data
+2024-07-19T18:59:44.612786,"Epoch 6, Step 36 start"
+2024-07-19T18:59:44.612797,Generating data
+2024-07-19T18:59:44.677835,"Epoch 6, Step 37 start"
+2024-07-19T18:59:44.677846,Generating data
+2024-07-19T18:59:44.743476,"Epoch 6, Step 38 start"
+2024-07-19T18:59:44.743489,Generating data
+2024-07-19T18:59:44.808468,"Epoch 6, Step 39 start"
+2024-07-19T18:59:44.808479,Generating data
+2024-07-19T18:59:44.873994,"Epoch 7, Step 0 start"
+2024-07-19T18:59:44.874004,Generating data
+2024-07-19T18:59:44.938567,"Epoch 7, Step 1 start"
+2024-07-19T18:59:44.938580,Generating data
+2024-07-19T18:59:45.003932,"Epoch 7, Step 2 start"
+2024-07-19T18:59:45.003942,Generating data
+2024-07-19T18:59:45.068824,"Epoch 7, Step 3 start"
+2024-07-19T18:59:45.068844,Generating data
+2024-07-19T18:59:45.132737,"Epoch 7, Step 4 start"
+2024-07-19T18:59:45.132748,Generating data
+2024-07-19T18:59:45.197464,"Epoch 7, Step 5 start"
+2024-07-19T18:59:45.197478,Generating data
+2024-07-19T18:59:45.262480,"Epoch 7, Step 6 start"
+2024-07-19T18:59:45.262493,Generating data
+2024-07-19T18:59:45.328034,"Epoch 7, Step 7 start"
+2024-07-19T18:59:45.328047,Generating data
+2024-07-19T18:59:45.393141,"Epoch 7, Step 8 start"
+2024-07-19T18:59:45.393155,Generating data
+2024-07-19T18:59:45.459102,"Epoch 7, Step 9 start"
+2024-07-19T18:59:45.459121,Generating data
+2024-07-19T18:59:45.523463,"Epoch 7, Step 10 start"
+2024-07-19T18:59:45.523477,Generating data
+2024-07-19T18:59:45.588279,"Epoch 7, Step 11 start"
+2024-07-19T18:59:45.588290,Generating data
+2024-07-19T18:59:45.653213,"Epoch 7, Step 12 start"
+2024-07-19T18:59:45.653226,Generating data
+2024-07-19T18:59:45.718531,"Epoch 7, Step 13 start"
+2024-07-19T18:59:45.718545,Generating data
+2024-07-19T18:59:45.784061,"Epoch 7, Step 14 start"
+2024-07-19T18:59:45.784072,Generating data
+2024-07-19T18:59:45.848937,"Epoch 7, Step 15 start"
+2024-07-19T18:59:45.848948,Generating data
+2024-07-19T18:59:45.920691,"Epoch 7, Step 16 start"
+2024-07-19T18:59:45.920717,Generating data
+2024-07-19T18:59:45.990714,"Epoch 7, Step 17 start"
+2024-07-19T18:59:45.990727,Generating data
+2024-07-19T18:59:46.057125,"Epoch 7, Step 18 start"
+2024-07-19T18:59:46.057155,Generating data
+2024-07-19T18:59:46.123423,"Epoch 7, Step 19 start"
+2024-07-19T18:59:46.123442,Generating data
+2024-07-19T18:59:46.191134,"Epoch 7, Step 20 start"
+2024-07-19T18:59:46.191162,Generating data
+2024-07-19T18:59:46.257368,"Epoch 7, Step 21 start"
+2024-07-19T18:59:46.257388,Generating data
+2024-07-19T18:59:46.323642,"Epoch 7, Step 22 start"
+2024-07-19T18:59:46.323672,Generating data
+2024-07-19T18:59:46.381312,"Epoch 7, Step 23 start"
+2024-07-19T18:59:46.381324,Generating data
+2024-07-19T18:59:46.445943,"Epoch 7, Step 24 start"
+2024-07-19T18:59:46.445955,Generating data
+2024-07-19T18:59:46.510212,"Epoch 7, Step 25 start"
+2024-07-19T18:59:46.510224,Generating data
+2024-07-19T18:59:46.574875,"Epoch 7, Step 26 start"
+2024-07-19T18:59:46.574886,Generating data
+2024-07-19T18:59:46.639965,"Epoch 7, Step 27 start"
+2024-07-19T18:59:46.639976,Generating data
+2024-07-19T18:59:46.705632,"Epoch 7, Step 28 start"
+2024-07-19T18:59:46.705646,Generating data
+2024-07-19T18:59:46.770521,"Epoch 7, Step 29 start"
+2024-07-19T18:59:46.770532,Generating data
+2024-07-19T18:59:46.835385,"Epoch 7, Step 30 start"
+2024-07-19T18:59:46.835399,Generating data
+2024-07-19T18:59:46.900161,"Epoch 7, Step 31 start"
+2024-07-19T18:59:46.900172,Generating data
+2024-07-19T18:59:46.966107,"Epoch 7, Step 32 start"
+2024-07-19T18:59:46.966118,Generating data
+2024-07-19T18:59:47.030867,"Epoch 7, Step 33 start"
+2024-07-19T18:59:47.030881,Generating data
+2024-07-19T18:59:47.095023,"Epoch 7, Step 34 start"
+2024-07-19T18:59:47.095034,Generating data
+2024-07-19T18:59:47.159997,"Epoch 7, Step 35 start"
+2024-07-19T18:59:47.160008,Generating data
+2024-07-19T18:59:47.225096,"Epoch 7, Step 36 start"
+2024-07-19T18:59:47.225107,Generating data
+2024-07-19T18:59:47.289361,"Epoch 7, Step 37 start"
+2024-07-19T18:59:47.289374,Generating data
+2024-07-19T18:59:47.354086,"Epoch 7, Step 38 start"
+2024-07-19T18:59:47.354097,Generating data
+2024-07-19T18:59:47.419594,"Epoch 7, Step 39 start"
+2024-07-19T18:59:47.419610,Generating data
+2024-07-19T18:59:47.487449,"Epoch 8, Step 0 start"
+2024-07-19T18:59:47.487468,Generating data
+2024-07-19T18:59:47.553071,"Epoch 8, Step 1 start"
+2024-07-19T18:59:47.553086,Generating data
+2024-07-19T18:59:47.617183,"Epoch 8, Step 2 start"
+2024-07-19T18:59:47.617195,Generating data
+2024-07-19T18:59:47.682119,"Epoch 8, Step 3 start"
+2024-07-19T18:59:47.682131,Generating data
+2024-07-19T18:59:47.747616,"Epoch 8, Step 4 start"
+2024-07-19T18:59:47.747630,Generating data
+2024-07-19T18:59:47.812152,"Epoch 8, Step 5 start"
+2024-07-19T18:59:47.812163,Generating data
+2024-07-19T18:59:47.877020,"Epoch 8, Step 6 start"
+2024-07-19T18:59:47.877031,Generating data
+2024-07-19T18:59:47.942424,"Epoch 8, Step 7 start"
+2024-07-19T18:59:47.942436,Generating data
+2024-07-19T18:59:48.007935,"Epoch 8, Step 8 start"
+2024-07-19T18:59:48.007947,Generating data
+2024-07-19T18:59:48.071969,"Epoch 8, Step 9 start"
+2024-07-19T18:59:48.071979,Generating data
+2024-07-19T18:59:48.136807,"Epoch 8, Step 10 start"
+2024-07-19T18:59:48.136819,Generating data
+2024-07-19T18:59:48.202135,"Epoch 8, Step 11 start"
+2024-07-19T18:59:48.202151,Generating data
+2024-07-19T18:59:48.267677,"Epoch 8, Step 12 start"
+2024-07-19T18:59:48.267690,Generating data
+2024-07-19T18:59:48.331297,"Epoch 8, Step 13 start"
+2024-07-19T18:59:48.331307,Generating data
+2024-07-19T18:59:48.396588,"Epoch 8, Step 14 start"
+2024-07-19T18:59:48.396600,Generating data
+2024-07-19T18:59:48.462153,"Epoch 8, Step 15 start"
+2024-07-19T18:59:48.462165,Generating data
+2024-07-19T18:59:48.527014,"Epoch 8, Step 16 start"
+2024-07-19T18:59:48.527029,Generating data
+2024-07-19T18:59:48.591106,"Epoch 8, Step 17 start"
+2024-07-19T18:59:48.591117,Generating data
+2024-07-19T18:59:48.655670,"Epoch 8, Step 18 start"
+2024-07-19T18:59:48.655680,Generating data
+2024-07-19T18:59:48.720612,"Epoch 8, Step 19 start"
+2024-07-19T18:59:48.720624,Generating data
+2024-07-19T18:59:48.786047,"Epoch 8, Step 20 start"
+2024-07-19T18:59:48.786059,Generating data
+2024-07-19T18:59:48.850915,"Epoch 8, Step 21 start"
+2024-07-19T18:59:48.850927,Generating data
+2024-07-19T18:59:48.915373,"Epoch 8, Step 22 start"
+2024-07-19T18:59:48.915382,Generating data
+2024-07-19T18:59:48.980137,"Epoch 8, Step 23 start"
+2024-07-19T18:59:48.980146,Generating data
+2024-07-19T18:59:49.045449,"Epoch 8, Step 24 start"
+2024-07-19T18:59:49.045461,Generating data
+2024-07-19T18:59:49.109625,"Epoch 8, Step 25 start"
+2024-07-19T18:59:49.109637,Generating data
+2024-07-19T18:59:49.173979,"Epoch 8, Step 26 start"
+2024-07-19T18:59:49.173991,Generating data
+2024-07-19T18:59:49.238891,"Epoch 8, Step 27 start"
+2024-07-19T18:59:49.238903,Generating data
+2024-07-19T18:59:49.303990,"Epoch 8, Step 28 start"
+2024-07-19T18:59:49.304002,Generating data
+2024-07-19T18:59:49.367979,"Epoch 8, Step 29 start"
+2024-07-19T18:59:49.367991,Generating data
+2024-07-19T18:59:49.433777,"Epoch 8, Step 30 start"
+2024-07-19T18:59:49.433794,Generating data
+2024-07-19T18:59:49.497917,"Epoch 8, Step 31 start"
+2024-07-19T18:59:49.497929,Generating data
+2024-07-19T18:59:49.563953,"Epoch 8, Step 32 start"
+2024-07-19T18:59:49.563966,Generating data
+2024-07-19T18:59:49.629420,"Epoch 8, Step 33 start"
+2024-07-19T18:59:49.629434,Generating data
+2024-07-19T18:59:49.694588,"Epoch 8, Step 34 start"
+2024-07-19T18:59:49.694624,Generating data
+2024-07-19T18:59:49.759169,"Epoch 8, Step 35 start"
+2024-07-19T18:59:49.759179,Generating data
+2024-07-19T18:59:49.824322,"Epoch 8, Step 36 start"
+2024-07-19T18:59:49.824331,Generating data
+2024-07-19T18:59:49.888438,"Epoch 8, Step 37 start"
+2024-07-19T18:59:49.888450,Generating data
+2024-07-19T18:59:49.953113,"Epoch 8, Step 38 start"
+2024-07-19T18:59:49.953125,Generating data
+2024-07-19T18:59:50.017786,"Epoch 8, Step 39 start"
+2024-07-19T18:59:50.017798,Generating data
+2024-07-19T18:59:50.083626,"Epoch 9, Step 0 start"
+2024-07-19T18:59:50.083634,Generating data
+2024-07-19T18:59:50.147882,"Epoch 9, Step 1 start"
+2024-07-19T18:59:50.147894,Generating data
+2024-07-19T18:59:50.212365,"Epoch 9, Step 2 start"
+2024-07-19T18:59:50.212375,Generating data
+2024-07-19T18:59:50.276970,"Epoch 9, Step 3 start"
+2024-07-19T18:59:50.276982,Generating data
+2024-07-19T18:59:50.342395,"Epoch 9, Step 4 start"
+2024-07-19T18:59:50.342406,Generating data
+2024-07-19T18:59:50.407574,"Epoch 9, Step 5 start"
+2024-07-19T18:59:50.407587,Generating data
+2024-07-19T18:59:50.471466,"Epoch 9, Step 6 start"
+2024-07-19T18:59:50.471477,Generating data
+2024-07-19T18:59:50.535902,"Epoch 9, Step 7 start"
+2024-07-19T18:59:50.535915,Generating data
+2024-07-19T18:59:50.601228,"Epoch 9, Step 8 start"
+2024-07-19T18:59:50.601240,Generating data
+2024-07-19T18:59:50.666394,"Epoch 9, Step 9 start"
+2024-07-19T18:59:50.666405,Generating data
+2024-07-19T18:59:50.731086,"Epoch 9, Step 10 start"
+2024-07-19T18:59:50.731099,Generating data
+2024-07-19T18:59:50.795740,"Epoch 9, Step 11 start"
+2024-07-19T18:59:50.795751,Generating data
+2024-07-19T18:59:50.861275,"Epoch 9, Step 12 start"
+2024-07-19T18:59:50.861285,Generating data
+2024-07-19T18:59:50.937420,"Epoch 9, Step 13 start"
+2024-07-19T18:59:50.937445,Generating data
+2024-07-19T18:59:51.003497,"Epoch 9, Step 14 start"
+2024-07-19T18:59:51.003522,Generating data
+2024-07-19T18:59:51.070133,"Epoch 9, Step 15 start"
+2024-07-19T18:59:51.070161,Generating data
+2024-07-19T18:59:51.136580,"Epoch 9, Step 16 start"
+2024-07-19T18:59:51.136597,Generating data
+2024-07-19T18:59:51.202845,"Epoch 9, Step 17 start"
+2024-07-19T18:59:51.202869,Generating data
+2024-07-19T18:59:51.269247,"Epoch 9, Step 18 start"
+2024-07-19T18:59:51.269263,Generating data
+2024-07-19T18:59:51.330741,"Epoch 9, Step 19 start"
+2024-07-19T18:59:51.330758,Generating data
+2024-07-19T18:59:51.391390,"Epoch 9, Step 20 start"
+2024-07-19T18:59:51.391402,Generating data
+2024-07-19T18:59:51.456809,"Epoch 9, Step 21 start"
+2024-07-19T18:59:51.456821,Generating data
+2024-07-19T18:59:51.521822,"Epoch 9, Step 22 start"
+2024-07-19T18:59:51.521835,Generating data
+2024-07-19T18:59:51.587039,"Epoch 9, Step 23 start"
+2024-07-19T18:59:51.587052,Generating data
+2024-07-19T18:59:51.651445,"Epoch 9, Step 24 start"
+2024-07-19T18:59:51.651463,Generating data
+2024-07-19T18:59:51.727739,"Epoch 9, Step 25 start"
+2024-07-19T18:59:51.727751,Generating data
+2024-07-19T18:59:51.783608,"Epoch 9, Step 26 start"
+2024-07-19T18:59:51.783620,Generating data
+2024-07-19T18:59:51.847876,"Epoch 9, Step 27 start"
+2024-07-19T18:59:51.847887,Generating data
+2024-07-19T18:59:51.912065,"Epoch 9, Step 28 start"
+2024-07-19T18:59:51.912078,Generating data
+2024-07-19T18:59:51.977596,"Epoch 9, Step 29 start"
+2024-07-19T18:59:51.977606,Generating data
+2024-07-19T18:59:52.042463,"Epoch 9, Step 30 start"
+2024-07-19T18:59:52.042473,Generating data
+2024-07-19T18:59:52.107170,"Epoch 9, Step 31 start"
+2024-07-19T18:59:52.107183,Generating data
+2024-07-19T18:59:52.170956,"Epoch 9, Step 32 start"
+2024-07-19T18:59:52.170966,Generating data
+2024-07-19T18:59:52.235979,"Epoch 9, Step 33 start"
+2024-07-19T18:59:52.235991,Generating data
+2024-07-19T18:59:52.300825,"Epoch 9, Step 34 start"
+2024-07-19T18:59:52.300837,Generating data
+2024-07-19T18:59:52.365421,"Epoch 9, Step 35 start"
+2024-07-19T18:59:52.365432,Generating data
+2024-07-19T18:59:52.430784,"Epoch 9, Step 36 start"
+2024-07-19T18:59:52.430801,Generating data
+2024-07-19T18:59:52.495052,"Epoch 9, Step 37 start"
+2024-07-19T18:59:52.495064,Generating data
+2024-07-19T18:59:52.559750,"Epoch 9, Step 38 start"
+2024-07-19T18:59:52.559760,Generating data
+2024-07-19T18:59:52.625233,"Epoch 9, Step 39 start"
+2024-07-19T18:59:52.625245,Generating data
