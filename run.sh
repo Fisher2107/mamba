@@ -1,33 +1,15 @@
 #!/bin/bash
 
 #NG 64
-python tsp.py --save_loc 'checkpoints/big/64_NG_city10_general' --nb_layers 3  --nb_epochs 4000 --mamba2 True --city_count 10 --nb_batch_per_epoch 10 --bsz 5000 --last_layer 'pointer' --reverse True --mlp_cls 'identity' --city_range '5,15'
-python tsp.py --save_loc 'checkpoints/big/64_NG_city10'         --nb_layers 3  --nb_epochs 4000  --mamba2 True --city_count 50 --nb_batch_per_epoch 10 --bsz 5000 --last_layer 'pointer' --reverse True --mlp_cls 'identity'
-python tsp.py --save_loc 'checkpoints/big/64_NG_city20_general' --nb_layers 3  --nb_epochs 4000 --mamba2 True --city_count 20 --nb_batch_per_epoch 10 --bsz 2000 --last_layer 'pointer' --reverse True --mlp_cls 'identity' --city_range '10,30'
-python tsp.py --save_loc 'checkpoints/big/64_NG_city20'         --nb_layers 3  --nb_epochs 4000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10 --bsz 2000 --last_layer 'pointer' --reverse True --mlp_cls 'identity'
-python tsp.py --save_loc 'checkpoints/big/64_NG_city50'         --nb_layers 3  --nb_epochs 1000  --mamba2 True --city_count 50 --nb_batch_per_epoch 40 --bsz 500 --last_layer 'pointer' --reverse True --mlp_cls 'identity'
-python tsp.py --save_loc 'checkpoints/big/64_NG_city100'        --nb_layers 3  --nb_epochs 1000 --mamba2 True --city_count 100 --nb_batch_per_epoch 40 --bsz 160 --last_layer 'pointer' --reverse True --mlp_cls 'identity'
-#NG 16
-python tsp.py --save_loc 'checkpoints/big/16_NG_city10_general' --nb_layers 3  --nb_epochs 4000 --mamba2 True --city_count 10 --nb_batch_per_epoch 10 --bsz 8000 --last_layer 'pointer' --reverse True --mlp_cls 'identity' --d_model 16 --city_range '5,15'
-python tsp.py --save_loc 'checkpoints/big/16_NG_city10'         --nb_layers 3  --nb_epochs 4000  --mamba2 True --city_count 10 --nb_batch_per_epoch 10 --bsz 8000 --last_layer 'pointer' --reverse True --mlp_cls 'identity' --d_model 16
-python tsp.py --save_loc 'checkpoints/big/16_NG_city20_general' --nb_layers 3  --nb_epochs 4000 --mamba2 True --city_count 20 --nb_batch_per_epoch 10 --bsz 5000 --last_layer 'pointer' --reverse True --mlp_cls 'identity' --d_model 16 --city_range '10,30'
-python tsp.py --save_loc 'checkpoints/big/16_NG_city20'         --nb_layers 3  --nb_epochs 4000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10 --bsz 5000 --last_layer 'pointer' --reverse True --mlp_cls 'identity' --d_model 16
-python tsp.py --save_loc 'checkpoints/big/16_NG_city50'         --nb_layers 3  --nb_epochs 1000  --mamba2 True --city_count 50 --nb_batch_per_epoch 40 --bsz 1000 --last_layer 'pointer' --reverse True --mlp_cls 'identity' --d_model 16
-python tsp.py --save_loc 'checkpoints/big/16_NG_city100'        --nb_layers 3  --nb_epochs 1000 --mamba2 True --city_count 100 --nb_batch_per_epoch 40 --bsz 400 --last_layer 'pointer' --reverse True --mlp_cls 'identity' --d_model 16
-#G 64
-python tsp.py --save_loc 'checkpoints/big/64_G_city10_general' --nb_layers 3  --nb_epochs 4000 --mamba2 True --city_count 10 --nb_batch_per_epoch 10 --bsz 1200 --last_layer 'pointer' --reverse True --city_range '5,15'
-python tsp.py --save_loc 'checkpoints/big/64_G_city10'         --nb_layers 3  --nb_epochs 4000  --mamba2 True --city_count 10 --nb_batch_per_epoch 10 --bsz 1200 --last_layer 'pointer' --reverse True
-python tsp.py --save_loc 'checkpoints/big/64_G_city20_general' --nb_layers 3  --nb_epochs 4000 --mamba2 True --city_count 20 --nb_batch_per_epoch 10 --bsz 600 --last_layer 'pointer' --reverse True --city_range '10,30'
-python tsp.py --save_loc 'checkpoints/big/64_G_city20'         --nb_layers 3  --nb_epochs 4000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10 --bsz 600 --last_layer 'pointer' --reverse True
-python tsp.py --save_loc 'checkpoints/big/64_G_city50'         --nb_layers 3  --nb_epochs 1000  --mamba2 True --city_count 50 --nb_batch_per_epoch 40 --bsz 220 --last_layer 'pointer' --reverse True
-python tsp.py --save_loc 'checkpoints/big/64_G_city100'        --nb_layers 3  --nb_epochs 1000 --mamba2 True --city_count 100 --nb_batch_per_epoch 40 --bsz 60 --last_layer 'pointer' --reverse True
-#G 16
-python tsp.py --save_loc 'checkpoints/big/16_G_city10_general' --nb_layers 3  --nb_epochs 4000 --mamba2 True --city_count 10 --nb_batch_per_epoch 10 --bsz 5000 --last_layer 'pointer' --reverse True --d_model 16 --city_range '5,15'
-python tsp.py --save_loc 'checkpoints/big/16_G_city10'         --nb_layers 3  --nb_epochs 4000  --mamba2 True --city_count 10 --nb_batch_per_epoch 10 --bsz 5000 --last_layer 'pointer' --reverse True --d_model 16
-python tsp.py --save_loc 'checkpoints/big/16_G_city20_general' --nb_layers 3  --nb_epochs 4000 --mamba2 True --city_count 20 --nb_batch_per_epoch 10 --bsz 2000 --last_layer 'pointer' --reverse True --d_model 16 --city_range '10,30'
-python tsp.py --save_loc 'checkpoints/big/16_G_city20'         --nb_layers 3  --nb_epochs 4000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10 --bsz 2000 --last_layer 'pointer' --reverse True --d_model 16
-python tsp.py --save_loc 'checkpoints/big/16_G_city50'         --nb_layers 3  --nb_epochs 1000  --mamba2 True --city_count 50 --nb_batch_per_epoch 40 --bsz 500 --last_layer 'pointer' --reverse True --d_model 16
-python tsp.py --save_loc 'checkpoints/big/16_G_city100'        --nb_layers 3  --nb_epochs 1000 --mamba2 True --city_count 100 --nb_batch_per_epoch 40 --bsz 160 --last_layer 'pointer' --reverse True --d_model 16
+python tspp.py --save_loc 'checkpoints/tspp/city10' --nb_layers 3  --nb_epochs 10 --mamba2 True --city_count 10 --nb_batch_per_epoch 10 --bsz 100 --last_layer 'pointer' --reverse True --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES 
+python tspp.py --save_loc 'checkpoints/tspp/city20' --nb_layers 3  --nb_epochs 10  --mamba2 True --city_count 20 --nb_batch_per_epoch 10 --bsz 100 --last_layer 'pointer' --reverse True --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES 
+python tspp.py --save_loc 'checkpoints/tspp/city50' --nb_layers 3  --nb_epochs 10  --mamba2 True --city_count 50 --nb_batch_per_epoch 40 --bsz 100 --last_layer 'pointer' --reverse True --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES 
+python tspp.py --save_loc 'checkpoints/tspp/city75' --nb_layers 3  --nb_epochs 10 --mamba2 True --city_count 75 --nb_batch_per_epoch 40 --bsz 100 --last_layer 'pointer' --reverse True  --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES 
+python tspp.py --save_loc 'checkpoints/tspp/city100' --nb_layers 3  --nb_epochs 10 --mamba2 True --city_count 100 --nb_batch_per_epoch 40 --bsz 100 --last_layer 'pointer' --reverse True  --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES 
+python tspp.py --save_loc 'checkpoints/tspp/city125' --nb_layers 3  --nb_epochs 10 --mamba2 True --city_count 125 --nb_batch_per_epoch 40 --bsz 100 --last_layer 'pointer' --reverse True  --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES 
+python tspp.py --save_loc 'checkpoints/tspp/city150' --nb_layers 3  --nb_epochs 10 --mamba2 True --city_count 150 --nb_batch_per_epoch 40 --bsz 100 --last_layer 'pointer' --reverse True  --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES 
+python tspp.py --save_loc 'checkpoints/tspp/city175' --nb_layers 3  --nb_epochs 10 --mamba2 True --city_count 175 --nb_batch_per_epoch 40 --bsz 100 --last_layer 'pointer' --reverse True  --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES 
+python tspp.py --save_loc 'checkpoints/tspp/city200' --nb_layers 3  --nb_epochs 10 --mamba2 True --city_count 200 --nb_batch_per_epoch 40 --bsz 100 --last_layer 'pointer' --reverse True  --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES 
 
 #Pointer Generalisation
 #python tsp.py --save_loc 'checkpoints/pointer_generalisation/normal_pointer' --nb_layers 3  --nb_epochs 2000 --city_count 10 --last_layer 'pointer' #Test to see if anything changed
