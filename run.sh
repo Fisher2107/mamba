@@ -1,17 +1,9 @@
 #!/bin/bash
 
 #action = next_city
-python tsp.py --save_loc 'checkpoints/action/city10_next_city' --nb_layers 3  --nb_epochs 10 --mamba2 True --city_count 10 --nb_batch_per_epoch 10 --bsz 60 --last_layer 'pointer' --reverse True --pynvml True --gpu_id 0 --wandb --action 'next_city'
-python tsp.py --save_loc 'checkpoints/action/city20_next_city' --nb_layers 3  --nb_epochs 10  --mamba2 True --city_count 20 --nb_batch_per_epoch 10 --bsz 60 --last_layer 'pointer' --reverse True --pynvml True --gpu_id 0 --wandb --action 'next_city'
-python tsp.py --save_loc 'checkpoints/action/city50_next_city' --nb_layers 3  --nb_epochs 10  --mamba2 True --city_count 50 --nb_batch_per_epoch 10 --bsz 60 --last_layer 'pointer' --reverse True --pynvml True --gpu_id 0 --wandb --action 'next_city'
-python tsp.py --save_loc 'checkpoints/action/city100_next_city' --nb_layers 3  --nb_epochs 10 --mamba2 True --city_count 100 --nb_batch_per_epoch 10 --bsz 60 --last_layer 'pointer' --reverse True  --pynvml True --gpu_id 0 --wandb --action 'next_city'
+python tsp.py --save_loc 'checkpoints/action/city50_big' --nb_layers 3  --nb_epochs 60  --mamba2 True --city_count 50 --nb_batch_per_epoch 40 --bsz 150 --last_layer 'pointer' --reverse True --project_name 'Mamba_action' 
 
-#action = tour
-python tsp.py --save_loc 'checkpoints/action/city10' --nb_layers 3  --nb_epochs 10 --mamba2 True --city_count 10 --nb_batch_per_epoch 10 --bsz 60 --last_layer 'pointer' --reverse True --pynvml True --gpu_id 0 --wandb
-python tsp.py --save_loc 'checkpoints/action/city20' --nb_layers 3  --nb_epochs 10  --mamba2 True --city_count 20 --nb_batch_per_epoch 10 --bsz 60 --last_layer 'pointer' --reverse True --pynvml True --gpu_id 0 --wandb
-python tsp.py --save_loc 'checkpoints/action/city50' --nb_layers 3  --nb_epochs 10  --mamba2 True --city_count 50 --nb_batch_per_epoch 10 --bsz 60 --last_layer 'pointer' --reverse True --pynvml True --gpu_id 0 --wandb 
-python tsp.py --save_loc 'checkpoints/action/city100' --nb_layers 3  --nb_epochs 10 --mamba2 True --city_count 100 --nb_batch_per_epoch 10 --bsz 60 --last_layer 'pointer' --reverse True  --pynvml True --gpu_id 0 --wandb
-
+python tsp.py --save_loc 'checkpoints/action/city50_next_city_big' --nb_layers 3  --nb_epochs 60  --mamba2 True --city_count 50 --nb_batch_per_epoch 40 --bsz 150 --last_layer 'pointer' --reverse True --project_name 'Mamba_action' --action 'next_city'
 
 
 #Pointer Generalisation
