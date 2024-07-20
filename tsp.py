@@ -172,7 +172,7 @@ now = datetime.now()
 date_time = now.strftime("%d-%m_%H-%M")
 
 if args.pynvml:
-    gpu_logger.start_gpu_logging(f'{args.save_loc}_gpu_stats_{date_time}.csv', interval_ms=25)
+    gpu_logger.start_gpu_logging(f'{args.save_loc}_gpu_stats.csv', interval_ms=25)
 
 # Training loop
 for epoch in tqdm(range(start_epoch,args.nb_epochs)):
@@ -284,7 +284,7 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
 
 if args.pynvml: 
     gpu_logger.stop_logging()
-    gpu_logger.export_events(f'{args.save_loc}_events_{date_time}.csv')
+    gpu_logger.export_events(f'{args.save_loc}_events.csv')
 
 if args.memory_snapshot:
     torch.cuda.memory._dump_snapshot(f'{args.save_loc}_memory_snapshot.pickle')
