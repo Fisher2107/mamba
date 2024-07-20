@@ -25,6 +25,7 @@ parser.add_argument('--city_count', type=int, default=5, help='Number of cities'
 parser.add_argument('--fourier_scale', type=float, default=None, help='Fourier scale')#If set as None a standard Linear map is used else a gaussian fourier feature mapping is used
 parser.add_argument('--start', type=float, default=2.0, help='Start token')
 parser.add_argument('--city_range', type=str, default='0,0', help='Range of cities to be used when generating data')
+parser.add_argument('--non_det', type=bool, default=False, help='Set to True if you want to use a non-deterministic baseline')
 
 parser.add_argument('--wandb', action='store_false', help='Call argument if you do not want to log to wandb')
 parser.add_argument('--project_name', type=str, default='Mamba_big', help='Name of project in wandb')
@@ -81,7 +82,6 @@ else:
         args.B = checkpoint['args'].B
     else:
         args.B = torch.randn(args.d_model // 2, 2).to(device) * args.fourier_scale
-
 
 args.city_range = tuple(map(int, args.city_range.split(',')))
 args['x_flipped']=False
@@ -198,13 +198,13 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
         if args.profiler and epoch>args.nb_epochs-2:
             with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], record_shapes=True,profile_memory=True, with_stack=True) as prof:
                 with record_function("model_inference"):
-                    L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,args.action)
+                    L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,args.action,args.non_det)
                 prof.step()  # Denotes step end
             print('Epoch:', epoch, ' Step:', step)
             print(prof.key_averages().table(sort_by="cuda_time_total"))
             prof.export_chrome_trace(f'{args.save_loc}.json')
         else:
-            L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,args.action)
+            L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,args.action,args.non_det)
         
     time_one_epoch = time.time()-start
     time_tot = time.time()-start_training_time + tot_time_ckpt

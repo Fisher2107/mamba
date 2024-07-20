@@ -294,7 +294,7 @@ def seq2seq_generate_tour(device,model,inputs,lastlayer,deterministic=False,sum_
     else:
         return tours, LogProbOfActions
     
-def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,action):
+def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,action,non_det):
     # list that will contain Long tensors of shape (bsz,) that gives the idx of the cities chosen at time t
     lastlayer = 'identity'
     if model_train.pointer:
@@ -304,7 +304,7 @@ def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_tr
         if gpu_logger: gpu_logger.log_event('generating tours of train model')
         tours_train, sumLogProbOfActions = seq2seq_generate_tour(device,model_train,inputs,lastlayer=lastlayer,deterministic=False)
         if gpu_logger: gpu_logger.log_event('generating tours of baseline model')
-        tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=True)
+        tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=not non_det)
 
         
         #get the length of the tours
@@ -327,10 +327,9 @@ def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_tr
     elif action == 'next_city':
         with torch.no_grad():
             tours_train, _ = seq2seq_generate_tour(device,model_train,inputs,lastlayer=lastlayer,deterministic=False)
-            tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=False)
+            tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=not non_det)
         
-        #get the length of the tours
-        with torch.no_grad():
+            #get the length of the tours
             if gpu_logger: gpu_logger.log_event('computing tour length of train model')
             L_train = compute_tour_length(inputs, tours_train)
             if gpu_logger: gpu_logger.log_event('computing tour length of baseline model')
