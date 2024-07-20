@@ -380,8 +380,13 @@ def non_reccurant_train_step(model_train, model_baseline, inputs, optimizer, dev
         else:
             outputs = model_train(inputs)[:,-1,:]
         outputs = nn.Softmax(dim=1)(outputs)
+        #print(outputs.shape)
         
-        target = torch.sum(inputs,dim=2).min(dim=1).values
+        target = torch.sum(inputs,dim=2).argmin(dim=1)
+        #print(target)
+        #print(inputs.shape,target.shape)
+        #print(inputs[0],target[0])
+        
         loss = -torch.log(outputs[torch.arange(bsz),target]).mean()
         optimizer.zero_grad()
         loss.backward()

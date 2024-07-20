@@ -125,10 +125,6 @@ model_baseline.eval()
 print('Total number of parameters:', sum(p.numel() for p in model_train.parameters()))
 print('Using determinisitic Baseline')
 
-# Load test data
-test_data = torch.load(args.test_data_loc).to(device)
-test_data_batches = torch.split(test_data, args.bsz)
-
 print(args)
 
 start_training_time = time.time()
