@@ -121,6 +121,8 @@ if args.memory_snapshot:
 #load train and baseline model, where baseline is used to reduce variance in loss function as per the REINFORCE algorithm. 
 model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer).to(device)
 model_baseline = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer).to(device)
+for param in model_baseline.parameters():
+    param.requires_grad = False
 loss_fn = nn.CrossEntropyLoss()
 optimizer = Adam(model_train.parameters(), lr=1e-4)
 
@@ -211,25 +213,26 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
     # Evaluate train model and baseline
     ###################
     model_train.eval()
-    #L_train is the average tour length of the train model on the test data
-    L_train_total = 0
-    L_baseline_total = 0
-    
-    # Compute tour for model and baseline for test data, making it sure its split to not overload the gpu
-    for batch_num,test_data_batch in enumerate(test_data_batches):
-        if args.pynvml: gpu_logger.log_event(f'Epoch {epoch}, Generating tour on test data batch {batch_num}')
-        tour_train, _ = seq2seq_generate_tour(device, model_train,test_data_batch, lastlayer=args.last_layer,deterministic=True)
-        tour_baseline, _ = seq2seq_generate_tour(device, model_baseline, test_data_batch, lastlayer=args.last_layer, deterministic=True)
+    with torch.no_grad():
+        #L_train is the average tour length of the train model on the test data
+        L_train_total = 0
+        L_baseline_total = 0
+        
+        # Compute tour for model and baseline for test data, making it sure its split to not overload the gpu
+        for batch_num,test_data_batch in enumerate(test_data_batches):
+            if args.pynvml: gpu_logger.log_event(f'Epoch {epoch}, Generating tour on test data batch {batch_num}')
+            tour_train, _ = seq2seq_generate_tour(device, model_train,test_data_batch, lastlayer=args.last_layer,deterministic=True)
+            tour_baseline, _ = seq2seq_generate_tour(device, model_baseline, test_data_batch, lastlayer=args.last_layer, deterministic=True)
 
-        if args.pynvml: gpu_logger.log_event(f'Epoch {epoch}, computing tour length on test data batch {batch_num}')
-        # Get the lengths of the tours and add to the accumulators
-        L_train_total += compute_tour_length(test_data_batch, tour_train).sum()
-        L_baseline_total += compute_tour_length(test_data_batch, tour_baseline).sum()
+            if args.pynvml: gpu_logger.log_event(f'Epoch {epoch}, computing tour length on test data batch {batch_num}')
+            # Get the lengths of the tours and add to the accumulators
+            L_train_total += compute_tour_length(test_data_batch, tour_train).sum()
+            L_baseline_total += compute_tour_length(test_data_batch, tour_baseline).sum()
 
-    # Compute the average tour lengths
-    L_train = L_train_total / args.test_size
-    L_baseline = L_baseline_total / args.test_size
-    if args.pynvml: gpu_logger.log_event(f'Epoch {epoch} saving checkpoint and updating baseline if train is better')
+        # Compute the average tour lengths
+        L_train = L_train_total / args.test_size
+        L_baseline = L_baseline_total / args.test_size
+        if args.pynvml: gpu_logger.log_event(f'Epoch {epoch} saving checkpoint and updating baseline if train is better')
 
     #print(f'Epoch {epoch}, test tour length train: {L_train}, test tour length baseline: {L_baseline}, time one epoch: {time_one_epoch}, time tot: {time_tot}')
     if args.wandb:
