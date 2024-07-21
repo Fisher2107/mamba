@@ -41,13 +41,13 @@ def generate_plot(csv_files64,csv_files16):
     #plt.show()
 
 # Nopoint
-Action = ['../../checkpoints/action/city10_next_city_gpu_stats_20-07_11-33.csv',
-              '../../checkpoints/action/city20_next_city_gpu_stats_20-07_11-34.csv', 
-              '../../checkpoints/action/city50_next_city_gpu_stats_20-07_11-38.csv', ]
+Action = ['../../checkpoints/action/initial_experiments/city10_next_city_gpu_stats_20-07_11-33.csv',
+              '../../checkpoints/action/initial_experiments/city20_next_city_gpu_stats_20-07_11-34.csv', 
+              '../../checkpoints/action/initial_experiments/city50_next_city_gpu_stats_20-07_11-38.csv', ]
 
-Tour = ['../../checkpoints/action/city10_gpu_stats_20-07_11-49.csv',
-              '../../checkpoints/action/city20_gpu_stats_20-07_11-50.csv', 
-              '../../checkpoints/action/city50_gpu_stats_20-07_11-54.csv', ]
+Tour = ['../../checkpoints/action/initial_experiments/city10_gpu_stats_20-07_11-49.csv',
+              '../../checkpoints/action/initial_experiments/city20_gpu_stats_20-07_11-50.csv', 
+              '../../checkpoints/action/initial_experiments/city50_gpu_stats_20-07_11-54.csv', ]
 
 
 #generate_plot(csv_files_64,csv_files_16,csv_files_lay1)

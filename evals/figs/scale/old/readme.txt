@@ -1,0 +1,2 @@
+These are catgegorised as old since they were generated using an outdated tsp.py file which did not set baseline parameters no requires grad = False. And also in evaluation mode
+it did not set torch.nograd as true.
