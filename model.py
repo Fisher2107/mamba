@@ -269,7 +269,7 @@ def seq2seq_generate_tour(device,model,inputs,lastlayer,deterministic=False,sum_
     #Construct tour recursively
     for i in range(city_count):
         if lastlayer=='pointer':
-            outputs = model(inputs,city_count)[:,-1,:]
+            outputs = model(inputs,city_count)[:,-1,:] #outputs of shape (bsz,city_count)
         else:
             outputs = model(inputs)[:,-1,:]
         #print(outputs.shape)
@@ -278,12 +278,13 @@ def seq2seq_generate_tour(device,model,inputs,lastlayer,deterministic=False,sum_
         outputs = nn.Softmax(dim=1)(outputs)
         #print(outputs[0])
         if deterministic:
-            next_city = torch.argmax(outputs, dim=1)
+            next_city = torch.argmax(outputs, dim=1) #next_city of shape (bsz,)
         else:
             next_city = Categorical(outputs).sample()
         #print(next_city[0])
         tours.append(next_city)
         LogProbOfActions.append(torch.log(outputs[torch.arange(bsz), next_city]) )
+        #Try: next_city = next_city.detach()
         mask[torch.arange(bsz), next_city] = 0
         inputs = torch.cat((inputs, inputs[torch.arange(bsz), next_city, :].unsqueeze(1)), dim=1)
     tours = torch.stack(tours, dim=1).to(device)
@@ -293,7 +294,7 @@ def seq2seq_generate_tour(device,model,inputs,lastlayer,deterministic=False,sum_
     else:
         return tours, LogProbOfActions
     
-def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,action):
+def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,action,non_det):
     # list that will contain Long tensors of shape (bsz,) that gives the idx of the cities chosen at time t
     lastlayer = 'identity'
     if model_train.pointer:
@@ -303,7 +304,7 @@ def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_tr
         if gpu_logger: gpu_logger.log_event('generating tours of train model')
         tours_train, sumLogProbOfActions = seq2seq_generate_tour(device,model_train,inputs,lastlayer=lastlayer,deterministic=False)
         if gpu_logger: gpu_logger.log_event('generating tours of baseline model')
-        tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=True)
+        tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=not non_det)
 
         
         #get the length of the tours
@@ -324,18 +325,73 @@ def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_tr
         optimizer.step()
 
     elif action == 'next_city':
-        tours_train, _ = seq2seq_generate_tour(device,model_train,inputs,lastlayer=lastlayer,deterministic=False,sum_logactions=False)
-        tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=False,sum_logactions=False)
-
-        #get the length of the tours
         with torch.no_grad():
-            L_train, L_train_action = compute_tour_length(inputs, tours_train,get_tour_only=False)
-            L_baseline, L_train_action = compute_tour_length(inputs, tours_baseline,get_tour_only=False)
+            tours_train, _ = seq2seq_generate_tour(device,model_train,inputs,lastlayer=lastlayer,deterministic=False)
+            tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=not non_det)
+        
+            #get the length of the tours
+            if gpu_logger: gpu_logger.log_event('computing tour length of train model')
+            L_train = compute_tour_length(inputs, tours_train)
+            if gpu_logger: gpu_logger.log_event('computing tour length of baseline model')
+            L_baseline = compute_tour_length(inputs, tours_baseline)
+            L_train_train_total += L_train.sum()
+            L_baseline_train_total += L_baseline.sum()
+        
+        #Go through tour and backprop
+        bsz = inputs.shape[0]
+        city_count = inputs.shape[1] - 1
+        mask = torch.ones(bsz, city_count).to(device)
+        #Construct tour recursively
+        optimizer.zero_grad()
+        for i in range(city_count):
+            if lastlayer=='pointer':
+                outputs = model_train(inputs,city_count)[:,-1,:]
+            else:
+                outputs = model_train(inputs)[:,-1,:]
+            outputs = outputs.masked_fill_(mask == 0, -float('inf'))
+            outputs = nn.Softmax(dim=1)(outputs)
+
+            next_city = tours_train[:,i]
+            LogProbOfAction = torch.log(outputs[torch.arange(bsz), next_city])
+            mask[torch.arange(bsz), next_city] = 0
+            inputs = torch.cat((inputs, inputs[torch.arange(bsz), next_city, :].unsqueeze(1)), dim=1)
+            loss = torch.mean( (L_train - L_baseline)* LogProbOfAction )
+            loss.backward()
+        optimizer.step()
              
     else:
         raise ValueError('action must be either "tour" or "next_city"')
 
     return L_train_train_total, L_baseline_train_total
+
+def non_reccurant_train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,action):
+    # list that will contain Long tensors of shape (bsz,) that gives the idx of the cities chosen at time t
+    lastlayer = 'identity'
+    if model_train.pointer:
+        lastlayer = 'pointer'
+    
+    #A toy example where we simply train the model to predict the city with the smallest x+y coordinate
+    if action == 'tour':
+        bsz = inputs.shape[0]
+        city_count = inputs.shape[1] - 1
+        if lastlayer=='pointer':
+            outputs = model_train(inputs,city_count)[:,-1,:]
+        else:
+            outputs = model_train(inputs)[:,-1,:]
+        outputs = nn.Softmax(dim=1)(outputs)
+        #print(outputs.shape)
+        
+        target = torch.sum(inputs,dim=2).argmin(dim=1)
+        #print(target)
+        #print(inputs.shape,target.shape)
+        #print(inputs[0],target[0])
+        
+        loss = -torch.log(outputs[torch.arange(bsz),target]).mean()
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+    return 0, 0
 
 class Bandau_Pointer(nn.Module):
     def __init__(self, d_model,nb_layers,reverse,reverse_start):

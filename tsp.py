@@ -19,13 +19,16 @@ parser = argparse.ArgumentParser(description='Train Mamba model')
 parser.add_argument('--bsz', type=int, default=600, help='Batch size')
 parser.add_argument('--d_model', type=int, default=64, help='Model dimension')#ensure that this is a multiple of 2 if fourier_scale is not None
 parser.add_argument('--coord_dim', type=int, default=2, help='Coordinate dimension')
-parser.add_argument('--nb_layers', type=int, default=4, help='Number of layers in the model')
+parser.add_argument('--nb_layers', type=int, default=3, help='Number of layers in the model')
 parser.add_argument('--mlp_cls', type=str, default='gatedmlp', help='Type of mlp to use')#set as 'identity' or 'gatedmlp'
 parser.add_argument('--city_count', type=int, default=5, help='Number of cities')
 parser.add_argument('--fourier_scale', type=float, default=None, help='Fourier scale')#If set as None a standard Linear map is used else a gaussian fourier feature mapping is used
 parser.add_argument('--start', type=float, default=2.0, help='Start token')
 parser.add_argument('--city_range', type=str, default='0,0', help='Range of cities to be used when generating data')
+parser.add_argument('--non_det', type=bool, default=False, help='Set to True if you want to use a non-deterministic baseline')
+
 parser.add_argument('--wandb', action='store_false', help='Call argument if you do not want to log to wandb')
+parser.add_argument('--project_name', type=str, default='Mamba_big', help='Name of project in wandb')
 parser.add_argument('--action', type=str, default='tour', help="Select if action is defined to be 'tour' or 'next_city'")
 
 parser.add_argument('--nb_epochs', type=int, default=500, help='Number of epochs')
@@ -80,7 +83,6 @@ else:
     else:
         args.B = torch.randn(args.d_model // 2, 2).to(device) * args.fourier_scale
 
-
 args.city_range = tuple(map(int, args.city_range.split(',')))
 args['x_flipped']=False
 if args.reverse_start and not args.reverse:
@@ -93,7 +95,7 @@ elif args.reverse and not args.reverse_start:
         args['x_flipped']=True
 
 if args.wandb:
-    project_name = 'Mamba_big'
+    project_name = args.project_name
     if args.profiler:
         project_name = 'Mamba_profiler'
     run = wandb.init(
@@ -119,6 +121,8 @@ if args.memory_snapshot:
 #load train and baseline model, where baseline is used to reduce variance in loss function as per the REINFORCE algorithm. 
 model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer).to(device)
 model_baseline = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer).to(device)
+for param in model_baseline.parameters():
+    param.requires_grad = False
 loss_fn = nn.CrossEntropyLoss()
 optimizer = Adam(model_train.parameters(), lr=1e-4)
 
@@ -168,7 +172,7 @@ now = datetime.now()
 date_time = now.strftime("%d-%m_%H-%M")
 
 if args.pynvml:
-    gpu_logger.start_gpu_logging(f'{args.save_loc}_gpu_stats_{date_time}.csv', interval_ms=25)
+    gpu_logger.start_gpu_logging(f'{args.save_loc}_gpu_stats.csv', interval_ms=25)
 
 # Training loop
 for epoch in tqdm(range(start_epoch,args.nb_epochs)):
@@ -194,13 +198,13 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
         if args.profiler and epoch>args.nb_epochs-2:
             with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], record_shapes=True,profile_memory=True, with_stack=True) as prof:
                 with record_function("model_inference"):
-                    L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,args.action)
+                    L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,args.action,args.non_det)
                 prof.step()  # Denotes step end
             print('Epoch:', epoch, ' Step:', step)
             print(prof.key_averages().table(sort_by="cuda_time_total"))
             prof.export_chrome_trace(f'{args.save_loc}.json')
         else:
-            L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,args.action)
+            L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,args.action,args.non_det)
         
     time_one_epoch = time.time()-start
     time_tot = time.time()-start_training_time + tot_time_ckpt
@@ -209,25 +213,26 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
     # Evaluate train model and baseline
     ###################
     model_train.eval()
-    #L_train is the average tour length of the train model on the test data
-    L_train_total = 0
-    L_baseline_total = 0
-    
-    # Compute tour for model and baseline for test data, making it sure its split to not overload the gpu
-    for batch_num,test_data_batch in enumerate(test_data_batches):
-        if args.pynvml: gpu_logger.log_event(f'Epoch {epoch}, Generating tour on test data batch {batch_num}')
-        tour_train, _ = seq2seq_generate_tour(device, model_train,test_data_batch, lastlayer=args.last_layer,deterministic=True)
-        tour_baseline, _ = seq2seq_generate_tour(device, model_baseline, test_data_batch, lastlayer=args.last_layer, deterministic=True)
+    with torch.no_grad():
+        #L_train is the average tour length of the train model on the test data
+        L_train_total = 0
+        L_baseline_total = 0
+        
+        # Compute tour for model and baseline for test data, making it sure its split to not overload the gpu
+        for batch_num,test_data_batch in enumerate(test_data_batches):
+            if args.pynvml: gpu_logger.log_event(f'Epoch {epoch}, Generating tour on test data batch {batch_num}')
+            tour_train, _ = seq2seq_generate_tour(device, model_train,test_data_batch, lastlayer=args.last_layer,deterministic=True)
+            tour_baseline, _ = seq2seq_generate_tour(device, model_baseline, test_data_batch, lastlayer=args.last_layer, deterministic=True)
 
-        if args.pynvml: gpu_logger.log_event(f'Epoch {epoch}, computing tour length on test data batch {batch_num}')
-        # Get the lengths of the tours and add to the accumulators
-        L_train_total += compute_tour_length(test_data_batch, tour_train).sum()
-        L_baseline_total += compute_tour_length(test_data_batch, tour_baseline).sum()
+            if args.pynvml: gpu_logger.log_event(f'Epoch {epoch}, computing tour length on test data batch {batch_num}')
+            # Get the lengths of the tours and add to the accumulators
+            L_train_total += compute_tour_length(test_data_batch, tour_train).sum()
+            L_baseline_total += compute_tour_length(test_data_batch, tour_baseline).sum()
 
-    # Compute the average tour lengths
-    L_train = L_train_total / args.test_size
-    L_baseline = L_baseline_total / args.test_size
-    if args.pynvml: gpu_logger.log_event(f'Epoch {epoch} saving checkpoint and updating baseline if train is better')
+        # Compute the average tour lengths
+        L_train = L_train_total / args.test_size
+        L_baseline = L_baseline_total / args.test_size
+        if args.pynvml: gpu_logger.log_event(f'Epoch {epoch} saving checkpoint and updating baseline if train is better')
 
     #print(f'Epoch {epoch}, test tour length train: {L_train}, test tour length baseline: {L_baseline}, time one epoch: {time_one_epoch}, time tot: {time_tot}')
     if args.wandb:
@@ -279,7 +284,7 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
 
 if args.pynvml: 
     gpu_logger.stop_logging()
-    gpu_logger.export_events(f'{args.save_loc}_events_{date_time}.csv')
+    gpu_logger.export_events(f'{args.save_loc}_events.csv')
 
 if args.memory_snapshot:
     torch.cuda.memory._dump_snapshot(f'{args.save_loc}_memory_snapshot.pickle')
