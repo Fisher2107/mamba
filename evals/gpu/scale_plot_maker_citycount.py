@@ -2,8 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 plt.style.use('bmh')
-def generate_plot(csv_files64,csv_files16,csv_files_lay1):
-    x_values = [5, 10, 20, 50, 75, 100]
+def generate_plot(csv_files64,csv_files16,csv_files_lay1,saveto):
+    x_values = [5, 10, 20, 50, 75, 100, 120]
     y_values_64 = []
     y_values_16 = []
     y_values_lay1 = []
@@ -46,75 +46,39 @@ def generate_plot(csv_files64,csv_files16,csv_files_lay1):
     plt.ylabel('Memory Usage (GB)')
     plt.title('Memory Usage by City Count')
     plt.legend()
-    plt.savefig('../figs/scale/memory_usage_ng.pdf')
+    plt.savefig(saveto)
     #plt.show()
 
-# Nopoint
-csv_files_64 = ['../../checkpoints/gpu/city_count/mamba2_5_gpu_stats_15-07_15-45.csv',
-              '../../checkpoints/gpu/city_count/mamba2_10_gpu_stats_15-07_15-46.csv', 
-              '../../checkpoints/gpu/city_count/mamba2_20_gpu_stats_15-07_15-48.csv', 
-              '../../checkpoints/gpu/city_count/mamba2_50_gpu_stats_15-07_15-49.csv', 
-              '../../checkpoints/gpu/city_count/mamba2_75_gpu_stats_16-07_20-14.csv',
-              '../../checkpoints/gpu/city_count/mamba2_100_gpu_stats_15-07_15-53.csv']
-
-csv_files_16 = ['../../checkpoints/gpu/city_count/mamba2_5_d16_gpu_stats_15-07_15-58.csv',
-              '../../checkpoints/gpu/city_count/mamba2_10_d16_gpu_stats_15-07_16-01.csv', 
-              '../../checkpoints/gpu/city_count/mamba2_20_d16_gpu_stats_15-07_16-02.csv', 
-              '../../checkpoints/gpu/city_count/mamba2_50_d16_gpu_stats_15-07_16-04.csv', 
-              '../../checkpoints/gpu/city_count/mamba2_75_d16_gpu_stats_17-07_05-54.csv',
-              '../../checkpoints/gpu/city_count/mamba2_100_d16_gpu_stats_15-07_16-07.csv']
-
-csv_files_lay1 = ['../../checkpoints/gpu/city_count/mamba2_5_lay1_gpu_stats_17-07_05-58.csv',
-              '../../checkpoints/gpu/city_count/mamba2_10_lay1_gpu_stats_17-07_05-59.csv', 
-              '../../checkpoints/gpu/city_count/mamba2_20_lay1_gpu_stats_17-07_06-00.csv', 
-              '../../checkpoints/gpu/city_count/mamba2_50_lay1_gpu_stats_17-07_06-01.csv', 
-              '../../checkpoints/gpu/city_count/mamba2_75_lay1_gpu_stats_17-07_06-06.csv',
-              '../../checkpoints/gpu/city_count/mamba2_100_lay1_gpu_stats_17-07_06-03.csv']
-
-#Point
-csv_files_64_point = ['../../checkpoints/gpu/city_count_point/mamba2_5_gpu_stats.csv',
+csv_files= ['../../checkpoints/gpu/city_count_point/mamba2_5_gpu_stats.csv',
               '../../checkpoints/gpu/city_count_point/mamba2_10_gpu_stats.csv', 
               '../../checkpoints/gpu/city_count_point/mamba2_20_gpu_stats.csv', 
               '../../checkpoints/gpu/city_count_point/mamba2_50_gpu_stats.csv', 
               '../../checkpoints/gpu/city_count_point/mamba2_75_gpu_stats.csv',
               '../../checkpoints/gpu/city_count_point/mamba2_100_gpu_stats.csv']
 
-csv_files_16_point = ['../../checkpoints/gpu/city_count_point/mamba2_5_d16_gpu_stats.csv',
+csv_files_16 = ['../../checkpoints/gpu/city_count_point/mamba2_5_d16_gpu_stats.csv',
               '../../checkpoints/gpu/city_count_point/mamba2_10_d16_gpu_stats.csv', 
               '../../checkpoints/gpu/city_count_point/mamba2_20_d16_gpu_stats.csv', 
               '../../checkpoints/gpu/city_count_point/mamba2_50_d16_gpu_stats.csv', 
               '../../checkpoints/gpu/city_count_point/mamba2_75_d16_gpu_stats.csv',
               '../../checkpoints/gpu/city_count_point/mamba2_100_d16_gpu_stats.csv']
 
-csv_files_lay1_point = ['../../checkpoints/gpu/city_count_point/mamba2_5_lay1_gpu_stats.csv',
+csv_files_lay1 = ['../../checkpoints/gpu/city_count_point/mamba2_5_lay1_gpu_stats.csv',
               '../../checkpoints/gpu/city_count_point/mamba2_10_lay1_gpu_stats.csv', 
               '../../checkpoints/gpu/city_count_point/mamba2_20_lay1_gpu_stats.csv', 
               '../../checkpoints/gpu/city_count_point/mamba2_50_lay1_gpu_stats.csv', 
               '../../checkpoints/gpu/city_count_point/mamba2_75_lay1_gpu_stats.csv',
               '../../checkpoints/gpu/city_count_point/mamba2_100_lay1_gpu_stats.csv']
 
-#Ng
-csv_files_64_ng = ['../../checkpoints/gpu/city_count_point_ng/mamba2_5_gpu_stats.csv',
-              '../../checkpoints/gpu/city_count_point_ng/mamba2_10_gpu_stats.csv', 
-              '../../checkpoints/gpu/city_count_point_ng/mamba2_20_gpu_stats.csv', 
-              '../../checkpoints/gpu/city_count_point_ng/mamba2_50_gpu_stats.csv', 
-              '../../checkpoints/gpu/city_count_point_ng/mamba2_75_gpu_stats.csv',
-              '../../checkpoints/gpu/city_count_point_ng/mamba2_100_gpu_stats.csv']
+csv_files_ng = ['../../checkpoints/gpu/city_count_point/mamba2_5_ng_gpu_stats.csv',
+              '../../checkpoints/gpu/city_count_point/mamba2_10_ng_gpu_stats.csv', 
+              '../../checkpoints/gpu/city_count_point/mamba2_20_ng_gpu_stats.csv', 
+              '../../checkpoints/gpu/city_count_point/mamba2_50_ng_gpu_stats.csv', 
+              '../../checkpoints/gpu/city_count_point/mamba2_75_ng_gpu_stats.csv',
+              '../../checkpoints/gpu/city_count_point/mamba2_100_ng_gpu_stats.csv']
 
-csv_files_16_ng = ['../../checkpoints/gpu/city_count_point_ng/mamba2_5_d16_gpu_stats.csv',
-              '../../checkpoints/gpu/city_count_point_ng/mamba2_10_d16_gpu_stats.csv', 
-              '../../checkpoints/gpu/city_count_point_ng/mamba2_20_d16_gpu_stats.csv', 
-              '../../checkpoints/gpu/city_count_point_ng/mamba2_50_d16_gpu_stats.csv', 
-              '../../checkpoints/gpu/city_count_point_ng/mamba2_75_d16_gpu_stats.csv',
-              '../../checkpoints/gpu/city_count_point_ng/mamba2_100_d16_gpu_stats.csv']
 
-csv_files_lay1_ng = ['../../checkpoints/gpu/city_count_point_ng/mamba2_5_lay1_gpu_stats.csv',
-              '../../checkpoints/gpu/city_count_point_ng/mamba2_10_lay1_gpu_stats.csv', 
-              '../../checkpoints/gpu/city_count_point_ng/mamba2_20_lay1_gpu_stats.csv', 
-              '../../checkpoints/gpu/city_count_point_ng/mamba2_50_lay1_gpu_stats.csv', 
-              '../../checkpoints/gpu/city_count_point_ng/mamba2_75_lay1_gpu_stats.csv',
-              '../../checkpoints/gpu/city_count_point_ng/mamba2_100_lay1_gpu_stats.csv']
 
-#generate_plot(csv_files_64,csv_files_16,csv_files_lay1)
-#generate_plot(csv_files_64_point,csv_files_16_point,csv_files_lay1_point)
-generate_plot(csv_files_64_ng,csv_files_16_ng,csv_files_lay1_ng)
+
+
+generate_plot(csv_files,csv_files_16,csv_files_lay,'../figs/scale/memory_usage_ng.pdf')

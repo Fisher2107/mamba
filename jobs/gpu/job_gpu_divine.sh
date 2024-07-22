@@ -1,4 +1,5 @@
 #!/bin/bash
+#!/bin/bash
 #$ -N job_gpu_divine
 #$ -wd /exports/eddie/scratch/s2517783/mamba
 #$ -l h_rt=4:00:00
