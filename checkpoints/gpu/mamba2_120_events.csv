@@ -1,0 +1,516 @@
+Timestamp,Event
+2024-07-22T01:45:17.725949,"Epoch 0, Step 0 start"
+2024-07-22T01:45:17.725966,Generating data
+2024-07-22T01:45:17.729278,generating tours of train model
+2024-07-22T01:45:35.714422,generating tours of baseline model
+2024-07-22T01:45:37.110214,computing tour length of train model
+2024-07-22T01:45:37.137649,computing tour length of baseline model
+2024-07-22T01:45:37.138018,computing loss and backprop
+2024-07-22T01:45:59.976117,"Epoch 0, Step 1 start"
+2024-07-22T01:45:59.976155,generating tours of train model
+2024-07-22T01:46:02.010700,generating tours of baseline model
+2024-07-22T01:46:03.615509,computing tour length of train model
+2024-07-22T01:46:03.615831,computing tour length of baseline model
+2024-07-22T01:46:03.616079,computing loss and backprop
+2024-07-22T01:46:05.397556,"Epoch 0, Step 2 start"
+2024-07-22T01:46:05.397572,generating tours of train model
+2024-07-22T01:46:07.459122,generating tours of baseline model
+2024-07-22T01:46:09.010583,computing tour length of train model
+2024-07-22T01:46:09.010864,computing tour length of baseline model
+2024-07-22T01:46:09.011101,computing loss and backprop
+2024-07-22T01:46:10.808400,"Epoch 0, Step 3 start"
+2024-07-22T01:46:10.808427,generating tours of train model
+2024-07-22T01:46:12.854710,generating tours of baseline model
+2024-07-22T01:46:14.363727,computing tour length of train model
+2024-07-22T01:46:14.364031,computing tour length of baseline model
+2024-07-22T01:46:14.364264,computing loss and backprop
+2024-07-22T01:46:16.167605,"Epoch 0, Step 4 start"
+2024-07-22T01:46:16.167639,generating tours of train model
+2024-07-22T01:46:18.414447,generating tours of baseline model
+2024-07-22T01:46:19.935041,computing tour length of train model
+2024-07-22T01:46:19.935307,computing tour length of baseline model
+2024-07-22T01:46:19.935533,computing loss and backprop
+2024-07-22T01:46:21.739981,"Epoch 0, Step 5 start"
+2024-07-22T01:46:21.739998,generating tours of train model
+2024-07-22T01:46:23.845767,generating tours of baseline model
+2024-07-22T01:46:25.289288,computing tour length of train model
+2024-07-22T01:46:25.289578,computing tour length of baseline model
+2024-07-22T01:46:25.289816,computing loss and backprop
+2024-07-22T01:46:27.102766,"Epoch 0, Step 6 start"
+2024-07-22T01:46:27.102779,Generating data
+2024-07-22T01:46:27.105751,generating tours of train model
+2024-07-22T01:46:29.218469,generating tours of baseline model
+2024-07-22T01:46:30.664313,computing tour length of train model
+2024-07-22T01:46:30.664619,computing tour length of baseline model
+2024-07-22T01:46:30.664859,computing loss and backprop
+2024-07-22T01:46:32.486304,"Epoch 0, Step 7 start"
+2024-07-22T01:46:32.486333,generating tours of train model
+2024-07-22T01:46:34.691923,generating tours of baseline model
+2024-07-22T01:46:36.095639,computing tour length of train model
+2024-07-22T01:46:36.095917,computing tour length of baseline model
+2024-07-22T01:46:36.096151,computing loss and backprop
+2024-07-22T01:46:37.926759,"Epoch 0, Step 8 start"
+2024-07-22T01:46:37.926777,generating tours of train model
+2024-07-22T01:46:40.090278,generating tours of baseline model
+2024-07-22T01:46:41.521191,computing tour length of train model
+2024-07-22T01:46:41.521484,computing tour length of baseline model
+2024-07-22T01:46:41.521822,computing loss and backprop
+2024-07-22T01:46:43.352163,"Epoch 0, Step 9 start"
+2024-07-22T01:46:43.352193,generating tours of train model
+2024-07-22T01:46:45.510002,generating tours of baseline model
+2024-07-22T01:46:46.900857,computing tour length of train model
+2024-07-22T01:46:46.901131,computing tour length of baseline model
+2024-07-22T01:46:46.901360,computing loss and backprop
+2024-07-22T01:46:48.735420,"Epoch 0, Generating tour on test data batch 0"
+2024-07-22T01:46:51.657833,"Epoch 0, computing tour length on test data batch 0"
+2024-07-22T01:46:51.658353,"Epoch 0, Generating tour on test data batch 1"
+2024-07-22T01:46:54.608264,"Epoch 0, computing tour length on test data batch 1"
+2024-07-22T01:46:54.608771,"Epoch 0, Generating tour on test data batch 2"
+2024-07-22T01:46:57.570105,"Epoch 0, computing tour length on test data batch 2"
+2024-07-22T01:46:57.570591,"Epoch 0, Generating tour on test data batch 3"
+2024-07-22T01:47:00.485297,"Epoch 0, computing tour length on test data batch 3"
+2024-07-22T01:47:00.485792,"Epoch 0, Generating tour on test data batch 4"
+2024-07-22T01:47:03.388691,"Epoch 0, computing tour length on test data batch 4"
+2024-07-22T01:47:03.389249,"Epoch 0, Generating tour on test data batch 5"
+2024-07-22T01:47:06.389923,"Epoch 0, computing tour length on test data batch 5"
+2024-07-22T01:47:06.390412,"Epoch 0, Generating tour on test data batch 6"
+2024-07-22T01:47:09.352698,"Epoch 0, computing tour length on test data batch 6"
+2024-07-22T01:47:09.353193,"Epoch 0, Generating tour on test data batch 7"
+2024-07-22T01:47:12.324183,"Epoch 0, computing tour length on test data batch 7"
+2024-07-22T01:47:12.324705,"Epoch 0, Generating tour on test data batch 8"
+2024-07-22T01:47:15.304390,"Epoch 0, computing tour length on test data batch 8"
+2024-07-22T01:47:15.304911,"Epoch 0, Generating tour on test data batch 9"
+2024-07-22T01:47:18.286222,"Epoch 0, computing tour length on test data batch 9"
+2024-07-22T01:47:18.286739,"Epoch 0, Generating tour on test data batch 10"
+2024-07-22T01:47:21.253896,"Epoch 0, computing tour length on test data batch 10"
+2024-07-22T01:47:21.254387,"Epoch 0, Generating tour on test data batch 11"
+2024-07-22T01:47:24.201486,"Epoch 0, computing tour length on test data batch 11"
+2024-07-22T01:47:24.201999,"Epoch 0, Generating tour on test data batch 12"
+2024-07-22T01:47:27.162938,"Epoch 0, computing tour length on test data batch 12"
+2024-07-22T01:47:27.163466,"Epoch 0, Generating tour on test data batch 13"
+2024-07-22T01:47:30.093720,"Epoch 0, computing tour length on test data batch 13"
+2024-07-22T01:47:30.094234,"Epoch 0, Generating tour on test data batch 14"
+2024-07-22T01:47:33.042887,"Epoch 0, computing tour length on test data batch 14"
+2024-07-22T01:47:33.043383,"Epoch 0, Generating tour on test data batch 15"
+2024-07-22T01:47:35.971856,"Epoch 0, computing tour length on test data batch 15"
+2024-07-22T01:47:35.972367,"Epoch 0, Generating tour on test data batch 16"
+2024-07-22T01:47:38.925352,"Epoch 0, computing tour length on test data batch 16"
+2024-07-22T01:47:38.925864,"Epoch 0, Generating tour on test data batch 17"
+2024-07-22T01:47:41.898975,"Epoch 0, computing tour length on test data batch 17"
+2024-07-22T01:47:41.899479,"Epoch 0, Generating tour on test data batch 18"
+2024-07-22T01:47:44.851417,"Epoch 0, computing tour length on test data batch 18"
+2024-07-22T01:47:44.851925,"Epoch 0, Generating tour on test data batch 19"
+2024-07-22T01:47:47.784722,"Epoch 0, computing tour length on test data batch 19"
+2024-07-22T01:47:47.785500,Epoch 0 saving checkpoint and updating baseline if train is better
+2024-07-22T01:47:47.824165,"Epoch 1, Step 0 start"
+2024-07-22T01:47:47.824183,Generating data
+2024-07-22T01:47:47.825765,generating tours of train model
+2024-07-22T01:47:50.055773,generating tours of baseline model
+2024-07-22T01:47:51.589899,computing tour length of train model
+2024-07-22T01:47:51.590205,computing tour length of baseline model
+2024-07-22T01:47:51.590446,computing loss and backprop
+2024-07-22T01:47:53.383545,"Epoch 1, Step 1 start"
+2024-07-22T01:47:53.383575,generating tours of train model
+2024-07-22T01:47:55.611332,generating tours of baseline model
+2024-07-22T01:47:57.172298,computing tour length of train model
+2024-07-22T01:47:57.172567,computing tour length of baseline model
+2024-07-22T01:47:57.172899,computing loss and backprop
+2024-07-22T01:47:58.968748,"Epoch 1, Step 2 start"
+2024-07-22T01:47:58.968766,generating tours of train model
+2024-07-22T01:48:01.092270,generating tours of baseline model
+2024-07-22T01:48:02.602111,computing tour length of train model
+2024-07-22T01:48:02.602384,computing tour length of baseline model
+2024-07-22T01:48:02.602610,computing loss and backprop
+2024-07-22T01:48:04.409960,"Epoch 1, Step 3 start"
+2024-07-22T01:48:04.409986,generating tours of train model
+2024-07-22T01:48:06.589697,generating tours of baseline model
+2024-07-22T01:48:08.028296,computing tour length of train model
+2024-07-22T01:48:08.028560,computing tour length of baseline model
+2024-07-22T01:48:08.028788,computing loss and backprop
+2024-07-22T01:48:09.844456,"Epoch 1, Step 4 start"
+2024-07-22T01:48:09.844476,generating tours of train model
+2024-07-22T01:48:12.027268,generating tours of baseline model
+2024-07-22T01:48:13.459010,computing tour length of train model
+2024-07-22T01:48:13.459318,computing tour length of baseline model
+2024-07-22T01:48:13.459556,computing loss and backprop
+2024-07-22T01:48:15.292522,"Epoch 1, Step 5 start"
+2024-07-22T01:48:15.292546,generating tours of train model
+2024-07-22T01:48:17.417752,generating tours of baseline model
+2024-07-22T01:48:18.818619,computing tour length of train model
+2024-07-22T01:48:18.818892,computing tour length of baseline model
+2024-07-22T01:48:18.819123,computing loss and backprop
+2024-07-22T01:48:20.650422,"Epoch 1, Step 6 start"
+2024-07-22T01:48:20.650450,Generating data
+2024-07-22T01:48:20.655531,generating tours of train model
+2024-07-22T01:48:22.787912,generating tours of baseline model
+2024-07-22T01:48:24.203942,computing tour length of train model
+2024-07-22T01:48:24.204217,computing tour length of baseline model
+2024-07-22T01:48:24.204443,computing loss and backprop
+2024-07-22T01:48:26.039000,"Epoch 1, Step 7 start"
+2024-07-22T01:48:26.039020,generating tours of train model
+2024-07-22T01:48:28.216597,generating tours of baseline model
+2024-07-22T01:48:29.632573,computing tour length of train model
+2024-07-22T01:48:29.632864,computing tour length of baseline model
+2024-07-22T01:48:29.633110,computing loss and backprop
+2024-07-22T01:48:31.466667,"Epoch 1, Step 8 start"
+2024-07-22T01:48:31.466700,generating tours of train model
+2024-07-22T01:48:33.651195,generating tours of baseline model
+2024-07-22T01:48:34.993449,computing tour length of train model
+2024-07-22T01:48:34.993733,computing tour length of baseline model
+2024-07-22T01:48:34.994170,computing loss and backprop
+2024-07-22T01:48:36.819256,"Epoch 1, Step 9 start"
+2024-07-22T01:48:36.819287,generating tours of train model
+2024-07-22T01:48:39.114397,generating tours of baseline model
+2024-07-22T01:48:40.510308,computing tour length of train model
+2024-07-22T01:48:40.510582,computing tour length of baseline model
+2024-07-22T01:48:40.510809,computing loss and backprop
+2024-07-22T01:48:42.327862,"Epoch 1, Generating tour on test data batch 0"
+2024-07-22T01:48:45.260314,"Epoch 1, computing tour length on test data batch 0"
+2024-07-22T01:48:45.260869,"Epoch 1, Generating tour on test data batch 1"
+2024-07-22T01:48:48.215825,"Epoch 1, computing tour length on test data batch 1"
+2024-07-22T01:48:48.216371,"Epoch 1, Generating tour on test data batch 2"
+2024-07-22T01:48:51.151311,"Epoch 1, computing tour length on test data batch 2"
+2024-07-22T01:48:51.151811,"Epoch 1, Generating tour on test data batch 3"
+2024-07-22T01:48:54.096617,"Epoch 1, computing tour length on test data batch 3"
+2024-07-22T01:48:54.097150,"Epoch 1, Generating tour on test data batch 4"
+2024-07-22T01:48:57.054550,"Epoch 1, computing tour length on test data batch 4"
+2024-07-22T01:48:57.055048,"Epoch 1, Generating tour on test data batch 5"
+2024-07-22T01:48:59.996308,"Epoch 1, computing tour length on test data batch 5"
+2024-07-22T01:48:59.996815,"Epoch 1, Generating tour on test data batch 6"
+2024-07-22T01:49:02.927625,"Epoch 1, computing tour length on test data batch 6"
+2024-07-22T01:49:02.928114,"Epoch 1, Generating tour on test data batch 7"
+2024-07-22T01:49:05.893718,"Epoch 1, computing tour length on test data batch 7"
+2024-07-22T01:49:05.894212,"Epoch 1, Generating tour on test data batch 8"
+2024-07-22T01:49:08.824798,"Epoch 1, computing tour length on test data batch 8"
+2024-07-22T01:49:08.825293,"Epoch 1, Generating tour on test data batch 9"
+2024-07-22T01:49:11.805769,"Epoch 1, computing tour length on test data batch 9"
+2024-07-22T01:49:11.806280,"Epoch 1, Generating tour on test data batch 10"
+2024-07-22T01:49:14.749964,"Epoch 1, computing tour length on test data batch 10"
+2024-07-22T01:49:14.750453,"Epoch 1, Generating tour on test data batch 11"
+2024-07-22T01:49:17.742590,"Epoch 1, computing tour length on test data batch 11"
+2024-07-22T01:49:17.743095,"Epoch 1, Generating tour on test data batch 12"
+2024-07-22T01:49:20.705480,"Epoch 1, computing tour length on test data batch 12"
+2024-07-22T01:49:20.705984,"Epoch 1, Generating tour on test data batch 13"
+2024-07-22T01:49:23.676296,"Epoch 1, computing tour length on test data batch 13"
+2024-07-22T01:49:23.676879,"Epoch 1, Generating tour on test data batch 14"
+2024-07-22T01:49:26.679697,"Epoch 1, computing tour length on test data batch 14"
+2024-07-22T01:49:26.680185,"Epoch 1, Generating tour on test data batch 15"
+2024-07-22T01:49:29.651406,"Epoch 1, computing tour length on test data batch 15"
+2024-07-22T01:49:29.651915,"Epoch 1, Generating tour on test data batch 16"
+2024-07-22T01:49:32.584662,"Epoch 1, computing tour length on test data batch 16"
+2024-07-22T01:49:32.585191,"Epoch 1, Generating tour on test data batch 17"
+2024-07-22T01:49:35.544599,"Epoch 1, computing tour length on test data batch 17"
+2024-07-22T01:49:35.545130,"Epoch 1, Generating tour on test data batch 18"
+2024-07-22T01:49:38.480564,"Epoch 1, computing tour length on test data batch 18"
+2024-07-22T01:49:38.481075,"Epoch 1, Generating tour on test data batch 19"
+2024-07-22T01:49:41.435601,"Epoch 1, computing tour length on test data batch 19"
+2024-07-22T01:49:41.436164,Epoch 1 saving checkpoint and updating baseline if train is better
+2024-07-22T01:49:41.472174,"Epoch 2, Step 0 start"
+2024-07-22T01:49:41.472193,Generating data
+2024-07-22T01:49:41.474494,generating tours of train model
+2024-07-22T01:49:43.683420,generating tours of baseline model
+2024-07-22T01:49:45.064039,computing tour length of train model
+2024-07-22T01:49:45.064321,computing tour length of baseline model
+2024-07-22T01:49:45.064557,computing loss and backprop
+2024-07-22T01:49:46.883281,"Epoch 2, Step 1 start"
+2024-07-22T01:49:46.883306,generating tours of train model
+2024-07-22T01:49:49.025008,generating tours of baseline model
+2024-07-22T01:49:50.469126,computing tour length of train model
+2024-07-22T01:49:50.469404,computing tour length of baseline model
+2024-07-22T01:49:50.469638,computing loss and backprop
+2024-07-22T01:49:52.270519,"Epoch 2, Step 2 start"
+2024-07-22T01:49:52.270545,generating tours of train model
+2024-07-22T01:49:54.302797,generating tours of baseline model
+2024-07-22T01:49:55.814280,computing tour length of train model
+2024-07-22T01:49:55.814557,computing tour length of baseline model
+2024-07-22T01:49:55.814784,computing loss and backprop
+2024-07-22T01:49:57.608933,"Epoch 2, Step 3 start"
+2024-07-22T01:49:57.608947,generating tours of train model
+2024-07-22T01:49:59.669536,generating tours of baseline model
+2024-07-22T01:50:01.237145,computing tour length of train model
+2024-07-22T01:50:01.237423,computing tour length of baseline model
+2024-07-22T01:50:01.237656,computing loss and backprop
+2024-07-22T01:50:03.031202,"Epoch 2, Step 4 start"
+2024-07-22T01:50:03.031220,generating tours of train model
+2024-07-22T01:50:05.128401,generating tours of baseline model
+2024-07-22T01:50:06.695803,computing tour length of train model
+2024-07-22T01:50:06.696090,computing tour length of baseline model
+2024-07-22T01:50:06.696324,computing loss and backprop
+2024-07-22T01:50:08.491855,"Epoch 2, Step 5 start"
+2024-07-22T01:50:08.491875,generating tours of train model
+2024-07-22T01:50:10.583569,generating tours of baseline model
+2024-07-22T01:50:12.147948,computing tour length of train model
+2024-07-22T01:50:12.148221,computing tour length of baseline model
+2024-07-22T01:50:12.148451,computing loss and backprop
+2024-07-22T01:50:13.937907,"Epoch 2, Step 6 start"
+2024-07-22T01:50:13.937919,Generating data
+2024-07-22T01:50:13.941091,generating tours of train model
+2024-07-22T01:50:15.995182,generating tours of baseline model
+2024-07-22T01:50:17.551369,computing tour length of train model
+2024-07-22T01:50:17.551641,computing tour length of baseline model
+2024-07-22T01:50:17.551875,computing loss and backprop
+2024-07-22T01:50:19.347264,"Epoch 2, Step 7 start"
+2024-07-22T01:50:19.347288,generating tours of train model
+2024-07-22T01:50:21.424599,generating tours of baseline model
+2024-07-22T01:50:23.009560,computing tour length of train model
+2024-07-22T01:50:23.009862,computing tour length of baseline model
+2024-07-22T01:50:23.010093,computing loss and backprop
+2024-07-22T01:50:24.785992,"Epoch 2, Step 8 start"
+2024-07-22T01:50:24.786006,generating tours of train model
+2024-07-22T01:50:26.908667,generating tours of baseline model
+2024-07-22T01:50:28.449277,computing tour length of train model
+2024-07-22T01:50:28.449544,computing tour length of baseline model
+2024-07-22T01:50:28.449773,computing loss and backprop
+2024-07-22T01:50:30.248983,"Epoch 2, Step 9 start"
+2024-07-22T01:50:30.249008,generating tours of train model
+2024-07-22T01:50:32.500356,generating tours of baseline model
+2024-07-22T01:50:34.015971,computing tour length of train model
+2024-07-22T01:50:34.016242,computing tour length of baseline model
+2024-07-22T01:50:34.016473,computing loss and backprop
+2024-07-22T01:50:35.825824,"Epoch 2, Generating tour on test data batch 0"
+2024-07-22T01:50:38.731944,"Epoch 2, computing tour length on test data batch 0"
+2024-07-22T01:50:38.732456,"Epoch 2, Generating tour on test data batch 1"
+2024-07-22T01:50:41.657618,"Epoch 2, computing tour length on test data batch 1"
+2024-07-22T01:50:41.658158,"Epoch 2, Generating tour on test data batch 2"
+2024-07-22T01:50:44.620464,"Epoch 2, computing tour length on test data batch 2"
+2024-07-22T01:50:44.620960,"Epoch 2, Generating tour on test data batch 3"
+2024-07-22T01:50:47.581011,"Epoch 2, computing tour length on test data batch 3"
+2024-07-22T01:50:47.581496,"Epoch 2, Generating tour on test data batch 4"
+2024-07-22T01:50:50.518052,"Epoch 2, computing tour length on test data batch 4"
+2024-07-22T01:50:50.518539,"Epoch 2, Generating tour on test data batch 5"
+2024-07-22T01:50:53.501482,"Epoch 2, computing tour length on test data batch 5"
+2024-07-22T01:50:53.501997,"Epoch 2, Generating tour on test data batch 6"
+2024-07-22T01:50:56.452599,"Epoch 2, computing tour length on test data batch 6"
+2024-07-22T01:50:56.453105,"Epoch 2, Generating tour on test data batch 7"
+2024-07-22T01:50:59.392792,"Epoch 2, computing tour length on test data batch 7"
+2024-07-22T01:50:59.393283,"Epoch 2, Generating tour on test data batch 8"
+2024-07-22T01:51:02.353839,"Epoch 2, computing tour length on test data batch 8"
+2024-07-22T01:51:02.354336,"Epoch 2, Generating tour on test data batch 9"
+2024-07-22T01:51:05.310179,"Epoch 2, computing tour length on test data batch 9"
+2024-07-22T01:51:05.310693,"Epoch 2, Generating tour on test data batch 10"
+2024-07-22T01:51:08.217616,"Epoch 2, computing tour length on test data batch 10"
+2024-07-22T01:51:08.218127,"Epoch 2, Generating tour on test data batch 11"
+2024-07-22T01:51:11.141956,"Epoch 2, computing tour length on test data batch 11"
+2024-07-22T01:51:11.142462,"Epoch 2, Generating tour on test data batch 12"
+2024-07-22T01:51:14.105761,"Epoch 2, computing tour length on test data batch 12"
+2024-07-22T01:51:14.106251,"Epoch 2, Generating tour on test data batch 13"
+2024-07-22T01:51:17.045954,"Epoch 2, computing tour length on test data batch 13"
+2024-07-22T01:51:17.046499,"Epoch 2, Generating tour on test data batch 14"
+2024-07-22T01:51:20.020910,"Epoch 2, computing tour length on test data batch 14"
+2024-07-22T01:51:20.021395,"Epoch 2, Generating tour on test data batch 15"
+2024-07-22T01:51:22.948079,"Epoch 2, computing tour length on test data batch 15"
+2024-07-22T01:51:22.948573,"Epoch 2, Generating tour on test data batch 16"
+2024-07-22T01:51:25.881411,"Epoch 2, computing tour length on test data batch 16"
+2024-07-22T01:51:25.881923,"Epoch 2, Generating tour on test data batch 17"
+2024-07-22T01:51:28.823091,"Epoch 2, computing tour length on test data batch 17"
+2024-07-22T01:51:28.823651,"Epoch 2, Generating tour on test data batch 18"
+2024-07-22T01:51:31.808567,"Epoch 2, computing tour length on test data batch 18"
+2024-07-22T01:51:31.809066,"Epoch 2, Generating tour on test data batch 19"
+2024-07-22T01:51:34.770258,"Epoch 2, computing tour length on test data batch 19"
+2024-07-22T01:51:34.770794,Epoch 2 saving checkpoint and updating baseline if train is better
+2024-07-22T01:51:34.775061,"Epoch 3, Step 0 start"
+2024-07-22T01:51:34.775069,Generating data
+2024-07-22T01:51:34.777067,generating tours of train model
+2024-07-22T01:51:36.961302,generating tours of baseline model
+2024-07-22T01:51:38.523903,computing tour length of train model
+2024-07-22T01:51:38.524193,computing tour length of baseline model
+2024-07-22T01:51:38.524427,computing loss and backprop
+2024-07-22T01:51:40.320002,"Epoch 3, Step 1 start"
+2024-07-22T01:51:40.320027,generating tours of train model
+2024-07-22T01:51:42.414134,generating tours of baseline model
+2024-07-22T01:51:43.951949,computing tour length of train model
+2024-07-22T01:51:43.952233,computing tour length of baseline model
+2024-07-22T01:51:43.952468,computing loss and backprop
+2024-07-22T01:51:45.749157,"Epoch 3, Step 2 start"
+2024-07-22T01:51:45.749175,generating tours of train model
+2024-07-22T01:51:47.846687,generating tours of baseline model
+2024-07-22T01:51:49.374066,computing tour length of train model
+2024-07-22T01:51:49.374361,computing tour length of baseline model
+2024-07-22T01:51:49.374595,computing loss and backprop
+2024-07-22T01:51:51.182204,"Epoch 3, Step 3 start"
+2024-07-22T01:51:51.182227,generating tours of train model
+2024-07-22T01:51:53.303197,generating tours of baseline model
+2024-07-22T01:51:54.800503,computing tour length of train model
+2024-07-22T01:51:54.800770,computing tour length of baseline model
+2024-07-22T01:51:54.801009,computing loss and backprop
+2024-07-22T01:51:56.613516,"Epoch 3, Step 4 start"
+2024-07-22T01:51:56.613536,generating tours of train model
+2024-07-22T01:51:58.764288,generating tours of baseline model
+2024-07-22T01:52:00.201163,computing tour length of train model
+2024-07-22T01:52:00.201443,computing tour length of baseline model
+2024-07-22T01:52:00.201684,computing loss and backprop
+2024-07-22T01:52:02.019520,"Epoch 3, Step 5 start"
+2024-07-22T01:52:02.019542,generating tours of train model
+2024-07-22T01:52:04.208556,generating tours of baseline model
+2024-07-22T01:52:05.618351,computing tour length of train model
+2024-07-22T01:52:05.618619,computing tour length of baseline model
+2024-07-22T01:52:05.618855,computing loss and backprop
+2024-07-22T01:52:07.455091,"Epoch 3, Step 6 start"
+2024-07-22T01:52:07.455111,Generating data
+2024-07-22T01:52:07.459799,generating tours of train model
+2024-07-22T01:52:09.691159,generating tours of baseline model
+2024-07-22T01:52:11.081308,computing tour length of train model
+2024-07-22T01:52:11.081575,computing tour length of baseline model
+2024-07-22T01:52:11.081804,computing loss and backprop
+2024-07-22T01:52:12.908705,"Epoch 3, Step 7 start"
+2024-07-22T01:52:12.908723,generating tours of train model
+2024-07-22T01:52:15.078272,generating tours of baseline model
+2024-07-22T01:52:16.443089,computing tour length of train model
+2024-07-22T01:52:16.443384,computing tour length of baseline model
+2024-07-22T01:52:16.443619,computing loss and backprop
+2024-07-22T01:52:18.278801,"Epoch 3, Step 8 start"
+2024-07-22T01:52:18.278823,generating tours of train model
+2024-07-22T01:52:20.444081,generating tours of baseline model
+2024-07-22T01:52:21.808573,computing tour length of train model
+2024-07-22T01:52:21.808914,computing tour length of baseline model
+2024-07-22T01:52:21.809158,computing loss and backprop
+2024-07-22T01:52:23.636119,"Epoch 3, Step 9 start"
+2024-07-22T01:52:23.636139,generating tours of train model
+2024-07-22T01:52:25.842717,generating tours of baseline model
+2024-07-22T01:52:27.214029,computing tour length of train model
+2024-07-22T01:52:27.214299,computing tour length of baseline model
+2024-07-22T01:52:27.214527,computing loss and backprop
+2024-07-22T01:52:29.027358,"Epoch 3, Generating tour on test data batch 0"
+2024-07-22T01:52:31.965141,"Epoch 3, computing tour length on test data batch 0"
+2024-07-22T01:52:31.965642,"Epoch 3, Generating tour on test data batch 1"
+2024-07-22T01:52:34.893261,"Epoch 3, computing tour length on test data batch 1"
+2024-07-22T01:52:34.893759,"Epoch 3, Generating tour on test data batch 2"
+2024-07-22T01:52:37.826194,"Epoch 3, computing tour length on test data batch 2"
+2024-07-22T01:52:37.826744,"Epoch 3, Generating tour on test data batch 3"
+2024-07-22T01:52:40.765716,"Epoch 3, computing tour length on test data batch 3"
+2024-07-22T01:52:40.766208,"Epoch 3, Generating tour on test data batch 4"
+2024-07-22T01:52:43.694955,"Epoch 3, computing tour length on test data batch 4"
+2024-07-22T01:52:43.695451,"Epoch 3, Generating tour on test data batch 5"
+2024-07-22T01:52:46.660704,"Epoch 3, computing tour length on test data batch 5"
+2024-07-22T01:52:46.661197,"Epoch 3, Generating tour on test data batch 6"
+2024-07-22T01:52:49.608704,"Epoch 3, computing tour length on test data batch 6"
+2024-07-22T01:52:49.609242,"Epoch 3, Generating tour on test data batch 7"
+2024-07-22T01:52:52.550529,"Epoch 3, computing tour length on test data batch 7"
+2024-07-22T01:52:52.551059,"Epoch 3, Generating tour on test data batch 8"
+2024-07-22T01:52:55.502699,"Epoch 3, computing tour length on test data batch 8"
+2024-07-22T01:52:55.503186,"Epoch 3, Generating tour on test data batch 9"
+2024-07-22T01:52:58.477828,"Epoch 3, computing tour length on test data batch 9"
+2024-07-22T01:52:58.478313,"Epoch 3, Generating tour on test data batch 10"
+2024-07-22T01:53:01.442490,"Epoch 3, computing tour length on test data batch 10"
+2024-07-22T01:53:01.443000,"Epoch 3, Generating tour on test data batch 11"
+2024-07-22T01:53:04.402202,"Epoch 3, computing tour length on test data batch 11"
+2024-07-22T01:53:04.402692,"Epoch 3, Generating tour on test data batch 12"
+2024-07-22T01:53:07.396936,"Epoch 3, computing tour length on test data batch 12"
+2024-07-22T01:53:07.397456,"Epoch 3, Generating tour on test data batch 13"
+2024-07-22T01:53:10.377659,"Epoch 3, computing tour length on test data batch 13"
+2024-07-22T01:53:10.378154,"Epoch 3, Generating tour on test data batch 14"
+2024-07-22T01:53:13.361920,"Epoch 3, computing tour length on test data batch 14"
+2024-07-22T01:53:13.362453,"Epoch 3, Generating tour on test data batch 15"
+2024-07-22T01:53:16.280209,"Epoch 3, computing tour length on test data batch 15"
+2024-07-22T01:53:16.280700,"Epoch 3, Generating tour on test data batch 16"
+2024-07-22T01:53:19.218627,"Epoch 3, computing tour length on test data batch 16"
+2024-07-22T01:53:19.219123,"Epoch 3, Generating tour on test data batch 17"
+2024-07-22T01:53:22.125676,"Epoch 3, computing tour length on test data batch 17"
+2024-07-22T01:53:22.126171,"Epoch 3, Generating tour on test data batch 18"
+2024-07-22T01:53:25.112690,"Epoch 3, computing tour length on test data batch 18"
+2024-07-22T01:53:25.113219,"Epoch 3, Generating tour on test data batch 19"
+2024-07-22T01:53:28.072990,"Epoch 3, computing tour length on test data batch 19"
+2024-07-22T01:53:28.073552,Epoch 3 saving checkpoint and updating baseline if train is better
+2024-07-22T01:53:28.074133,"Epoch 4, Step 0 start"
+2024-07-22T01:53:28.074143,Generating data
+2024-07-22T01:53:28.074759,generating tours of train model
+2024-07-22T01:53:30.269957,generating tours of baseline model
+2024-07-22T01:53:31.670576,computing tour length of train model
+2024-07-22T01:53:31.670857,computing tour length of baseline model
+2024-07-22T01:53:31.671206,computing loss and backprop
+2024-07-22T01:53:33.510768,"Epoch 4, Step 1 start"
+2024-07-22T01:53:33.510783,generating tours of train model
+2024-07-22T01:53:35.704980,generating tours of baseline model
+2024-07-22T01:53:37.087062,computing tour length of train model
+2024-07-22T01:53:37.087337,computing tour length of baseline model
+2024-07-22T01:53:37.087569,computing loss and backprop
+2024-07-22T01:53:38.898216,"Epoch 4, Step 2 start"
+2024-07-22T01:53:38.898232,generating tours of train model
+2024-07-22T01:53:41.062409,generating tours of baseline model
+2024-07-22T01:53:42.458891,computing tour length of train model
+2024-07-22T01:53:42.459174,computing tour length of baseline model
+2024-07-22T01:53:42.459417,computing loss and backprop
+2024-07-22T01:53:44.274460,"Epoch 4, Step 3 start"
+2024-07-22T01:53:44.274484,generating tours of train model
+2024-07-22T01:53:46.414436,generating tours of baseline model
+2024-07-22T01:53:47.835521,computing tour length of train model
+2024-07-22T01:53:47.835792,computing tour length of baseline model
+2024-07-22T01:53:47.836039,computing loss and backprop
+2024-07-22T01:53:49.646525,"Epoch 4, Step 4 start"
+2024-07-22T01:53:49.646538,generating tours of train model
+2024-07-22T01:53:51.706304,generating tours of baseline model
+2024-07-22T01:53:53.180531,computing tour length of train model
+2024-07-22T01:53:53.180817,computing tour length of baseline model
+2024-07-22T01:53:53.181060,computing loss and backprop
+2024-07-22T01:53:54.977664,"Epoch 4, Step 5 start"
+2024-07-22T01:53:54.977682,generating tours of train model
+2024-07-22T01:53:57.225389,generating tours of baseline model
+2024-07-22T01:53:58.693804,computing tour length of train model
+2024-07-22T01:53:58.694095,computing tour length of baseline model
+2024-07-22T01:53:58.694332,computing loss and backprop
+2024-07-22T01:54:00.495444,"Epoch 4, Step 6 start"
+2024-07-22T01:54:00.495455,Generating data
+2024-07-22T01:54:00.498206,generating tours of train model
+2024-07-22T01:54:02.560580,generating tours of baseline model
+2024-07-22T01:54:04.078530,computing tour length of train model
+2024-07-22T01:54:04.078832,computing tour length of baseline model
+2024-07-22T01:54:04.079076,computing loss and backprop
+2024-07-22T01:54:05.868431,"Epoch 4, Step 7 start"
+2024-07-22T01:54:05.868451,generating tours of train model
+2024-07-22T01:54:07.906925,generating tours of baseline model
+2024-07-22T01:54:09.504343,computing tour length of train model
+2024-07-22T01:54:09.504657,computing tour length of baseline model
+2024-07-22T01:54:09.504897,computing loss and backprop
+2024-07-22T01:54:11.297021,"Epoch 4, Step 8 start"
+2024-07-22T01:54:11.297040,generating tours of train model
+2024-07-22T01:54:13.399489,generating tours of baseline model
+2024-07-22T01:54:14.955652,computing tour length of train model
+2024-07-22T01:54:14.955967,computing tour length of baseline model
+2024-07-22T01:54:14.956206,computing loss and backprop
+2024-07-22T01:54:16.744218,"Epoch 4, Step 9 start"
+2024-07-22T01:54:16.744243,generating tours of train model
+2024-07-22T01:54:18.869150,generating tours of baseline model
+2024-07-22T01:54:20.448531,computing tour length of train model
+2024-07-22T01:54:20.448798,computing tour length of baseline model
+2024-07-22T01:54:20.449036,computing loss and backprop
+2024-07-22T01:54:22.235357,"Epoch 4, Generating tour on test data batch 0"
+2024-07-22T01:54:25.157383,"Epoch 4, computing tour length on test data batch 0"
+2024-07-22T01:54:25.157889,"Epoch 4, Generating tour on test data batch 1"
+2024-07-22T01:54:28.127383,"Epoch 4, computing tour length on test data batch 1"
+2024-07-22T01:54:28.127879,"Epoch 4, Generating tour on test data batch 2"
+2024-07-22T01:54:31.136445,"Epoch 4, computing tour length on test data batch 2"
+2024-07-22T01:54:31.136975,"Epoch 4, Generating tour on test data batch 3"
+2024-07-22T01:54:34.120705,"Epoch 4, computing tour length on test data batch 3"
+2024-07-22T01:54:34.121193,"Epoch 4, Generating tour on test data batch 4"
+2024-07-22T01:54:37.114774,"Epoch 4, computing tour length on test data batch 4"
+2024-07-22T01:54:37.115311,"Epoch 4, Generating tour on test data batch 5"
+2024-07-22T01:54:40.063102,"Epoch 4, computing tour length on test data batch 5"
+2024-07-22T01:54:40.063584,"Epoch 4, Generating tour on test data batch 6"
+2024-07-22T01:54:43.050504,"Epoch 4, computing tour length on test data batch 6"
+2024-07-22T01:54:43.051023,"Epoch 4, Generating tour on test data batch 7"
+2024-07-22T01:54:45.990117,"Epoch 4, computing tour length on test data batch 7"
+2024-07-22T01:54:45.990637,"Epoch 4, Generating tour on test data batch 8"
+2024-07-22T01:54:48.924179,"Epoch 4, computing tour length on test data batch 8"
+2024-07-22T01:54:48.924689,"Epoch 4, Generating tour on test data batch 9"
+2024-07-22T01:54:51.908326,"Epoch 4, computing tour length on test data batch 9"
+2024-07-22T01:54:51.908858,"Epoch 4, Generating tour on test data batch 10"
+2024-07-22T01:54:54.870655,"Epoch 4, computing tour length on test data batch 10"
+2024-07-22T01:54:54.871206,"Epoch 4, Generating tour on test data batch 11"
+2024-07-22T01:54:57.838491,"Epoch 4, computing tour length on test data batch 11"
+2024-07-22T01:54:57.839003,"Epoch 4, Generating tour on test data batch 12"
+2024-07-22T01:55:00.757335,"Epoch 4, computing tour length on test data batch 12"
+2024-07-22T01:55:00.757830,"Epoch 4, Generating tour on test data batch 13"
+2024-07-22T01:55:03.695632,"Epoch 4, computing tour length on test data batch 13"
+2024-07-22T01:55:03.696130,"Epoch 4, Generating tour on test data batch 14"
+2024-07-22T01:55:06.670339,"Epoch 4, computing tour length on test data batch 14"
+2024-07-22T01:55:06.670887,"Epoch 4, Generating tour on test data batch 15"
+2024-07-22T01:55:09.609590,"Epoch 4, computing tour length on test data batch 15"
+2024-07-22T01:55:09.610092,"Epoch 4, Generating tour on test data batch 16"
+2024-07-22T01:55:12.600866,"Epoch 4, computing tour length on test data batch 16"
+2024-07-22T01:55:12.601402,"Epoch 4, Generating tour on test data batch 17"
+2024-07-22T01:55:15.588619,"Epoch 4, computing tour length on test data batch 17"
+2024-07-22T01:55:15.589113,"Epoch 4, Generating tour on test data batch 18"
+2024-07-22T01:55:18.601453,"Epoch 4, computing tour length on test data batch 18"
+2024-07-22T01:55:18.601987,"Epoch 4, Generating tour on test data batch 19"
+2024-07-22T01:55:21.560761,"Epoch 4, computing tour length on test data batch 19"
+2024-07-22T01:55:21.561323,Epoch 4 saving checkpoint and updating baseline if train is better
