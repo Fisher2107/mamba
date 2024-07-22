@@ -11,52 +11,52 @@ def generate_plot(csv_files,csv_files16,csv_files_lay1,csv_files_ng,saveto):
     
     for csv_file in csv_files:
         df = pd.read_csv(csv_file)
-        memory_usage = df['Memory Usage'].iloc[-1] - df['Memory Usage'].iloc[0]
+        memory_usage = df['Memory Usage'].iloc[-1]
         y_values.append(memory_usage)
         
-    for csv_file in csv_files16:
+    '''for csv_file in csv_files16:
         df = pd.read_csv(csv_file)
-        memory_usage = df['Memory Usage'].iloc[-1] - df['Memory Usage'].iloc[0]
-        y_values_16.append(memory_usage)
+        memory_usage = df['Memory Usage'].iloc[-1]
+        y_values_16.append(memory_usage)'''
 
     for csv_file in csv_files_lay1:
         df = pd.read_csv(csv_file)
-        memory_usage = df['Memory Usage'].iloc[-1] - df['Memory Usage'].iloc[0]
+        memory_usage = df['Memory Usage'].iloc[-1]
         y_values_lay1.append(memory_usage)
 
     for csv_file in csv_files_ng:
         df = pd.read_csv(csv_file)
-        memory_usage = df['Memory Usage'].iloc[-1] - df['Memory Usage'].iloc[0]
+        memory_usage = df['Memory Usage'].iloc[-1]
         y_values_ng.append(memory_usage)
 
     #least squares fit
     z64 = np.polyfit(x_values, y_values, 2)
     x_range = np.arange(0, 200, 0.1)
-    plt.plot(x_range, np.polyval(z64, x_range), label='quad fit dim = 64')
+    plt.plot(x_range, np.polyval(z64, x_range), label='quad fit dim = 64',alpha=0.5)
 
-    z16 = np.polyfit(x_values, y_values_16, 2)
-    plt.plot(x_range, np.polyval(z16, x_range), label='quad fit dim = 16')
+    '''z16 = np.polyfit(x_values, y_values_16, 2)
+    plt.plot(x_range, np.polyval(z16, x_range), label='quad fit dim = 16',alpha=0.5)'''
 
     zlay1 = np.polyfit(x_values, y_values_lay1, 2)
-    plt.plot(x_range, np.polyval(zlay1, x_range), label='quad fit lay1')
+    plt.plot(x_range, np.polyval(zlay1, x_range), label='quad fit lay1',alpha=0.5)
 
     zng = np.polyfit(x_values, y_values_ng, 2)
-    plt.plot(x_range, np.polyval(zng, x_range), label='quad fit ng')
+    plt.plot(x_range, np.polyval(zng, x_range), label='quad fit ng',alpha=0.5)
 
 
     print('quad fit dim = 64:', z64)
-    print('quad fit dim = 16:', z16)
+    '''print('quad fit dim = 16:', z16)'''
     print('quad fit lay1:', zlay1)
     print('quad fit ng:', zng)
 
     #plot
-    plt.plot(x_values, y_values, marker='o', linestyle='None', label='dim = 64')
-    plt.plot(x_values, y_values_16, marker='o', linestyle='None', label='dim = 16')
-    plt.plot(x_values, y_values_lay1, marker='o', linestyle='None', label='lay1')
-    plt.plot(x_values, y_values_ng, marker='o', linestyle='None', label='ng')
+    plt.plot(x_values, y_values, marker='o', linestyle='None', label='dim = 64',ms=5)
+    '''plt.plot(x_values, y_values_16, marker='o', linestyle='None', label='dim = 16',ms=5)'''
+    plt.plot(x_values, y_values_lay1, marker='o', linestyle='None', label='lay1',ms=5)
+    plt.plot(x_values, y_values_ng, marker='o', linestyle='None', label='ng',ms=5)
     plt.xlabel('City Count')
     plt.ylabel('Memory Usage (GB)')
-    plt.title('Memory Usage by City Count')
+    plt.title('Memory Usage required to train model by City Count')
     plt.legend()
     plt.savefig(saveto)
     #plt.show()
@@ -92,6 +92,8 @@ csv_files_ng = ['../../checkpoints/gpu/tour/mamba2_5_ng_gpu_stats.csv',
               '../../checkpoints/gpu/tour/mamba2_75_ng_gpu_stats.csv',
               '../../checkpoints/gpu/tour/mamba2_100_ng_gpu_stats.csv',
                 '../../checkpoints/gpu/tour/mamba2_120_ng_gpu_stats.csv']
+
+
 
 
 
