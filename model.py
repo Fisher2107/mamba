@@ -358,6 +358,41 @@ def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_tr
             loss = torch.mean( (L_train - L_baseline)* LogProbOfAction )
             loss.backward()
         optimizer.step()
+    
+    elif action == 'next_city2':
+        if gpu_logger: gpu_logger.log_event('generating tours of baseline model')
+        tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=not non_det)
+        if gpu_logger: gpu_logger.log_event('computing tour length of baseline model')
+        L_baseline = compute_tour_length(inputs, tours_baseline)
+    
+        #Generate tours of the train model
+        bsz = inputs.shape[0]
+        city_count = inputs.shape[1] - 1
+        mask = torch.ones(bsz, city_count).to(device)
+        tours = []
+        LogProbOfActions = []
+        #Construct tour recursively
+        optimizer.zero_grad()
+        for i in range(city_count):
+            if lastlayer=='pointer':
+                outputs = model_train(inputs,city_count)[:,-1,:]
+            else:
+                outputs = model_train(inputs)[:,-1,:]
+            outputs = outputs.masked_fill_(mask == 0, -float('inf'))
+            outputs = nn.Softmax(dim=1)(outputs)
+
+            next_city = tours_train[:,i]
+            LogProbOfAction = torch.log(outputs[torch.arange(bsz), next_city])
+            mask[torch.arange(bsz), next_city] = 0
+            inputs = torch.cat((inputs, inputs[torch.arange(bsz), next_city, :].unsqueeze(1)), dim=1)
+            loss = torch.mean( LogProbOfAction )
+            loss.backward()
+        
+        L_train = compute_tour_length(inputs, tours_train)
+        # Multiply every gradient by L_train - L_baseline
+        for param in model_train.parameters():
+            if param.grad is not None:
+                param.grad *= (L_train - L_baseline).mean()
              
     else:
         raise ValueError('action must be either "tour" or "next_city"')
