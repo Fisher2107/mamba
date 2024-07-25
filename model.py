@@ -360,17 +360,22 @@ def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_tr
         optimizer.step()
     
     elif action == 'next_city2':
-        if gpu_logger: gpu_logger.log_event('generating tours of baseline model')
-        tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=not non_det)
-        if gpu_logger: gpu_logger.log_event('computing tour length of baseline model')
-        L_baseline = compute_tour_length(inputs, tours_baseline)
-    
-        #Generate tours of the train model
+        with torch.no_grad():
+            tours_train, _ = seq2seq_generate_tour(device,model_train,inputs,lastlayer=lastlayer,deterministic=False)
+            tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=not non_det)
+        
+            #get the length of the tours
+            if gpu_logger: gpu_logger.log_event('computing tour length of train model')
+            L_train = compute_tour_length(inputs, tours_train)
+            if gpu_logger: gpu_logger.log_event('computing tour length of baseline model')
+            L_baseline = compute_tour_length(inputs, tours_baseline)
+            L_train_train_total += L_train.sum()
+            L_baseline_train_total += L_baseline.sum()
+        
+        #Go through tour and backprop
         bsz = inputs.shape[0]
         city_count = inputs.shape[1] - 1
         mask = torch.ones(bsz, city_count).to(device)
-        tours = []
-        LogProbOfActions = []
         #Construct tour recursively
         optimizer.zero_grad()
         for i in range(city_count):
@@ -385,14 +390,9 @@ def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_tr
             LogProbOfAction = torch.log(outputs[torch.arange(bsz), next_city])
             mask[torch.arange(bsz), next_city] = 0
             inputs = torch.cat((inputs, inputs[torch.arange(bsz), next_city, :].unsqueeze(1)), dim=1)
-            loss = torch.mean( LogProbOfAction )
+            loss = torch.mean( (L_train - L_baseline)* LogProbOfAction )
             loss.backward()
-        
-        L_train = compute_tour_length(inputs, tours_train)
-        # Multiply every gradient by L_train - L_baseline
-        for param in model_train.parameters():
-            if param.grad is not None:
-                param.grad *= (L_train - L_baseline).mean()
+            optimizer.step()
              
     else:
         raise ValueError('action must be either "tour" or "next_city"')

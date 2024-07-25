@@ -1,7 +1,7 @@
 #!/bin/bash
-#$ -N job_big_action_comp_1
+#$ -N job_gpu_divine2
 #$ -wd /exports/eddie/scratch/s2517783/mamba
-#$ -l h_rt=24:00:00
+#$ -l h_rt=4:00:00
 #$ -q gpu
 #$ -pe gpu-a100 1
 #$ -l h_vmem=80G
@@ -16,4 +16,4 @@ source /exports/eddie/scratch/s2517783/miniconda3/bin/activate base
 cd /exports/eddie/scratch/s2517783/mamba
 conda activate tsp
 
-python tsp.py --save_loc 'checkpoints/action/mamba2_action1' --nb_layers 3  --nb_epochs 1000 --nb_batch_per_epoch 40 --city_count 50 --recycle_data 5 --mamba2 True --action 'next_city' --bsz 220 --reverse True --project_name 'Action2' --checkpoint 'checkpoints/action/mamba2_action1_22-07_17-06.pt'
+python tsp.py --save_loc 'checkpoints/gpu/mamba2_75_ng' --nb_layers 3  --nb_epochs 5 --city_count 75 --recycle_data 5 --mamba2 True --pynvml True --gpu_id $CUDA_VISIBLE_DEVICES --wandb --bsz 100 --reverse True --action 'next_city' --mlp_cls 'identity'

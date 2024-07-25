@@ -139,7 +139,12 @@ if checkpoint:
     tot_time_ckpt = checkpoint['time_tot']
     start_epoch = checkpoint['epoch']
     mean_tour_length_list = checkpoint['mean_tour_length_list']
-    mean_tour_length_best = min([i.item() for i in checkpoint['mean_tour_length_list']])
+
+    if checkpoint['args'].city_count == args.city_count:
+        mean_tour_length_best = min([i.item() for i in checkpoint['mean_tour_length_list']])
+    else:
+        mean_tour_length_best = float('inf')
+    
     if 'time_to_reach_best' in checkpoint.keys():    
         best_time = checkpoint['time_to_reach_best']
     else:

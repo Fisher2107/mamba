@@ -14,10 +14,10 @@ def generate_plot(csv_files,csv_files16,csv_files_lay1,csv_files_ng,saveto):
         memory_usage = df['Memory Usage'].iloc[-1]
         y_values.append(memory_usage)
         
-    '''for csv_file in csv_files16:
+    for csv_file in csv_files16:
         df = pd.read_csv(csv_file)
         memory_usage = df['Memory Usage'].iloc[-1]
-        y_values_16.append(memory_usage)'''
+        y_values_16.append(memory_usage)
 
     for csv_file in csv_files_lay1:
         df = pd.read_csv(csv_file)
@@ -31,11 +31,11 @@ def generate_plot(csv_files,csv_files16,csv_files_lay1,csv_files_ng,saveto):
 
     #least squares fit
     z64 = np.polyfit(x_values, y_values, 2)
-    x_range = np.arange(0, 200, 0.1)
+    x_range = np.arange(0, 150, 0.1)
     plt.plot(x_range, np.polyval(z64, x_range), label='quad fit dim = 64',alpha=0.5)
 
-    '''z16 = np.polyfit(x_values, y_values_16, 2)
-    plt.plot(x_range, np.polyval(z16, x_range), label='quad fit dim = 16',alpha=0.5)'''
+    z16 = np.polyfit(x_values, y_values_16, 2)
+    plt.plot(x_range, np.polyval(z16, x_range), label='quad fit dim = 16',alpha=0.5)
 
     zlay1 = np.polyfit(x_values, y_values_lay1, 2)
     plt.plot(x_range, np.polyval(zlay1, x_range), label='quad fit lay1',alpha=0.5)
@@ -45,13 +45,13 @@ def generate_plot(csv_files,csv_files16,csv_files_lay1,csv_files_ng,saveto):
 
 
     print('quad fit dim = 64:', z64)
-    '''print('quad fit dim = 16:', z16)'''
+    print('quad fit dim = 16:', z16)
     print('quad fit lay1:', zlay1)
     print('quad fit ng:', zng)
 
     #plot
     plt.plot(x_values, y_values, marker='o', linestyle='None', label='dim = 64',ms=5)
-    '''plt.plot(x_values, y_values_16, marker='o', linestyle='None', label='dim = 16',ms=5)'''
+    plt.plot(x_values, y_values_16, marker='o', linestyle='None', label='dim = 16',ms=5)
     plt.plot(x_values, y_values_lay1, marker='o', linestyle='None', label='lay1',ms=5)
     plt.plot(x_values, y_values_ng, marker='o', linestyle='None', label='ng',ms=5)
     plt.xlabel('City Count')
