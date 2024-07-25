@@ -1,0 +1,2 @@
+wandb: Currently logged in as: umutcanhalil10 (umutcanhalil10-University of Edinburgh). Use `wandb login --relogin` to force relogin
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:50<03:22, 50.59s/it] 40%|████      | 2/5 [01:16<01:47, 35.99s/it] 60%|██████    | 3/5 [01:42<01:02, 31.30s/it] 80%|████████  | 4/5 [02:07<00:29, 29.08s/it]100%|██████████| 5/5 [02:33<00:00, 27.82s/it]100%|██████████| 5/5 [02:33<00:00, 30.67s/it]

@@ -1,0 +1,5 @@
+CUDA_VISIBLE_DEVICES: 
+gpu id=  0
+Total number of parameters: 113096
+Using determinisitic Baseline
+{'bsz': 100, 'd_model': 64, 'coord_dim': 2, 'nb_layers': 3, 'mlp_cls': 'identity', 'city_count': 75, 'fourier_scale': None, 'start': 2.0, 'city_range': (0, 0), 'non_det': False, 'wandb': False, 'project_name': 'Mamba_big', 'action': 'next_city', 'nb_epochs': 5, 'nb_batch_per_epoch': 10, 'test_size': 2000, 'save_loc': 'checkpoints/gpu/mamba2_75_ng', 'checkpoint': None, 'recycle_data': 5, 'model_name': 'Full', 'mamba2': True, 'reverse': True, 'reverse_start': False, 'last_layer': 'pointer', 'test_folder_name': None, 'profiler': False, 'memory_snapshot': False, 'pynvml': True, 'gpu_id': 0, 'test_data_loc': 'data/start_2/2000_75_2.pt', 'B': None, 'x_flipped': False}
