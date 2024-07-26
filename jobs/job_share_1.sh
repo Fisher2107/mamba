@@ -16,4 +16,4 @@ source /exports/eddie/scratch/s2517783/miniconda3/bin/activate base
 cd /exports/eddie/scratch/s2517783/mamba
 conda activate tsp
 
-python tsp.py --save_loc 'checkpoints/big/share_20' --nb_epochs 1000 --nb_batch_per_epoch 10 --city_count 20 --mamba2 True --bsz 600 --reverse True --checkpoint 'checkpoints/big/64_G_city10_20-07_05-48.pt' --action 'next_city'
+python tsp.py --save_loc 'checkpoints/big/share_20' --nb_epochs 5000 --nb_batch_per_epoch 10 --city_count 20 --mamba2 True --bsz 600 --reverse True --checkpoint 'checkpoints/big/64_G_city10_20-07_05-48.pt' --action 'next_city'
