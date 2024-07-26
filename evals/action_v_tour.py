@@ -9,6 +9,7 @@ from model import MambaFull
 import torch
 import torch.nn
 import matplotlib.pyplot as plt
+import numpy as np
 
 coord_dim = 2
 city_count = 50
@@ -37,6 +38,25 @@ mean_tour_length_list4 = [tensor.cpu().numpy() for tensor in checkpoint4['mean_t
 mean_tour_length_list5 = [tensor.cpu().numpy() for tensor in checkpoint5['mean_tour_length_list']]
 mean_tour_length_list6 = [tensor.cpu().numpy() for tensor in checkpoint6['mean_tour_length_list']]
 
+mean_tour_length_lists = [mean_tour_length_list, mean_tour_length_list2, mean_tour_length_list3, mean_tour_length_list4, mean_tour_length_list5, mean_tour_length_list6]
+
+#for the first 3 mean tour len lists find mean and s.d of the last elementand same for the last 3
+last_elem = []
+for i in range(3):
+    last_elem.append(mean_tour_length_lists[i][-1])
+mean = np.mean(last_elem)
+sd = np.std(last_elem)
+print('action', mean, sd)
+
+last_elem = []
+for i in range(3,6):
+    last_elem.append(mean_tour_length_lists[i][-1])
+mean = np.mean(last_elem)
+sd = np.std(last_elem)
+
+print('tour', mean, sd)
+
+
 plt.plot(mean_tour_length_list, label='Action 1')
 plt.plot(mean_tour_length_list2, label='Action 2')
 plt.plot(mean_tour_length_list3, label='Action 3')
@@ -44,7 +64,7 @@ plt.plot(mean_tour_length_list4, label='Tour 1')
 plt.plot(mean_tour_length_list5, label='Tour 2')
 plt.plot(mean_tour_length_list6, label='Tour 3')
 
-greedy = 3.1791656017303467
+greedy = 6.9641
 #exact = 2.8630127906799316
 
 
@@ -53,9 +73,9 @@ plt.axhline(y=greedy, color='r', linestyle='--', label='Greedy Solver')
 # Add labels to the axes
 plt.xlabel('Epoch')
 plt.ylabel('Mean Tour Length')
-plt.ylim(2.85, 3.2)
+#plt.ylim(2.85, 3.2)
 
-plt.title('All layers')
+plt.title('Training Curves for Action and Tour Models')
 
 plt.legend()
 plt.savefig('figs/action_v_tour.pdf')
