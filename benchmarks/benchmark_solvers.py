@@ -19,10 +19,10 @@ def greedy_tsp(cities, device='cpu'):
     tour = torch.zeros(bsz, city_count, dtype=torch.long, device=device)
     tour_length = torch.zeros(bsz, device=device)
     current_city = torch.zeros(bsz, 2, device=device)
-    for i in range(city_count):
+    for i in tqdm(range(city_count)):
         if i == 0:
-            current_city = cities[arange_vec, i, :]
-            visited[arange_vec, i] = True
+            current_city = cities[arange_vec, 0, :]
+            visited[arange_vec, 0] = True
             
         else:
             current_city = cities[arange_vec, tour[arange_vec, i-1], :]
@@ -92,6 +92,16 @@ def exact_solver(cities, device='cpu', split=1):
     return all_min_tour_lengths.mean()
     
 if __name__ == '__main__':
-    test_input = torch.load('data/start_2/2000_5_2.pt')
+    test_input = torch.load('../data/start_2/2000_10_2.pt')
+    print(greedy_tsp(test_input)) # 3.1792
+    test_input = torch.load('../data/start_2/2000_20_2.pt')
+    print(greedy_tsp(test_input)) # 4.4843
+    test_input = torch.load('../data/start_2/2000_50_2.pt')
+    print(greedy_tsp(test_input)) # 6.9641
+    test_input = torch.load('../data/start_2/2000_100_2.pt')
+    print(greedy_tsp(test_input))#9.6730
+    test_input = torch.load('../data/start_2/2000_200_2.pt')
+    print(greedy_tsp(test_input))# 13.4371
+    test_input = torch.load('../data/start_2/2000_500_2.pt')
     print(greedy_tsp(test_input))
-    print(exact_solver(test_input))
+    #print(exact_solver(test_input))
