@@ -4,7 +4,7 @@ import os
 # Add the parent directory to the system path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from benchmark_solvers import greedy_tsp,exact_solver
+from benchmarks.benchmark_solvers import greedy_tsp,exact_solver
 from model import MambaFull
 import torch
 import torch.nn
