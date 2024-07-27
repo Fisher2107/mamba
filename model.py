@@ -309,35 +309,6 @@ def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_tr
 
     return L_train_train_total, L_baseline_train_total
 
-def non_reccurant_train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,action):
-    # list that will contain Long tensors of shape (bsz,) that gives the idx of the cities chosen at time t
-    lastlayer = 'identity'
-    if model_train.pointer:
-        lastlayer = 'pointer'
-    
-    #A toy example where we simply train the model to predict the city with the smallest x+y coordinate
-    if action == 'tour':
-        bsz = inputs.shape[0]
-        city_count = inputs.shape[1] - 1
-        if lastlayer=='pointer':
-            outputs = model_train(inputs,city_count)[:,-1,:]
-        else:
-            outputs = model_train(inputs)[:,-1,:]
-        outputs = nn.Softmax(dim=1)(outputs)
-        #print(outputs.shape)
-        
-        target = torch.sum(inputs,dim=2).argmin(dim=1)
-        #print(target)
-        #print(inputs.shape,target.shape)
-        #print(inputs[0],target[0])
-        
-        loss = -torch.log(outputs[torch.arange(bsz),target]).mean()
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-
-    return 0, 0
-
 class Bandau_Pointer(nn.Module):
     def __init__(self, d_model,nb_layers,reverse,reverse_start):
         super().__init__()
