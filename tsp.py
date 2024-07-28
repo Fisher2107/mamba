@@ -166,11 +166,9 @@ if False:
 print('Total number of parameters:', sum(p.numel() for p in model_train.parameters()))
 print('Using determinisitic Baseline')
 
-# Load test data
+# Load test data and val data
 test_data = torch.load(args.test_data_loc).to(device)
-val_data = generate_data(device, 2000, args.city_count, args.coord_dim,start=args.start)
-test_data_batches = torch.split(test_data, args.bsz)
-val_data_batches = torch.split(val_data, args.bsz)
+val_data = generate_data(device, 10000, args.city_count, args.coord_dim,start=args.start)
 
 print(args)
 
@@ -217,48 +215,35 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
     time_tot = time.time()-start_training_time + tot_time_ckpt
 
     ###################
-    # Evaluate train model and baseline
+    # Evaluate train model and baseline on test and validation sets
     ###################
     model_train.eval()
     with torch.no_grad():
-        #L_train is the average tour length of the train model on the test data
-        L_train_total = 0
-        L_baseline_total = 0
-        L_train_val_total = 0
-        L_baseline_val_total = 0
-        
-        # Compute tour for model and baseline for test data, making it sure its split to not overload the gpu
+        #TEST DATA; Compute tour for model and baseline
         #We use the test data to evaluate the model
-        for batch_num,test_data_batch in enumerate(test_data_batches):
-            if args.pynvml: gpu_logger.log_event(f'Epoch {epoch}, Generating tour on test data batch {batch_num}')
-            tour_train, _ = seq2seq_generate_tour(device, model_train,test_data_batch, lastlayer=args.last_layer,deterministic=True)
-            tour_baseline, _ = seq2seq_generate_tour(device, model_baseline, test_data_batch, lastlayer=args.last_layer, deterministic=True)
+        if args.pynvml: gpu_logger.log_event(f'Testing on test data')
+        tour_train, _ = seq2seq_generate_tour(device, model_train,test_data, lastlayer=args.last_layer,deterministic=True)
+        tour_baseline, _ = seq2seq_generate_tour(device, model_baseline, test_data, lastlayer=args.last_layer, deterministic=True)
 
-            if args.pynvml: gpu_logger.log_event(f'Epoch {epoch}, computing tour length on test data batch {batch_num}')
-            # Get the lengths of the tours and add to the accumulators
-            L_train_total += compute_tour_length(test_data_batch, tour_train).sum()
-            L_baseline_total += compute_tour_length(test_data_batch, tour_baseline).sum()
+        #L_train is the average tour length of the train model on the test data
+        L_train = compute_tour_length(test_data, tour_train).mean()
+        L_baseline = compute_tour_length(test_data, tour_baseline).mean()
 
-        # Compute the average tour lengths
-        L_train = L_train_total / args.test_size
-        L_baseline = L_baseline_total / args.test_size
-        if args.pynvml: gpu_logger.log_event(f'Epoch {epoch} saving checkpoint and updating baseline if train is better')
 
-        # Compute tour for model and baseline for validation data, making it sure its split to not overload the gpu
+        #VALIDATION DATA; Compute tour for model and baseline
         #We use the validation data to update the baseline model
-        for batch_num,val_data_batch in enumerate(val_data_batches):
-            tour_train, _ = seq2seq_generate_tour(device, model_train,val_data_batch, lastlayer=args.last_layer,deterministic=True)
-            tour_baseline, _ = seq2seq_generate_tour(device, model_baseline, val_data_batch, lastlayer=args.last_layer, deterministic=True)
+        if args.pynvml: gpu_logger.log_event(f'Testing on val data')
+        tour_train, _ = seq2seq_generate_tour(device, model_train,val_data, lastlayer=args.last_layer,deterministic=True)
+        tour_baseline, _ = seq2seq_generate_tour(device, model_baseline, val_data, lastlayer=args.last_layer, deterministic=True)
 
-            # Get the lengths of the tours and add to the accumulators
-            L_train_val_total += compute_tour_length(val_data_batch, tour_train).sum()
-            L_baseline_val_total += compute_tour_length(val_data_batch, tour_baseline).sum()
+        # Get the lengths of the tours and add to the accumulators
+        L_train_val= compute_tour_length(val_data, tour_train).mean()
+        L_baseline_val= compute_tour_length(val_data, tour_baseline).mean()
 
-        if L_train_val_total < L_baseline_val_total:
+        if L_train_val < L_baseline_val:
             model_baseline.load_state_dict( model_train.state_dict() )
             best_time = time_tot
-            val_data = generate_data(device, 2000, args.city_count, args.coord_dim,start=args.start)
-            val_data_batches = torch.split(val_data, args.bsz)
+            val_data = generate_data(device, 10000, args.city_count, args.coord_dim,start=args.start)
         
 
     #print(f'Epoch {epoch}, test tour length train: {L_train}, test tour length baseline: {L_baseline}, time one epoch: {time_one_epoch}, time tot: {time_tot}')
@@ -273,9 +258,8 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
         })
 
     mean_tour_length_list.append(L_train)
-    
 
-    # Save checkpoint every 10,000 epochs
+    # Save checkpoint
     if L_train < mean_tour_length_best or epoch % 10 == 0:
         if L_train < mean_tour_length_best:
             mean_tour_length_best = L_train
