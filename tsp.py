@@ -37,6 +37,7 @@ parser.add_argument('--nb_batch_per_epoch', type=int, default=10, help='Number o
 parser.add_argument('--test_size', type=int, default=2000, help='Size of test data')
 parser.add_argument('--save_loc', type=str, default='checkpoints/not_named', help='Location to save model')
 parser.add_argument('--checkpoint', type=str, default=None, help='Checkpoint to load')
+parser.add_argument('--datetime', type=str, default=False, help='Add datetime to checkpoint name')
 parser.add_argument('--recycle_data', type=int, default=0, help='Recycle data')
 parser.add_argument('--model_name', type=str, default='Full', help='Model name')
 parser.add_argument('--mamba2', type=bool, default=False, help='choose if mamba2 is used')
@@ -135,13 +136,13 @@ if checkpoint:
         model_train.load_state_dict(checkpoint['model_state_dict'])
         model_baseline.load_state_dict(checkpoint['model_state_dict']) 
 
-    optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
     tot_time_ckpt = checkpoint['time_tot']
     start_epoch = checkpoint['epoch']
     mean_tour_length_list = checkpoint['mean_tour_length_list']
 
     if checkpoint['args'].city_count == args.city_count:
         mean_tour_length_best = min([i.item() for i in checkpoint['mean_tour_length_list']])
+        optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
     else:
         mean_tour_length_best = float('inf')
     
@@ -264,8 +265,6 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
         if L_train < mean_tour_length_best:
             mean_tour_length_best = L_train
 
-        # Append to filename
-        filename = f"file_{date_time}.pt"
         checkpoint = {
             'epoch': epoch,
             'model_train_state_dict': model_train.state_dict(),
@@ -276,7 +275,10 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
             'time_tot': time_tot,
             'time_to_reach_best': best_time,
         }
-        torch.save(checkpoint, f'{args.save_loc}_{date_time}.pt' )
+        if args.datetime:
+            torch.save(checkpoint, f'{args.save_loc}_{date_time}.pt' )
+        else:
+            torch.save(checkpoint, f'{args.save_loc}.pt' )
 
 if args.pynvml: 
     gpu_logger.stop_logging()

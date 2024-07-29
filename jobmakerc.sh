@@ -2,7 +2,6 @@
 
 # 1st arg - runtime in hours of each job
 # 2nd arg - job name
-# 3rf arg - memory in GB
 
 # Counter for job number
 job_count=1
@@ -19,22 +18,20 @@ do
         # Write the job script
         cat << EOF > "$job_file"
 #!/bin/bash
-#$ -N job_${2}_${job_count}
-#$ -wd /exports/eddie/scratch/s2517783/mamba
-#$ -l h_rt=${1}:00:00
-#$ -q gpu
-#$ -pe gpu-a100 1
-#$ -l h_vmem=${3}G
-#$ -l rl9=true
+#
+#SBATCH --partition=gpu
+#SBATCH --qos=gpu
+#SBATCH --gres=gpu:4
+#SBATCH --time=${1}:00:00
 
-. /etc/profile.d/modules.sh
-. /exports/applications/support/set_qlogin_environment.sh
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=tc064-s2517783
 
-module load cuda/12.1.1
-
-source /exports/eddie/scratch/s2517783/miniconda3/bin/activate base
-cd /exports/eddie/scratch/s2517783/mamba
-conda activate tsp
+# Load the required modules
+module load nvidia/nvhpc/24.5
+pwd
+source ../miniconda3/bin/activate
+conda activate base
 
 $line
 EOF

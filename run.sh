@@ -1,7 +1,15 @@
 #!/bin/bash
+#CIRRUS REDO
+python tsp.py --save_loc 'checkpoints/big_cirrus/64_G_city20' --nb_layers 3  --nb_epochs 6000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10 --bsz 600 --last_layer 'pointer' --reverse True --action 'next_city'  --project_name 'big_cirrus' 
+python tsp.py --save_loc 'checkpoints/big_cirrus/64_G_city50' --nb_layers 3  --nb_epochs 6000  --mamba2 True --city_count 50 --nb_batch_per_epoch 40 --bsz 220 --last_layer 'pointer' --reverse True --action 'next_city'  --project_name 'big_cirrus' --recycle_data 10
+python tsp.py --save_loc 'checkpoints/big_cirrus/64_G_city100' --nb_layers 3  --nb_epochs 6000 --mamba2 True --city_count 100 --nb_batch_per_epoch 40 --bsz 220 --last_layer 'pointer' --reverse True --action 'next_city'  --project_name 'big_cirrus' --recycle_data 10
 
-python tsp.py --save_loc 'checkpoints/big/share_50_big' --nb_epochs 5500 -nb_batch_per_epoch 40 --city_count 50  --mamba2 True --bsz 220 --reverse True  --checkpoint 'checkpoints/big/share_50_general_27-07_13-29.pt'
-python tsp.py --save_loc 'checkpoints/big/share_100_big' --nb_epochs 6000 -nb_batch_per_epoch 40 --city_count 100  --mamba2 True --bsz 220 --reverse True  --checkpoint 'checkpoints/big/share_50_general_27-07_13-29.pt' --action 'next_city'
+
+#ABALATION
+
+#SHARE BIG
+#python tsp.py --save_loc 'checkpoints/big/share_50_big' --nb_epochs 5500 --nb_batch_per_epoch 40 --city_count 50  --mamba2 True --bsz 220 --reverse True  --checkpoint 'checkpoints/big/share_50_general_27-07_13-29.pt'
+#python tsp.py --save_loc 'checkpoints/big/share_100_big' --nb_epochs 6000 --nb_batch_per_epoch 40 --city_count 100  --mamba2 True --bsz 220 --reverse True  --checkpoint 'checkpoints/big/share_50_general_27-07_13-29.pt' --action 'next_city'
 
 #action = next_city
 #python tsp.py --save_loc 'checkpoints/action/city50_big_nondet' --nb_layers 3  --nb_epochs 30  --mamba2 True --city_count 50 --nb_batch_per_epoch 40 --bsz 150 --last_layer 'pointer' --reverse True --project_name 'Mamba_action' --non_det True
