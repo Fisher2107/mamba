@@ -32,18 +32,18 @@ checkpoint4 = torch.load('../checkpoints/embed2/fourier10_5city_3l_05-07_23-04.p
 checkpoint5 = torch.load('../checkpoints/embed2/linear_5city_3l_05-07_23-11.pt')'''
 
 #5city 4layer
-'''checkpoint = torch.load('../checkpoints/embed2/fourier1_5city_4l_05-07_21-38.pt')
+checkpoint = torch.load('../checkpoints/embed2/fourier1_5city_4l_05-07_21-38.pt')
 checkpoint2 = torch.load('../checkpoints/embed2/fourier2_5city_4l_05-07_20-37.pt')
 checkpoint3 = torch.load('../checkpoints/embed2/fourier5_5city_4l_06-07_07-24.pt')
 checkpoint4 = torch.load('../checkpoints/embed2/fourier10_5city_4l_05-07_20-11.pt')
-checkpoint5 = torch.load('../checkpoints/embed2/linear_5city_4l_06-07_00-11.pt')'''
+checkpoint5 = torch.load('../checkpoints/embed2/linear_5city_4l_06-07_00-11.pt')
 
 #10city 3layer
-checkpoint = torch.load('../checkpoints/embed2/fourier1_10city_3l_06-07_09-10.pt')
+'''checkpoint = torch.load('../checkpoints/embed2/fourier1_10city_3l_06-07_09-10.pt')
 checkpoint2 = torch.load('../checkpoints/embed2/fourier2_10city_3l_06-07_01-37.pt')
 checkpoint3 = torch.load('../checkpoints/embed2/fourier5_10city_3l_06-07_08-51.pt')
 checkpoint4 = torch.load('../checkpoints/embed2/fourier10_10city_3l_06-07_03-54.pt')
-checkpoint5 = torch.load('../checkpoints/embed2/linear_10city_3l_05-07_18-18.pt')
+checkpoint5 = torch.load('../checkpoints/embed2/linear_10city_3l_05-07_18-18.pt')'''
 
 #10city 4layer
 '''checkpoint = torch.load('../checkpoints/embed2/fourier1_10city_4l_06-07_00-17.pt')
@@ -58,9 +58,13 @@ mean_tour_length_list3 = [tensor.cpu().numpy() for tensor in checkpoint3['mean_t
 mean_tour_length_list4 = [tensor.cpu().numpy() for tensor in checkpoint4['mean_tour_length_list']]
 mean_tour_length_list5 = [tensor.cpu().numpy() for tensor in checkpoint5['mean_tour_length_list']]
 
-
+#10 city
 greedy = 3.1791656017303467
 exact = 2.8630127906799316
+
+#5 city
+greedy = 2.207540988922119
+exact = 2.121398448944092
 
 
 print(min(mean_tour_length_list))
@@ -94,5 +98,5 @@ plt.ylabel('Mean Tour Length')
 #plt.ylim(2.1, 2.64)
 
 plt.legend()
-plt.savefig('figs/10_city/embed_3l.pdf')
+plt.savefig('figs/5_city/embed_4l.pdf')
 plt.show()
