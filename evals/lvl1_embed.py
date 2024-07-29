@@ -39,18 +39,18 @@ checkpoint4 = torch.load('../checkpoints/embed2/fourier10_5city_4l_05-07_20-11.p
 checkpoint5 = torch.load('../checkpoints/embed2/linear_5city_4l_06-07_00-11.pt')'''
 
 #10city 3layer
-'''checkpoint = torch.load('../checkpoints/embed2/fourier1_10city_3l_06-07_09-10.pt')
+checkpoint = torch.load('../checkpoints/embed2/fourier1_10city_3l_06-07_09-10.pt')
 checkpoint2 = torch.load('../checkpoints/embed2/fourier2_10city_3l_06-07_01-37.pt')
 checkpoint3 = torch.load('../checkpoints/embed2/fourier5_10city_3l_06-07_08-51.pt')
 checkpoint4 = torch.load('../checkpoints/embed2/fourier10_10city_3l_06-07_03-54.pt')
-checkpoint5 = torch.load('../checkpoints/embed2/linear_10city_3l_05-07_18-18.pt')'''
+checkpoint5 = torch.load('../checkpoints/embed2/linear_10city_3l_05-07_18-18.pt')
 
 #10city 4layer
-checkpoint = torch.load('../checkpoints/embed2/fourier1_10city_4l_06-07_00-17.pt')
+'''checkpoint = torch.load('../checkpoints/embed2/fourier1_10city_4l_06-07_00-17.pt')
 checkpoint2 = torch.load('../checkpoints/embed2/fourier2_10city_4l_06-07_03-17.pt')
 checkpoint3 = torch.load('../checkpoints/embed2/fourier5_10city_4l_06-07_22-45.pt')
 checkpoint4 = torch.load('../checkpoints/embed2/fourier10_10city_4l_06-07_06-11.pt')
-checkpoint5 = torch.load('../checkpoints/embed2/linear_10city_4l_05-07_17-11.pt')
+checkpoint5 = torch.load('../checkpoints/embed2/linear_10city_4l_05-07_17-11.pt')'''
 
 mean_tour_length_list = [tensor.cpu().numpy() for tensor in checkpoint['mean_tour_length_list']]
 mean_tour_length_list2 = [tensor.cpu().numpy() for tensor in checkpoint2['mean_tour_length_list']]
@@ -58,18 +58,29 @@ mean_tour_length_list3 = [tensor.cpu().numpy() for tensor in checkpoint3['mean_t
 mean_tour_length_list4 = [tensor.cpu().numpy() for tensor in checkpoint4['mean_tour_length_list']]
 mean_tour_length_list5 = [tensor.cpu().numpy() for tensor in checkpoint5['mean_tour_length_list']]
 
+
+greedy = 3.1791656017303467
+exact = 2.8630127906799316
+
+
+print(min(mean_tour_length_list))
+print(min(mean_tour_length_list2))
+print(min(mean_tour_length_list3))
+print(min(mean_tour_length_list4))
+print(min(mean_tour_length_list5))
+
+print('optimality gap', (min(mean_tour_length_list)-exact)/exact)
+print('optimality gap', (min(mean_tour_length_list2)-exact)/exact)
+print('optimality gap', (min(mean_tour_length_list3)-exact)/exact)
+print('optimality gap', (min(mean_tour_length_list4)-exact)/exact)
+print('optimality gap', (min(mean_tour_length_list5)-exact)/exact)
+
 plt.plot(mean_tour_length_list, label='Fourier1 ')
 plt.plot(mean_tour_length_list2, label='Fourier2 ')
 plt.plot(mean_tour_length_list3, label='Fourier5 ')
 plt.plot(mean_tour_length_list4, label='Fourier10 ')
 plt.plot(mean_tour_length_list5, label='Linear ')
-#plt.plot(mean_tour_length_list3)
-#plt.plot(mean_tour_length_list4)
 
-#greedy = greedy_tsp(test_data)[0].item()
-#exact = exact_solver(test_data,device='cuda').item()
-greedy = 3.1791656017303467
-exact = 2.8630127906799316
 print(greedy)
 print(exact)
 
@@ -83,5 +94,5 @@ plt.ylabel('Mean Tour Length')
 #plt.ylim(2.1, 2.64)
 
 plt.legend()
-plt.savefig('figs/10_city/embed_4l.pdf')
+plt.savefig('figs/10_city/embed_3l.pdf')
 plt.show()
