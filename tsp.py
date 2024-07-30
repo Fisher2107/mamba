@@ -12,8 +12,7 @@ import wandb
 from torch.profiler import profile, record_function, ProfilerActivity
 
 
-#login to wandb
-wandb.login()
+
 #parser
 parser = argparse.ArgumentParser(description='Train Mamba model')
 parser.add_argument('--bsz', type=int, default=600, help='Batch size')
@@ -96,6 +95,8 @@ elif args.reverse and not args.reverse_start:
         args['x_flipped']=True
 
 if args.wandb:
+    #login to wandb
+    wandb.login()
     project_name = args.project_name
     if args.profiler:
         project_name = 'Mamba_profiler'
