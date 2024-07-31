@@ -32,6 +32,7 @@ parser.add_argument('--action', type=str, default='tour', help="Select if action
 
 parser.add_argument('--nb_epochs', type=int, default=500, help='Number of epochs')
 parser.add_argument('--nb_batch_per_epoch', type=int, default=10, help='Number of batches per epoch')
+parser.add_argument('--use_inf_params', type=bool, default=False, help='Set to True if you want to use inference parameters allowing for autoregressive')
 
 parser.add_argument('--test_size', type=int, default=2000, help='Size of test data')
 parser.add_argument('--save_loc', type=str, default='checkpoints/not_named', help='Location to save model')
@@ -98,8 +99,6 @@ if args.wandb:
     #login to wandb
     wandb.login()
     project_name = args.project_name
-    if args.profiler:
-        project_name = 'Mamba_profiler'
     run = wandb.init(
         # Set the project where this run will be logged
         project=project_name,
@@ -205,13 +204,13 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
         if args.profiler and epoch>args.nb_epochs-2:
             with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], record_shapes=True,profile_memory=True, with_stack=True) as prof:
                 with record_function("model_inference"):
-                    L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,args.action,args.non_det)
+                    L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,args.action,args.non_det,args.use_inf_params)
                 prof.step()  # Denotes step end
             print('Epoch:', epoch, ' Step:', step)
             print(prof.key_averages().table(sort_by="cuda_time_total"))
             prof.export_chrome_trace(f'{args.save_loc}.json')
         else:
-            L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,args.action,args.non_det)
+            L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,args.action,args.non_det,args.use_inf_params)
         
     time_one_epoch = time.time()-start
     time_tot = time.time()-start_training_time + tot_time_ckpt
@@ -224,8 +223,8 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
         #TEST DATA; Compute tour for model and baseline
         #We use the test data to evaluate the model
         if args.pynvml: gpu_logger.log_event(f'Testing on test data')
-        tour_train, _ = seq2seq_generate_tour(device, model_train,test_data, lastlayer=args.last_layer,deterministic=True)
-        tour_baseline, _ = seq2seq_generate_tour(device, model_baseline, test_data, lastlayer=args.last_layer, deterministic=True)
+        tour_train, _ = seq2seq_generate_tour(device, model_train,test_data, lastlayer=args.last_layer,deterministic=True,use_inf_params=args.use_inf_params)
+        tour_baseline, _ = seq2seq_generate_tour(device, model_baseline, test_data, lastlayer=args.last_layer, deterministic=True,use_inf_params=args.use_inf_params)
 
         #L_train is the average tour length of the train model on the test data
         L_train = compute_tour_length(test_data, tour_train).mean()
@@ -235,8 +234,8 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
         #VALIDATION DATA; Compute tour for model and baseline
         #We use the validation data to update the baseline model
         if args.pynvml: gpu_logger.log_event(f'Testing on val data')
-        tour_train, _ = seq2seq_generate_tour(device, model_train,val_data, lastlayer=args.last_layer,deterministic=True)
-        tour_baseline, _ = seq2seq_generate_tour(device, model_baseline, val_data, lastlayer=args.last_layer, deterministic=True)
+        tour_train, _ = seq2seq_generate_tour(device, model_train,val_data, lastlayer=args.last_layer,deterministic=True,use_inf_params=args.use_inf_params)
+        tour_baseline, _ = seq2seq_generate_tour(device, model_baseline, val_data, lastlayer=args.last_layer, deterministic=True,use_inf_params=args.use_inf_params)
 
         # Get the lengths of the tours and add to the accumulators
         L_train_val= compute_tour_length(val_data, tour_train).mean()

@@ -3,6 +3,7 @@ from mamba_ssm.modules.mamba2 import Mamba2
 from mamba_ssm.modules.block import Block
 from mamba_ssm.ops.triton.layer_norm import RMSNorm, layer_norm_fn, rms_norm_fn
 from mamba_ssm.modules.mlp import GatedMLP
+from mamba_ssm.utils.generation import InferenceParams
 import torch
 from torch.distributions.categorical import Categorical
 from functools import partial
@@ -134,7 +135,7 @@ class MambaFull(nn.Module):
         self.reverse_start = reverse_start
 
     #only include city_count if you want to override the default city_count and you are use last_layer='pointer'
-    def forward(self,x,city_count=None):
+    def forward(self,x,city_count=None,inference_params=None):
         x = self.embedding(x)
         if self.reverse_start:
             x = torch.flip(x,[1])
@@ -144,7 +145,10 @@ class MambaFull(nn.Module):
             if self.reverse == True and i>0:
                 x , residual = layer(torch.flip(x,[1]),torch.flip(residual,[1]))
             else:
-                x , residual = layer(x,residual)
+                if inference_params is None:
+                    x , residual = layer(x,residual)
+                else:
+                    x , residual = layer(x,residual,inference_params=inference_params)
 
         # Set prenorm=False here since we don't need the residual
         x = layer_norm_fn(
@@ -167,7 +171,7 @@ class MambaFull(nn.Module):
         #mask vistited cities
         return logits
 
-def seq2seq_generate_tour(device,model,inputs,lastlayer,deterministic=False,sum_logactions=True):
+def seq2seq_generate_tour(device,model,inputs,lastlayer,deterministic=False,sum_logactions=True,use_inf_params=False):
     # Mask is used to prevent the model from choosing the same city twice
     bsz = inputs.shape[0]
     city_count = inputs.shape[1] - 1
@@ -177,11 +181,17 @@ def seq2seq_generate_tour(device,model,inputs,lastlayer,deterministic=False,sum_
     # list that will contain Float tensors of shape (bsz,) that gives the log probs of the choices made at time t
     LogProbOfActions = []
     #Construct tour recursively
+    if use_inf_params:
+        inference_params = InferenceParams(max_seqlen=inputs.shape[1]*2, max_batch_size=inputs.shape[0])
+    else:
+        inference_params = None
     for i in range(city_count):
         if lastlayer=='pointer':
-            outputs = model(inputs,city_count)[:,-1,:] #outputs of shape (bsz,city_count)
+            outputs = model(inputs,city_count,inference_params=inference_params)[:,-1,:] #outputs of shape (bsz,city_count)
         else:
-            outputs = model(inputs)[:,-1,:]
+            outputs = model(inputs,inference_params=inference_params)[:,-1,:]
+        if use_inf_params:
+            inference_params.seqlen_offset += 1
         #print(outputs.shape)
         outputs = outputs.masked_fill_(mask == 0, -float('inf'))
         #print(outputs[0])
@@ -204,7 +214,7 @@ def seq2seq_generate_tour(device,model,inputs,lastlayer,deterministic=False,sum_
     else:
         return tours, LogProbOfActions
     
-def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,action,non_det):
+def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,action,non_det,use_inf_params=False):
     # list that will contain Long tensors of shape (bsz,) that gives the idx of the cities chosen at time t
     lastlayer = 'identity'
     if model_train.pointer:
@@ -212,9 +222,9 @@ def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_tr
     
     if action == 'tour':
         if gpu_logger: gpu_logger.log_event('generating tours of train model')
-        tours_train, sumLogProbOfActions = seq2seq_generate_tour(device,model_train,inputs,lastlayer=lastlayer,deterministic=False)
+        tours_train, sumLogProbOfActions = seq2seq_generate_tour(device,model_train,inputs,lastlayer=lastlayer,deterministic=False,use_inf_params=use_inf_params)
         if gpu_logger: gpu_logger.log_event('generating tours of baseline model')
-        tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=not non_det)
+        tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=not non_det,use_inf_params=use_inf_params)
 
         
         #get the length of the tours
@@ -236,8 +246,8 @@ def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_tr
 
     elif action == 'next_city':
         with torch.no_grad():
-            tours_train, _ = seq2seq_generate_tour(device,model_train,inputs,lastlayer=lastlayer,deterministic=False)
-            tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=not non_det)
+            tours_train, _ = seq2seq_generate_tour(device,model_train,inputs,lastlayer=lastlayer,deterministic=False,use_inf_params=use_inf_params)
+            tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=not non_det,use_inf_params=use_inf_params)
         
             #get the length of the tours
             if gpu_logger: gpu_logger.log_event('computing tour length of train model')
@@ -269,6 +279,7 @@ def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_tr
             loss.backward()
         optimizer.step()
     
+    ##SS
     elif action == 'next_city2':
         with torch.no_grad():
             tours_train, _ = seq2seq_generate_tour(device,model_train,inputs,lastlayer=lastlayer,deterministic=False)
