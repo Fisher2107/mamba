@@ -1,8 +1,20 @@
 #!/bin/bash
+#Autoregressive
+python tsp.py --save_loc 'checkpoints/autoregressive/10_no_param_pointer' --nb_layers 3 --mamba2 True --nb_epochs 100 --nb_batch_per_epoch 10 --bsz 1200 --city_count 10                        --project_name 'auto' --wandb
+#python tsp.py --save_loc 'checkpoints/autoregressive/10_with_param_pointer' --nb_layers 3 --mamba2 True --nb_epochs 10 --nb_batch_per_epoch 10 --bsz 1200 --city_count 10 --use_inf_params True --project_name 'auto' --wandb
+
+#python tsp.py --save_loc 'checkpoints/autoregressive/10_with_param_3' --nb_layers 3 --mamba2 True --nb_epochs 200 --nb_batch_per_epoch 10 --bsz 1200 --city_count 10 --last_layer 'identity' --use_inf_params True --project_name 'auto'
+#python tsp.py --save_loc 'checkpoints/autoregressive/10_no_param_3' --nb_layers 3 --mamba2 True --nb_epochs 200 --nb_batch_per_epoch 10 --bsz 1200 --city_count 10 --last_layer 'identity' --project_name 'auto' 
+#python tsp.py --save_loc 'checkpoints/autoregressive/10_with_param_4' --nb_layers 3 --mamba2 True --nb_epochs 200 --nb_batch_per_epoch 10 --bsz 1200 --city_count 10 --last_layer 'identity' --use_inf_params True --project_name 'auto'
+#python tsp.py --save_loc 'checkpoints/autoregressive/10_no_param_4' --nb_layers 3 --mamba2 True --nb_epochs 200 --nb_batch_per_epoch 10 --bsz 1200 --city_count 10 --last_layer 'identity' --project_name 'auto' 
+#python tsp.py --save_loc 'checkpoints/autoregressive/10_with_param_5' --nb_layers 3 --mamba2 True --nb_epochs 200 --nb_batch_per_epoch 10 --bsz 1200 --city_count 10 --last_layer 'identity' --use_inf_params True --project_name 'auto'
+#python tsp.py --save_loc 'checkpoints/autoregressive/10_no_param_5' --nb_layers 3 --mamba2 True --nb_epochs 200 --nb_batch_per_epoch 10 --bsz 1200 --city_count 10 --last_layer 'identity' --project_name 'auto' 
+
+
 #CIRRUS REDO
-python tsp.py --save_loc 'checkpoints/big_cirrus/64_G_city20' --nb_layers 3  --nb_epochs 6000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10 --bsz 600 --last_layer 'pointer' --reverse True --action 'next_city'  --project_name 'big_cirrus' 
-python tsp.py --save_loc 'checkpoints/big_cirrus/64_G_city50' --nb_layers 3  --nb_epochs 6000  --mamba2 True --city_count 50 --nb_batch_per_epoch 40 --bsz 220 --last_layer 'pointer' --reverse True --action 'next_city'  --project_name 'big_cirrus' --recycle_data 10
-python tsp.py --save_loc 'checkpoints/big_cirrus/64_G_city100' --nb_layers 3  --nb_epochs 6000 --mamba2 True --city_count 100 --nb_batch_per_epoch 40 --bsz 220 --last_layer 'pointer' --reverse True --action 'next_city'  --project_name 'big_cirrus' --recycle_data 10
+#python tsp.py --save_loc 'checkpoints/big_cirrus/64_G_city20' --nb_layers 3  --nb_epochs 6000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10 --bsz 600 --last_layer 'pointer' --reverse True --action 'next_city'  --project_name 'big_cirrus' 
+#python tsp.py --save_loc 'checkpoints/big_cirrus/64_G_city50' --nb_layers 3  --nb_epochs 6000  --mamba2 True --city_count 50 --nb_batch_per_epoch 40 --bsz 220 --last_layer 'pointer' --reverse True --action 'next_city'  --project_name 'big_cirrus' --recycle_data 10
+#python tsp.py --save_loc 'checkpoints/big_cirrus/64_G_city100' --nb_layers 3  --nb_epochs 6000 --mamba2 True --city_count 100 --nb_batch_per_epoch 40 --bsz 220 --last_layer 'pointer' --reverse True --action 'next_city'  --project_name 'big_cirrus' --recycle_data 10
 
 
 #ABALATION

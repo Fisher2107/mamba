@@ -119,9 +119,17 @@ else:
 if args.memory_snapshot:
     torch.cuda.memory._record_memory_history()
 
-#load train and baseline model, where baseline is used to reduce variance in loss function as per the REINFORCE algorithm. 
-model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer).to(device)
-model_baseline = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer).to(device)
+#load train and baseline model, where baseline is used to reduce variance in loss function as per the REINFORCE algorith
+#If args.mamba 
+if args.mamba_input:
+    model_train = MambaInput(args.d_model, args.city_count, args.nb_layers, args.d_model, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer).to(device)
+    model_baseline = MambaInput(args.d_model, args.city_count, args.nb_layers, args.d_model, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer).to(device)
+
+    model_train_input = MambaInput(args.d_model, args.city_count, args.nb_mamba_input_layers, args.coord_dim, args.mlp_cls, args.B, True, False, args.mamba2,'identity').to(device)
+    model_train_baseline = MambaInput(args.d_model, args.city_count, args.nb_mamba_input_layers, args.coord_dim, args.mlp_cls, args.B, True, False, args.mamba2,'identity').to(device)
+else:
+    model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer).to(device)
+    model_baseline = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer).to(device)
 for param in model_baseline.parameters():
     param.requires_grad = False
 loss_fn = nn.CrossEntropyLoss()
