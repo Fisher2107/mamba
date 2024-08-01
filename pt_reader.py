@@ -12,3 +12,4 @@ args = argparser.parse_args()
 
 checkpoint = torch.load(args.checkpoint,map_location='cpu')
 print(checkpoint['args'])
+print(checkpoint['time_tot'])
