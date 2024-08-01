@@ -1,8 +1,12 @@
 #!/bin/bash
 #Autoregressive
-python tsp.py --save_loc 'checkpoints/autoregressive/10_no_param_pointer' --nb_layers 3 --mamba2 True --nb_epochs 100 --nb_batch_per_epoch 10 --bsz 1200 --city_count 10                        --project_name 'auto' --wandb
-#python tsp.py --save_loc 'checkpoints/autoregressive/10_with_param_pointer' --nb_layers 3 --mamba2 True --nb_epochs 10 --nb_batch_per_epoch 10 --bsz 1200 --city_count 10 --use_inf_params True --project_name 'auto' --wandb
+python tsp.py --save_loc 'checkpoints/autoregressive/10_pointer_stats' --nb_layers 3 --mamba2 True --nb_epochs 10 --nb_batch_per_epoch 10 --bsz 2000 --city_count 10 --project_name 'auto' --pynvml True --wandb --gpu_id 0
+python tsp.py --save_loc 'checkpoints/autoregressive/10_auto_pointer_stats' --nb_layers 3 --mamba2 True --nb_epochs 10 --nb_batch_per_epoch 10 --bsz 2000 --city_count 10 --use_inf_params True --project_name 'auto' --pynvml True --wandb --gpu_id 0
+python tsp.py --save_loc 'checkpoints/autoregressive/50_pointer_stats' --nb_layers 3 --mamba2 True --nb_epochs 10 --nb_batch_per_epoch 10 --bsz 200 --city_count 50 --project_name 'auto' --pynvml True --wandb --gpu_id 0
+python tsp.py --save_loc 'checkpoints/autoregressive/50_auto_pointer_stats' --nb_layers 3 --mamba2 True --nb_epochs 10 --nb_batch_per_epoch 10 --bsz 200 --city_count 50 --use_inf_params True --project_name 'auto' --pynvml True --wandb --gpu_id 0
 
+python tsp.py --save_loc 'checkpoints/autoregressive/10_reverse_pointer_stats' --nb_layers 3 --mamba2 True --nb_epochs 10 --nb_batch_per_epoch 10 --bsz 2000 --city_count 10 --project_name 'auto' --pynvml True --wandb --gpu_id 0 --reverse True
+python tsp.py --save_loc 'checkpoints/autoregressive/50_reverse_pointer_stats' --nb_layers 3 --mamba2 True --nb_epochs 10 --nb_batch_per_epoch 10 --bsz 2000 --city_count 50 --project_name 'auto' --pynvml True --wandb --gpu_id 0 --reverse True
 #python tsp.py --save_loc 'checkpoints/autoregressive/10_with_param_3' --nb_layers 3 --mamba2 True --nb_epochs 200 --nb_batch_per_epoch 10 --bsz 1200 --city_count 10 --last_layer 'identity' --use_inf_params True --project_name 'auto'
 #python tsp.py --save_loc 'checkpoints/autoregressive/10_no_param_3' --nb_layers 3 --mamba2 True --nb_epochs 200 --nb_batch_per_epoch 10 --bsz 1200 --city_count 10 --last_layer 'identity' --project_name 'auto' 
 #python tsp.py --save_loc 'checkpoints/autoregressive/10_with_param_4' --nb_layers 3 --mamba2 True --nb_epochs 200 --nb_batch_per_epoch 10 --bsz 1200 --city_count 10 --last_layer 'identity' --use_inf_params True --project_name 'auto'

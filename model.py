@@ -345,7 +345,8 @@ class Bandau_Pointer(nn.Module):
         elif reverse and not reverse_start:
             if nb_layers%2==0:
                 self.x_flipped=True
-            
+
+    #here we call energy the attention score, probability of choosing a city    
     def forward(self,x,city_count,inference_params=None):
         if inference_params == None or x.shape[1] == city_count+1:
             if self.x_flipped:
@@ -355,6 +356,12 @@ class Bandau_Pointer(nn.Module):
                 self.key = key
             query = self.W2(x[:,-1,:].unsqueeze(1))#(bsz,1,d_model)
             energy = self.V(torch.tanh(key + query)).squeeze(-1)
+            #if glimpse
+            '''
+            energy = energy.unsqueeze(-1)#(bsz,city_count,1)
+            key = self.W1(x[:,:self.city_count,:]*energy)
+            energy = self.V(torch.tanh(key + query)).squeeze(-1)
+            '''
             return energy.unsqueeze(1) #returns a tensor of size (bsz,1,city_count)
         
         elif inference_params is not None:
