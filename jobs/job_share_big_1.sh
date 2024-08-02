@@ -1,7 +1,7 @@
 #!/bin/bash
 #$ -N job_share_big_1
 #$ -wd /exports/eddie/scratch/s2517783/mamba
-#$ -l h_rt=80:00:00
+#$ -l h_rt=48:00:00
 #$ -q gpu
 #$ -pe gpu-a100 1
 #$ -l h_vmem=80G
