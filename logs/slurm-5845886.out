@@ -1,0 +1,33 @@
+/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba
+wandb: ERROR Find detailed error logs at: /mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/wandb/debug-cli.s2517783.log
+Error: api_key not configured (no-tty). call wandb login [your_api_key]
+Matplotlib created a temporary cache directory at /dev/shm/s2517783_5845886/matplotlib-551r9b36 because the default path (/home/tc064/tc064/s2517783/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/mamba_ssm/ops/selective_scan_interface.py:163: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  @custom_fwd
+/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/mamba_ssm/ops/selective_scan_interface.py:239: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  @custom_bwd
+/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/mamba_ssm/ops/triton/layer_norm.py:985: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  @custom_fwd
+/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/mamba_ssm/ops/triton/layer_norm.py:1044: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  @custom_bwd
+/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/mamba_ssm/distributed/tensor_parallel.py:25: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  @custom_fwd
+/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/mamba_ssm/distributed/tensor_parallel.py:61: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  @custom_bwd
+/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/mamba_ssm/ops/triton/ssd_combined.py:757: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  @custom_fwd
+/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/mamba_ssm/ops/triton/ssd_combined.py:835: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  @custom_bwd
+There was a problem when trying to write in your cache folder (/home/tc064/tc064/s2517783/.cache/huggingface/hub). You should set the environment variable TRANSFORMERS_CACHE to a writable directory.
+wandb: ERROR api_key not configured (no-tty). call wandb.login(key=[your_api_key])
+Traceback (most recent call last):
+  File "/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/tsp.py", line 16, in <module>
+    wandb.login()
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/wandb/sdk/wandb_login.py", line 84, in login
+    configured = _login(
+                 ^^^^^^^
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/wandb/sdk/wandb_login.py", line 346, in _login
+    wlogin.prompt_api_key()
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/wandb/sdk/wandb_login.py", line 280, in prompt_api_key
+    raise UsageError("api_key not configured (no-tty). call " + directive)
+wandb.errors.UsageError: api_key not configured (no-tty). call wandb.login(key=[your_api_key])

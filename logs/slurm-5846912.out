@@ -1,0 +1,118 @@
+/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba
+Matplotlib created a temporary cache directory at /dev/shm/s2517783_5846912/matplotlib-il7s24yn because the default path (/home/tc064/tc064/s2517783/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/mamba_ssm/ops/selective_scan_interface.py:163: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  @custom_fwd
+/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/mamba_ssm/ops/selective_scan_interface.py:239: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  @custom_bwd
+/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/mamba_ssm/ops/triton/layer_norm.py:985: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  @custom_fwd
+/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/mamba_ssm/ops/triton/layer_norm.py:1044: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  @custom_bwd
+/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/mamba_ssm/distributed/tensor_parallel.py:25: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  @custom_fwd
+/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/mamba_ssm/distributed/tensor_parallel.py:61: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  @custom_bwd
+/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/mamba_ssm/ops/triton/ssd_combined.py:757: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  @custom_fwd
+/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/mamba_ssm/ops/triton/ssd_combined.py:835: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  @custom_bwd
+/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/transformers/utils/hub.py:127: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/tsp.py:172: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  test_data = torch.load(args.test_data_loc).to(device)
+Total number of parameters: 260936
+Using determinisitic Baseline
+{'bsz': 220, 'd_model': 64, 'coord_dim': 2, 'nb_layers': 3, 'mlp_cls': 'gatedmlp', 'city_count': 100, 'fourier_scale': None, 'start': 2.0, 'city_range': (0, 0), 'non_det': False, 'wandb': False, 'project_name': 'big_cirrus', 'action': 'next_city', 'nb_epochs': 6000, 'nb_batch_per_epoch': 40, 'test_size': 2000, 'save_loc': 'checkpoints/big_cirrus/64_G_city100', 'checkpoint': None, 'datetime': False, 'recycle_data': 10, 'model_name': 'Full', 'mamba2': True, 'reverse': True, 'reverse_start': False, 'last_layer': 'pointer', 'test_folder_name': None, 'profiler': False, 'memory_snapshot': False, 'pynvml': False, 'gpu_id': -1, 'test_data_loc': 'data/start_2/2000_100_2.pt', 'B': None, 'x_flipped': False}
+  0%|          | 0/6000 [00:00<?, ?it/s]  0%|          | 0/6000 [00:01<?, ?it/s]
+Traceback (most recent call last):
+  File "/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/tsp.py", line 214, in <module>
+    L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,args.action,args.non_det)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/model.py", line 239, in train_step
+    tours_train, _ = seq2seq_generate_tour(device,model_train,inputs,lastlayer=lastlayer,deterministic=False)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/model.py", line 182, in seq2seq_generate_tour
+    outputs = model(inputs,city_count)[:,-1,:] #outputs of shape (bsz,city_count)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/model.py", line 147, in forward
+    x , residual = layer(x,residual)
+                   ^^^^^^^^^^^^^^^^^
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/mamba_ssm/modules/block.py", line 57, in forward
+    hidden_states, residual = layer_norm_fn(
+                              ^^^^^^^^^^^^^^
+  File "/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/mamba_ssm/ops/triton/layer_norm.py", line 902, in layer_norm_fn
+    return LayerNormFn.apply(
+           ^^^^^^^^^^^^^^^^^^
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/torch/autograd/function.py", line 574, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/mamba_ssm/ops/triton/layer_norm.py", line 775, in forward
+    y, y1, mean, rstd, residual_out, seeds, dropout_mask, dropout_mask1 = _layer_norm_fwd(
+                                                                          ^^^^^^^^^^^^^^^^
+  File "/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/mamba_ssm/ops/triton/layer_norm.py", line 369, in _layer_norm_fwd
+    _layer_norm_fwd_1pass_kernel[(M,)](
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/triton/runtime/jit.py", line 345, in <lambda>
+    return lambda *args, **kwargs: self.run(grid=grid, warmup=False, *args, **kwargs)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/triton/runtime/autotuner.py", line 156, in run
+    timings = {config: self._bench(*args, config=config, **kwargs) for config in pruned_configs}
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/triton/runtime/autotuner.py", line 133, in _bench
+    return do_bench(kernel_call, warmup=self.num_warmups, rep=self.num_reps, quantiles=(0.5, 0.2, 0.8))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/triton/testing.py", line 103, in do_bench
+    fn()
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/triton/runtime/autotuner.py", line 114, in kernel_call
+    self.fn.run(
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/triton/runtime/autotuner.py", line 338, in run
+    return self.fn.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/triton/runtime/autotuner.py", line 338, in run
+    return self.fn.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/triton/runtime/autotuner.py", line 338, in run
+    return self.fn.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/triton/runtime/jit.py", line 607, in run
+    device = driver.active.get_current_device()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/triton/runtime/driver.py", line 23, in __getattr__
+    self._initialize_obj()
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/triton/runtime/driver.py", line 20, in _initialize_obj
+    self._obj = self._init_fn()
+                ^^^^^^^^^^^^^^^
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/triton/runtime/driver.py", line 9, in _create_driver
+    return actives[0]()
+           ^^^^^^^^^^^^
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/triton/backends/nvidia/driver.py", line 371, in __init__
+    self.utils = CudaUtils()  # TODO: make static
+                 ^^^^^^^^^^^
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/triton/backends/nvidia/driver.py", line 80, in __init__
+    mod = compile_module_from_src(Path(os.path.join(dirname, "driver.c")).read_text(), "cuda_utils")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/triton/backends/nvidia/driver.py", line 50, in compile_module_from_src
+    cache = get_cache_manager(key)
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/triton/runtime/cache.py", line 263, in get_cache_manager
+    return __cache_cls(key)
+           ^^^^^^^^^^^^^^^^
+  File "/work/tc064/tc064/s2517783/miniconda3/lib/python3.12/site-packages/triton/runtime/cache.py", line 64, in __init__
+    os.makedirs(self.cache_dir, exist_ok=True)
+  File "<frozen os>", line 215, in makedirs
+  File "<frozen os>", line 215, in makedirs
+  File "<frozen os>", line 215, in makedirs
+  [Previous line repeated 2 more times]
+  File "<frozen os>", line 225, in makedirs
+OSError: [Errno 30] Read-only file system: '/home/tc064'
