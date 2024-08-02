@@ -26,7 +26,7 @@ class DotDict(dict):
 plt.style.use('bmh')
 checkpoint= torch.load('../checkpoints/big_cirrus/64_G_city20.pt')
 checkpoint2 = torch.load('../checkpoints/big_cirrus/64_G_city50.pt')
-checkpoint3 = torch.load('../checkpoints/big_cirrus/64_G_city60.pt')
+checkpoint3 = torch.load('../checkpoints/big_cirrus/64_G_city100.pt')
 
 mean_tour_length_list = [tensor.cpu().numpy() for tensor in checkpoint['mean_tour_length_list']]
 mean_tour_length_list2 = [tensor.cpu().numpy() for tensor in checkpoint2['mean_tour_length_list']]
@@ -58,7 +58,8 @@ plt.axhline(y=greedy, color='r', linestyle='--', label='Greedy Solver')
 # Add labels to the axes
 plt.xlabel('Epoch')
 plt.ylabel('Mean Tour Length')
-#plt.ylim(2.85, 3.2)
+plt.xlim(5000, 6000)
+plt.ylim(3.77, 4)
 
 plt.title('Training Curves for Action and Tour Models')
 
