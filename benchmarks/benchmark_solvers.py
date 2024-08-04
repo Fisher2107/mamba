@@ -19,6 +19,7 @@ def greedy_tsp(cities, device='cpu'):
     tour = torch.zeros(bsz, city_count, dtype=torch.long, device=device)
     tour_length = torch.zeros(bsz, device=device)
     current_city = torch.zeros(bsz, 2, device=device)
+    print(city_count)
     for i in tqdm(range(city_count)):
         if i == 0:
             current_city = cities[arange_vec, 0, :]
