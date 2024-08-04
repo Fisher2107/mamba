@@ -294,7 +294,7 @@ class TSP_net(nn.Module):
         self.WV_att_decoder = nn.Linear(dim_emb, nb_layers_decoder* dim_emb) 
         self.PE = generate_positional_encoding(dim_emb, max_len_PE)        
         
-    def forward(self, x, deterministic=False):
+    def forward(self, x, deterministic=False,sum_logactions=True):
 
         # some parameters
         bsz = x.shape[0]
@@ -360,14 +360,13 @@ class TSP_net(nn.Module):
             mask_visited_nodes = mask_visited_nodes.clone()
             mask_visited_nodes[zero_to_bsz, idx] = True
             
-            
-        # logprob_of_choices = sum_t log prob( pi_t | pi_(t-1),...,pi_0 )
-        sumLogProbOfActions = torch.stack(sumLogProbOfActions,dim=1).sum(dim=1) # size(sumLogProbOfActions)=(bsz,)
-
-        # convert the list of nodes into a tensor of shape (bsz,num_cities)
         tours = torch.stack(tours,dim=1) # size(col_index)=(bsz, nb_nodes)
-        
-        return tours, sumLogProbOfActions
-    
+        # logprob_of_choices = sum_t log prob( pi_t | pi_(t-1),...,pi_0 )
+        if sum_logactions:
+            sumLogProbOfActions = torch.stack(sumLogProbOfActions,dim=1).sum(dim=1)
+            return tours, sumLogProbOfActions
+        else:
+            LogProbOfActions = sumLogProbOfActions
+            return tours, sumLogProbOfActions
     
     

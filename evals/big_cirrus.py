@@ -27,6 +27,7 @@ plt.style.use('bmh')
 checkpoint= torch.load('../checkpoints/big_cirrus/64_G_city20.pt')
 checkpoint2 = torch.load('../checkpoints/big_cirrus/64_G_city50.pt')
 checkpoint3 = torch.load('../checkpoints/big_cirrus/64_G_city100.pt')
+print(checkpoint3['time_tot'])
 
 mean_tour_length_list = [tensor.cpu().numpy() for tensor in checkpoint['mean_tour_length_list']]
 mean_tour_length_list2 = [tensor.cpu().numpy() for tensor in checkpoint2['mean_tour_length_list']]
