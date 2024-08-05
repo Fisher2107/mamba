@@ -123,7 +123,7 @@ class MambaFull(nn.Module):
         if last_layer == 'identity':
             self.last_layer = nn.Identity()
         elif last_layer == 'pointer':
-            self.last_layer = Bandau_Pointer(d_model,nb_layers,reverse,reverse_start,n=self.n)
+            self.last_layer = Bandau_Pointer(d_model,nb_layers,reverse,reverse_start)
             self.pointer = True
         elif last_layer == 'dot_pointer':
             self.last_layer = Dot_Pointer(d_model, city_count)
@@ -300,24 +300,24 @@ def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_tr
         #inputs size (bsz, city_count+1, 2), tours_train size (bsz, city_count)
         for i in range(tours_train.shape[1]-1):
             inputs = torch.cat((inputs, inputs[torch.arange(inputs.shape[0]), tours_train[:,i], :].unsqueeze(1)), dim=1)
-        print(inputs.shape) #should be inputs size (bsz, 2*city_count, 2)
+        #print(inputs.shape) #should be inputs size (bsz, 2*city_count, 2)
         
 
         for i in range(reuse_tours):
             #Go through tour with teacher forcing
             optimizer.zero_grad()
             if lastlayer=='pointer':
-                outputs = model_train(inputs,city_count)[:,-city_count,:]
+                outputs = model_train(inputs,city_count)
             else:
-                outputs = model_train(inputs)[:,-city_count,:]
-            print(outputs.shape)#should be (bsz, city_count,city_count)
+                outputs = model_train(inputs)
+            #print('outputs shape', outputs.shape)#should be (bsz, city_count,city_count)
             
             for i in range(city_count,0,-1):
                 outputs[:,-i,:] = outputs[:,-i,:].masked_fill_(mask == 0, -float('inf'))
                 mask[torch.arange(bsz), tours_train[:,-i]] = 0
             
             outputs = nn.Softmax(dim=2)(outputs)
-            print(outputs.shape)#should be (bsz, city_count,city_count)
+            #print(outputs.shape)#should be (bsz, city_count,city_count)
             '''LogProbOfActions = torch.zeros(bsz,city_count).to(device)
             for i in range(bsz):
                 for j in range(city_count):

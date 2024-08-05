@@ -1,11 +1,16 @@
 #!/bin/bash
+#Importance Sampling
+python tsp.py --save_loc 'checkpoints/abalation/city20_128_importance'  --nb_epochs 1000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10  --bsz 600  --project_name 'Abalation' --d_model 128 --nb_layers 1 --action 'importance_sampling_5'
+
+
+
 #FINAL EDDIE RUNS
-python tsp.py --save_loc 'checkpoints/big/BIG_city100_2'  --nb_epochs 7000 --mamba2 True  --city_count 100 --nb_batch_per_epoch 40 --bsz 220 --reverse True  --project_name 'Mamba_big' --checkpoint 'checkpoints/big/share_100_big_fix_30-07_05-40.pt' --action 'next_city'
-python tsp.py --save_loc 'checkpoints/big/BIG_city20_2'  --nb_epochs 12000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10  --bsz 600 --reverse True  --project_name 'Mamba_big' --checkpoint 'checkpoints/big_cirrus/64_G_city20.pt'
-python tsp.py --save_loc 'checkpoints/abalation/city20_128'  --nb_epochs 10000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10  --bsz 600 --reverse True  --project_name 'Abalation' --d_model 128 --nb_layers 1 
-python tsp.py --save_loc 'checkpoints/abalation/city20_256'  --nb_epochs 10000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10  --bsz 600 --reverse True  --project_name 'Abalation' --d_model 256 --nb_layers 1 
-python tsp.py --save_loc 'checkpoints/abalation/city20_3_128_R'  --nb_epochs 10000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10  --bsz 600 --reverse True  --project_name 'Abalation' --d_model 128
-python tsp.py --save_loc 'checkpoints/abalation/city20_3_128'  --nb_epochs 10000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10  --bsz 600 --reverse False  --project_name 'Abalation' --d_model 128
+#python tsp.py --save_loc 'checkpoints/big/BIG_city100_2'  --nb_epochs 7000 --mamba2 True  --city_count 100 --nb_batch_per_epoch 40 --bsz 220 --reverse True  --project_name 'Mamba_big' --checkpoint 'checkpoints/big/share_100_big_fix_30-07_05-40.pt' --action 'next_city'
+#python tsp.py --save_loc 'checkpoints/big/BIG_city20_2'  --nb_epochs 12000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10  --bsz 600 --reverse True  --project_name 'Mamba_big' --checkpoint 'checkpoints/big_cirrus/64_G_city20.pt'
+#python tsp.py --save_loc 'checkpoints/abalation/city20_128'  --nb_epochs 10000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10  --bsz 600 --reverse True  --project_name 'Abalation' --d_model 128 --nb_layers 1 
+#python tsp.py --save_loc 'checkpoints/abalation/city20_256'  --nb_epochs 10000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10  --bsz 600 --reverse True  --project_name 'Abalation' --d_model 256 --nb_layers 1 
+#python tsp.py --save_loc 'checkpoints/abalation/city20_3_128_R'  --nb_epochs 10000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10  --bsz 600 --reverse True  --project_name 'Abalation' --d_model 128
+#python tsp.py --save_loc 'checkpoints/abalation/city20_3_128'  --nb_epochs 10000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10  --bsz 600 --reverse False  --project_name 'Abalation' --d_model 128
 
 #CIRRUS REDO
 #python tsp.py --save_loc 'checkpoints/big_cirrus/64_G_city20' --nb_layers 3  --nb_epochs 6000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10 --bsz 600 --last_layer 'pointer' --reverse True --action 'next_city'  --project_name 'big_cirrus' 
