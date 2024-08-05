@@ -1,1 +1,2 @@
-Here we include checkpoints and events and gpu csv files of tsp runs that use low epoch size and are only designed to create scalability plots
+Here we include checkpoints and events and gpu csv files of tsp runs that use low epoch size and are only designed to create scalability plots. 
+I belive action2 is when i redone all my experiments becuase I did action wrong the first time. I was using eval instead of torch.no_grad.

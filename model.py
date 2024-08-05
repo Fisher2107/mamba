@@ -209,6 +209,8 @@ def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_tr
     lastlayer = 'identity'
     if model_train.pointer:
         lastlayer = 'pointer'
+    reverse_start = model_train.reverse_start
+    reverse = model_train.reverse
     
     if action == 'tour':
         if gpu_logger: gpu_logger.log_event('generating tours of train model')
@@ -269,9 +271,13 @@ def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_tr
             loss.backward()
         optimizer.step()
     
-    elif action == 'next_city2':
+    elif 'importance_sampling' in action:
+        reuse_tours = int(action.split('_')[-1])
+        if reverse or reverse_start:
+            raise ValueError('importance_sampling only works with reverse=False and reverse_start=False')
+        
         with torch.no_grad():
-            tours_train, _ = seq2seq_generate_tour(device,model_train,inputs,lastlayer=lastlayer,deterministic=False)
+            tours_train, sumLogProbOfActions = seq2seq_generate_tour(device,model_train,inputs,lastlayer=lastlayer,deterministic=False)
             tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=not non_det)
         
             #get the length of the tours
@@ -282,25 +288,39 @@ def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_tr
             L_train_train_total += L_train.sum()
             L_baseline_train_total += L_baseline.sum()
         
-        #Go through tour and backprop
+
         bsz = inputs.shape[0]
         city_count = inputs.shape[1] - 1
         mask = torch.ones(bsz, city_count).to(device)
-        #Construct tour recursively
-        optimizer.zero_grad()
-        for i in range(city_count):
-            if lastlayer=='pointer':
-                outputs = model_train(inputs,city_count)[:,-1,:]
-            else:
-                outputs = model_train(inputs)[:,-1,:]
-            outputs = outputs.masked_fill_(mask == 0, -float('inf'))
-            outputs = nn.Softmax(dim=1)(outputs)
 
-            next_city = tours_train[:,i]
-            LogProbOfAction = torch.log(outputs[torch.arange(bsz), next_city])
-            mask[torch.arange(bsz), next_city] = 0
-            inputs = torch.cat((inputs, inputs[torch.arange(bsz), next_city, :].unsqueeze(1)), dim=1)
-            loss = torch.mean( (L_train - L_baseline)* LogProbOfAction )
+        #inputs size (bsz, city_count+1, 2), tours_train size (bsz, city_count)
+        for i in range(tours_train.shape[1]-1):
+            inputs = torch.cat((inputs, inputs[torch.arange(inputs.shape[0]), tours_train[:,i], :].unsqueeze(1)), dim=1)
+        print(inputs.shape) #should be inputs size (bsz, 2*city_count, 2)
+        
+
+        for i in range(reuse_tours):
+            #Go through tour with teacher forcing
+            optimizer.zero_grad()
+            if lastlayer=='pointer':
+                outputs = model_train(inputs,city_count)[:,-city_count,:]
+            else:
+                outputs = model_train(inputs)[:,-city_count,:]
+            print(outputs.shape)#should be (bsz, city_count,city_count)
+            
+            for i in range(city_count,0,-1):
+                outputs[:,-i,:] = outputs[:,-i,:].masked_fill_(mask == 0, -float('inf'))
+                mask[torch.arange(bsz), tours_train[:,-i]] = 0
+            
+            outputs = nn.Softmax(dim=2)(outputs)
+            print(outputs.shape)#should be (bsz, city_count,city_count)
+            '''LogProbOfActions = torch.zeros(bsz,city_count).to(device)
+            for i in range(bsz):
+                for j in range(city_count):
+                    LogProbOfActions[i,j] = torch.log(outputs[i,j,tours_train[i,j]])'''
+            LogProbOfActions = torch.log(outputs[torch.arange(bsz).unsqueeze(1), torch.arange(city_count).unsqueeze(0), tours_train]).to(device)
+            sumLogProbOfActionsnew = LogProbOfActions.sum(dim=1)
+            loss = torch.mean( (L_train - L_baseline)* torch.exp(sumLogProbOfActionsnew-sumLogProbOfActions) )
             loss.backward()
             optimizer.step()
              

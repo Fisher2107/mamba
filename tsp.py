@@ -28,7 +28,7 @@ parser.add_argument('--non_det', type=bool, default=False, help='Set to True if 
 
 parser.add_argument('--wandb', action='store_false', help='Call argument if you do not want to log to wandb')
 parser.add_argument('--project_name', type=str, default='Mamba_big', help='Name of project in wandb')
-parser.add_argument('--action', type=str, default='tour', help="Select if action is defined to be 'tour' or 'next_city'")
+parser.add_argument('--action', type=str, default='tour', help="Select if action is defined to be 'tour' or 'next_city' or 'importance_sampling_x' or imporance_sampling_clip_x' where x is the number of reused tours")
 
 parser.add_argument('--nb_epochs', type=int, default=500, help='Number of epochs')
 parser.add_argument('--nb_batch_per_epoch', type=int, default=10, help='Number of batches per epoch')
@@ -213,6 +213,9 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
         else:
             L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,args.action,args.non_det)
         
+        if 'importance_sampling' in args.action:
+            step+=int(args.action.split('_')[-1])
+
     time_one_epoch = time.time()-start
     time_tot = time.time()-start_training_time + tot_time_ckpt
 
