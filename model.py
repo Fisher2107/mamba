@@ -87,7 +87,8 @@ class MambaFull(nn.Module):
     reverse=False,
     reverse_start=False,
     mamba2=False,
-    last_layer='identity'):
+    last_layer='identity',
+    importance_sampling=False):
         super().__init__()
         self.d_model=d_model
         self.city_count=city_count
@@ -99,7 +100,10 @@ class MambaFull(nn.Module):
         else:
             raise ValueError('mlp_cls must be either "gatedmlp" or "identity"')
         self.norm_f = nn.LayerNorm(d_model)
-
+        if importance_sampling: #number of queries for the pointer network (used for importance sampling case)
+            self.n = self.city_count
+        else:
+            self.n = 1
         self.embedding = input_mapping(B,d_model,coord_dim=coord_dim)
         if d_model%16 != 0: raise ValueError('d_model must be a multiple of 16')
         if mamba2:
@@ -119,7 +123,7 @@ class MambaFull(nn.Module):
         if last_layer == 'identity':
             self.last_layer = nn.Identity()
         elif last_layer == 'pointer':
-            self.last_layer = Bandau_Pointer(d_model,nb_layers,reverse,reverse_start)
+            self.last_layer = Bandau_Pointer(d_model,nb_layers,reverse,reverse_start,n=self.n)
             self.pointer = True
         elif last_layer == 'dot_pointer':
             self.last_layer = Dot_Pointer(d_model, city_count)
@@ -159,7 +163,7 @@ class MambaFull(nn.Module):
         )
 
         if self.pointer:
-            x = self.last_layer(x,city_count)
+            x = self.last_layer(x,city_count,self.n)
         else:
             x = self.last_layer(x)
 
@@ -347,13 +351,23 @@ class Bandau_Pointer(nn.Module):
             if nb_layers%2==0:
                 self.x_flipped=True
             
-    def forward(self,x,city_count):
+    def forward(self, x, city_count, n=1):
         if self.x_flipped:
-            x = torch.flip(x,[1])
-        key = self.W1(x[:,:city_count,:])#(bsz,city_count,d_model)
-        query = self.W2(x[:,-1,:].unsqueeze(1))#(bsz,1,d_model)
-        energy = self.V(torch.tanh(key + query)).squeeze(-1)
-        return energy.unsqueeze(1) #returns a tensor of size (bsz,1,city_count)
+            x = torch.flip(x, [1])
+        
+        key = self.W1(x[:, :city_count, :])  # (bsz, city_count, d_model)
+        
+        if n == 1:
+            query = self.W2(x[:, -1, :].unsqueeze(1))  # (bsz, 1, d_model)
+            energy = self.V(torch.tanh(key + query)).squeeze(-1)
+            return energy.unsqueeze(1)  # returns a tensor of size (bsz, 1, city_count)
+        else:
+            queries = self.W2(x[:, -n:, :])  # (bsz, n, d_model)
+            queries = queries.unsqueeze(2)  # (bsz, n, 1, d_model)
+            key = key.unsqueeze(1)  # (bsz, 1, city_count, d_model)
+            energy = self.V(torch.tanh(key + queries)).squeeze(-1)  # (bsz, n, city_count)
+            return energy  # returns a tensor of size (bsz, n, city_count)
+
 
 class Dot_Pointer(nn.Module):
     def __init__(self, d_model,city_count):

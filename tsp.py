@@ -117,12 +117,14 @@ if args.pynvml:
 else:
     gpu_logger=None
 
+importance_sampling  = 'importance_sampling' in args.action
+
 if args.memory_snapshot:
     torch.cuda.memory._record_memory_history()
 
 #load train and baseline model, where baseline is used to reduce variance in loss function as per the REINFORCE algorithm. 
-model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer).to(device)
-model_baseline = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer).to(device)
+model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer,importance_sampling).to(device)
+model_baseline = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer,importance_sampling).to(device)
 for param in model_baseline.parameters():
     param.requires_grad = False
 loss_fn = nn.CrossEntropyLoss()
