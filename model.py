@@ -87,8 +87,7 @@ class MambaFull(nn.Module):
     reverse=False,
     reverse_start=False,
     mamba2=False,
-    last_layer='identity',
-    importance_sampling=False):
+    last_layer='identity'):
         super().__init__()
         self.d_model=d_model
         self.city_count=city_count
@@ -100,10 +99,6 @@ class MambaFull(nn.Module):
         else:
             raise ValueError('mlp_cls must be either "gatedmlp" or "identity"')
         self.norm_f = nn.LayerNorm(d_model)
-        if importance_sampling: #number of queries for the pointer network (used for importance sampling case)
-            self.n = self.city_count
-        else:
-            self.n = 1
         self.embedding = input_mapping(B,d_model,coord_dim=coord_dim)
         if d_model%16 != 0: raise ValueError('d_model must be a multiple of 16')
         if mamba2:
@@ -138,7 +133,13 @@ class MambaFull(nn.Module):
         self.reverse_start = reverse_start
 
     #only include city_count if you want to override the default city_count and you are use last_layer='pointer'
-    def forward(self,x,city_count=None):
+    def forward(self,x,city_count=None,importance_sampling=False):
+        
+        if importance_sampling: #number of queries for the pointer network (used for importance sampling case)
+            n = self.city_count
+        else:
+            n = 1
+        
         x = self.embedding(x)
         if self.reverse_start:
             x = torch.flip(x,[1])
@@ -163,7 +164,7 @@ class MambaFull(nn.Module):
         )
 
         if self.pointer:
-            x = self.last_layer(x,city_count,self.n)
+            x = self.last_layer(x,city_count,n)
         else:
             x = self.last_layer(x)
 
@@ -300,16 +301,14 @@ def train_step(model_train, model_baseline, inputs, optimizer, device,L_train_tr
         #inputs size (bsz, city_count+1, 2), tours_train size (bsz, city_count)
         for i in range(tours_train.shape[1]-1):
             inputs = torch.cat((inputs, inputs[torch.arange(inputs.shape[0]), tours_train[:,i], :].unsqueeze(1)), dim=1)
-        #print(inputs.shape) #should be inputs size (bsz, 2*city_count, 2)
-        
 
         for i in range(reuse_tours):
             #Go through tour with teacher forcing
             optimizer.zero_grad()
             if lastlayer=='pointer':
-                outputs = model_train(inputs,city_count)
+                outputs = model_train(inputs,city_count,importance_sampling=True)
             else:
-                outputs = model_train(inputs)
+                outputs = model_train(inputs,importance_sampling=True)
             #print('outputs shape', outputs.shape)#should be (bsz, city_count,city_count)
             
             for i in range(city_count,0,-1):

@@ -50,6 +50,7 @@ parser.add_argument('--memory_snapshot', type=bool, default=False, help='Set to 
 parser.add_argument('--pynvml', type=bool, default=False, help='Set to True if you want to profile the model')
 parser.add_argument('--gpu_id', type=int, default=-1, help='The GPU ID to get information')
 parser.add_argument('--val_split', type=int, default=1, help='how many chuncks to split the validation data into')
+parser.add_argument('--test_split', type=int, default=1, help='how many chuncks to split the test data into')
 # Define model parameters and hyperparameters
 class DotDict(dict):
     def __init__(self, **kwds):
@@ -124,8 +125,8 @@ if args.memory_snapshot:
     torch.cuda.memory._record_memory_history()
 
 #load train and baseline model, where baseline is used to reduce variance in loss function as per the REINFORCE algorithm. 
-model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer,importance_sampling).to(device)
-model_baseline = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer,importance_sampling).to(device)
+model_train = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer).to(device)
+model_baseline = MambaFull(args.d_model, args.city_count, args.nb_layers, args.coord_dim, args.mlp_cls,args.B, args.reverse,args.reverse_start,args.mamba2,args.last_layer).to(device)
 for param in model_baseline.parameters():
     param.requires_grad = False
 loss_fn = nn.CrossEntropyLoss()
@@ -213,7 +214,7 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
         else:
             L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,args.action,args.non_det)
         
-        if 'importance_sampling' in args.action:
+        if importance_sampling:
             step+=int(args.action.split('_')[-1])
 
     time_one_epoch = time.time()-start
@@ -226,14 +227,19 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
     with torch.no_grad():
         #TEST DATA; Compute tour for model and baseline
         #We use the test data to evaluate the model
-        if args.pynvml: gpu_logger.log_event(f'Testing on test data')
-        tour_train, _ = seq2seq_generate_tour(device, model_train,test_data, lastlayer=args.last_layer,deterministic=True)
-        tour_baseline, _ = seq2seq_generate_tour(device, model_baseline, test_data, lastlayer=args.last_layer, deterministic=True)
+        split_size = len(test_data) // args.test_split
+        L_train = 0
+        L_baseline = 0
+        for i in range(args.test_split):
+            test_data_split = test_data[i*split_size:(i+1)*split_size]
+            if args.pynvml: gpu_logger.log_event(f'Testing on test data split {i+1}')
+            tour_train, _ = seq2seq_generate_tour(device, model_train,test_data_split, lastlayer=args.last_layer,deterministic=True)
+            tour_baseline, _ = seq2seq_generate_tour(device, model_baseline, test_data_split, lastlayer=args.last_layer, deterministic=True)
 
-        #L_train is the average tour length of the train model on the test data
-        L_train = compute_tour_length(test_data, tour_train).mean()
-        L_baseline = compute_tour_length(test_data, tour_baseline).mean()
-
+            L_train += compute_tour_length(test_data_split, tour_train).mean()
+            L_baseline += compute_tour_length(test_data_split, tour_baseline).mean()
+        L_train /= args.test_split
+        L_baseline /= args.test_split
 
         #VALIDATION DATA; Compute tour for model and baseline
         #We use the validation data to update the baseline model
@@ -249,6 +255,8 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
             # Get the lengths of the tours and add to the accumulators
             L_train_val += compute_tour_length(val_data_split, tour_train).mean()
             L_baseline_val += compute_tour_length(val_data_split, tour_baseline).mean()
+        L_train_val /= args.val_split
+        L_baseline_val /= args.val_split
 
         if L_train_val < L_baseline_val:
             model_baseline.load_state_dict( model_train.state_dict() )
