@@ -5,13 +5,17 @@
 #python tsp.py --save_loc 'checkpoints/gpu/importance_sampling_lightning/standard_mamba2_100_split' --nb_layers 1  --nb_epochs 4 --nb_batch_per_epoch 20 --city_count 100 --mamba2 True --pynvml True --gpu_id 0 --bsz 50 --d_model 128  --project_name 'scale'  --val_split 5
 #python tsp.py --save_loc 'checkpoints/gpu/importance_sampling_lightning/NC_mamba2_100_split' --nb_layers 1  --nb_epochs 4 --nb_batch_per_epoch 20 --city_count 100 --mamba2 True --pynvml True --gpu_id 0 --bsz 50 --d_model 128  --project_name 'scale'  --val_split 20 --test_split 4 --action 'next_city'
 #python tsp.py --save_loc 'checkpoints/gpu/importance_sampling_lightning/T_mamba2_100_split' --nb_layers 1  --nb_epochs 4 --nb_batch_per_epoch 20 --city_count 100 --mamba2 True --pynvml True --gpu_id 0 --bsz 50 --d_model 128  --project_name 'scale'  --val_split 20 --test_split 4
-python tsp.py --save_loc 'checkpoints/gpu/importance_sampling_lightning/RU5fix_mamba2_100_split' --nb_layers 1  --nb_epochs 4 --nb_batch_per_epoch 20 --city_count 100 --mamba2 True --pynvml True --gpu_id 0 --bsz 50 --d_model 128  --project_name 'scale'  --val_split 20 --test_split 4 --action 'importance_sampling_5'
+#python tsp.py --save_loc 'checkpoints/gpu/importance_sampling_lightning/RU5fix_mamba2_100_split' --nb_layers 1  --nb_epochs 4 --nb_batch_per_epoch 20 --city_count 100 --mamba2 True --pynvml True --gpu_id 0 --bsz 50 --d_model 128  --project_name 'scale'  --val_split 20 --test_split 4 --action 'importance_sampling_5'
 #python tsp.py --save_loc 'checkpoints/gpu/tour_lightning/mamba2_100_split_3lNC' --nb_layers 3  --nb_epochs 4 --nb_batch_per_epoch 20 --city_count 100 --mamba2 True --pynvml True --gpu_id 0 --bsz 50 --reverse True  --project_name 'scale' --val_split 5 --action 'next_city'
+#python tsp.py --save_loc 'checkpoints/gpu/tour_lightning/mamba2_100' --nb_layers 3  --nb_epochs 4 --val_split 5 --nb_batch_per_epoch 20 --city_count 100 --mamba2 True --pynvml True --gpu_id 0 --wandb --bsz 50 --reverse True
 #Importance Sampling
-#python tsp.py --save_loc 'checkpoints/abalation/city20_128_importance'  --nb_epochs 1000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10  --bsz 600  --project_name 'Abalation' --d_model 128 --nb_layers 1 --action 'importance_sampling_5'
+python tsp.py --save_loc 'checkpoints/abalation/city20_128_importance_RU5'  --nb_epochs 10000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10  --bsz 600  --project_name 'Abalation' --d_model 128 --nb_layers 1 --action 'importance_sampling_5'
+python tsp.py --save_loc 'checkpoints/abalation/city20_128_importance_RU2'  --nb_epochs 10000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10  --bsz 600  --project_name 'Abalation' --d_model 128 --nb_layers 1 --action 'importance_sampling_2'
 
+python tsp.py --save_loc 'checkpoints/abalation/city50_128_importance_RU5'  --nb_epochs 20000  --mamba2 True --city_count 50 --nb_batch_per_epoch 40  --bsz 220  --project_name 'Abalation' --d_model 128 --nb_layers 1 --action 'importance_sampling_5' --checkpoint 'checkpoints/abalation/city20_128.pt'
+python tsp.py --save_loc 'checkpoints/abalation/city50_128_importance_RU2'  --nb_epochs 20000  --mamba2 True --city_count 50 --nb_batch_per_epoch 40  --bsz 220  --project_name 'Abalation' --d_model 128 --nb_layers 1 --action 'importance_sampling_2' --checkpoint 'checkpoints/abalation/city20_128.pt'
 
-
+python tsp.py --save_loc 'checkpoints/abalation/city50_128_importance_RU2'  --nb_epochs 30000  --mamba2 True --city_count 100 --nb_batch_per_epoch 100  --bsz 220  --project_name 'Abalation' --d_model 128 --nb_layers 1 --checkpoint 'checkpoints/abalation/city20_128.pt'
 #FINAL EDDIE RUNS
 #python tsp.py --save_loc 'checkpoints/big/BIG_city100_2'  --nb_epochs 7000 --mamba2 True  --city_count 100 --nb_batch_per_epoch 40 --bsz 220 --reverse True  --project_name 'Mamba_big' --checkpoint 'checkpoints/big/share_100_big_fix_30-07_05-40.pt' --action 'next_city'
 #python tsp.py --save_loc 'checkpoints/big/BIG_city20_2'  --nb_epochs 12000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10  --bsz 600 --reverse True  --project_name 'Mamba_big' --checkpoint 'checkpoints/big_cirrus/64_G_city20.pt'

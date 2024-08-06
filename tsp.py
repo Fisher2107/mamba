@@ -190,7 +190,8 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
     #L_train_train is the average tour length of the train model on the train data
     L_train_train_total = 0
     L_baseline_train_total = 0
-    for step in range(args.nb_batch_per_epoch):
+    step=0
+    while step < args.nb_batch_per_epoch:
         if args.pynvml: gpu_logger.log_event(f'Epoch {epoch}, Step {step} start')
         if i == 0:
             if args.pynvml: gpu_logger.log_event(f'Generating data')
@@ -215,7 +216,9 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
             L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger,args.action,args.non_det)
         
         if importance_sampling:
-            step+=int(args.action.split('_')[-1])
+            step+= int(args.action.split('_')[-1])
+        else:
+            step+=1
 
     time_one_epoch = time.time()-start
     time_tot = time.time()-start_training_time + tot_time_ckpt
