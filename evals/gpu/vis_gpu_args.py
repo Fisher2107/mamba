@@ -51,9 +51,9 @@ sns.lineplot(x='Seconds', y='Power Usage (W)', data=gpu_stats, ax=ax3)
 ax3.set_title('GPU Power Usage Over Time')
 ax3.set_xlabel('Time (seconds)')
 
-# Function to determine color based on event text
+# Function to determine color based on event text ###or 'test' in event_text.lower()
 def get_event_color(event_text):
-    return 'red' if 'start' in event_text.lower() or 'test' in event_text.lower() else 'black'
+    return 'red' if 'start' in event_text.lower() else 'black'
 
 # Add event markers to all plots
 for ax in [ax1, ax2, ax3]:

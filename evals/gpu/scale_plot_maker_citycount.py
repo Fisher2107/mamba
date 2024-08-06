@@ -2,8 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 plt.style.use('bmh')
-def generate_plot(csv_files,csv_files16,csv_files_lay1,csv_files_ng,saveto):
-    x_values = [5, 10, 20, 50, 75, 100, 120]
+def generate_plot_memory(csv_files,csv_files16,csv_files_lay1,csv_files_ng,saveto):
+    x_values = [5, 10, 20, 40, 60, 80, 100]
     y_values = []
     y_values_16 = []
     y_values_lay1 = []
