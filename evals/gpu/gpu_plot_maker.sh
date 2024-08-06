@@ -1,5 +1,20 @@
 #!/bin/bash
 
+#python vis_gpu_args.py --gpu_stats 'action_lightning/mamba2_20_gpu_stats' --events 'action_lightning/mamba2_20_events' --output_file 'action20.pdf'  --x_lim_start 0 --x_lim_end 0
+#python vis_gpu_args.py --gpu_stats 'action_lightning/mamba2_60_gpu_stats' --events 'action_lightning/mamba2_60_events' --output_file 'action60.pdf'  --x_lim_start 0 --x_lim_end 0
+#python vis_gpu_args.py --gpu_stats 'action_lightning/mamba2_100_gpu_stats' --events 'action_lightning/mamba2_100_events' --output_file 'action100.pdf'  --x_lim_start 0 --x_lim_end 0
+
+#python vis_gpu_args.py --gpu_stats 'tour_lightning/mamba2_20_gpu_stats' --events 'tour_lightning/mamba2_20_events' --output_file 'tour20.pdf'  --x_lim_start 0 --x_lim_end 0
+#python vis_gpu_args.py --gpu_stats 'tour_lightning/mamba2_60_gpu_stats' --events 'tour_lightning/mamba2_60_events' --output_file 'tour60.pdf'  --x_lim_start 0 --x_lim_end 0
+#python vis_gpu_args.py --gpu_stats 'tour_lightning/mamba2_100_gpu_stats' --events 'tour_lightning/mamba2_100_events' --output_file 'tour100.pdf'  --x_lim_start 0 --x_lim_end 0
+
+python vis_gpu_args.py --gpu_stats 'importance_sampling_lightning/Reuse5_mamba2_20_gpu_stats' --events 'importance_sampling_lightning/Reuse5_mamba2_20_events' --output_file 'importance_sampling20_RU5.pdf'  --x_lim_start 0 --x_lim_end 0
+python vis_gpu_args.py --gpu_stats 'importance_sampling_lightning/Reuse5_mamba2_60_gpu_stats' --events 'importance_sampling_lightning/Reuse5_mamba2_60_events' --output_file 'importance_sampling60_RU5.pdf'  --x_lim_start 0 --x_lim_end 0
+python vis_gpu_args.py --gpu_stats 'importance_sampling_lightning/Reuse5_mamba2_100_gpu_stats' --events 'importance_sampling_lightning/Reuse5_mamba2_100_events' --output_file 'importance_sampling100_RU5.pdf'  --x_lim_start 0 --x_lim_end 0
+
+python vis_gpu_args.py --gpu_stats 'importance_sampling_lightning/standard_mamba2_20_gpu_stats' --events 'importance_sampling_lightning/standard_mamba2_20_events' --output_file 'importance_sampling20_Stand.pdf'  --x_lim_start 0 --x_lim_end 0
+python vis_gpu_args.py --gpu_stats 'importance_sampling_lightning/standard_mamba2_60_gpu_stats' --events 'importance_sampling_lightning/standard_mamba2_60_events' --output_file 'importance_sampling60_Stand.pdf'  --x_lim_start 0 --x_lim_end 0
+python vis_gpu_args.py --gpu_stats 'importance_sampling_lightning/standard_mamba2_100_gpu_stats' --events 'importance_sampling_lightning/standard_mamba2_100_events' --output_file 'importance_sampling100_Stand.pdf'  --x_lim_start 0 --x_lim_end 0
 #NO_POINT
 ##################
 #bsz
@@ -34,37 +49,38 @@
 #POINT
 ##################
 #bsz
-python vis_gpu_args.py --gpu_stats 'bsz_point/mamba2_50_bsz10_gpu_stats' --events 'bsz_point/mamba2_50_bsz10_events' --output_file 'point/bsz/mamab2_50_bsz10.pdf'  --x_lim_start 0 --x_lim_end 0
-python vis_gpu_args.py --gpu_stats 'bsz_point/mamba2_50_bsz100_gpu_stats' --events 'bsz_point/mamba2_50_bsz100_events' --output_file 'point/bsz/mamab2_50_bsz100.pdf'  --x_lim_start 0 --x_lim_end 0
-python vis_gpu_args.py --gpu_stats 'bsz_point/mamba2_50_bsz200_gpu_stats' --events 'bsz_point/mamba2_50_bsz200_events' --output_file 'point/bsz/mamab2_50_bsz200.pdf'  --x_lim_start 0 --x_lim_end 0
 
-python vis_gpu_args.py --gpu_stats 'importance_sampling_lightning/NC_mamba2_100_split_gpu_stats' --events 'importance_sampling_lightning/NC_mamba2_100_split_events' --output_file '128_NC.pdf'  --x_lim_start 0 --x_lim_end 0
-python vis_gpu_args.py --gpu_stats 'importance_sampling_lightning/T_mamba2_100_split_gpu_stats' --events 'importance_sampling_lightning/T_mamba2_100_split_events' --output_file '128_T.pdf'  --x_lim_start 0 --x_lim_end 0
-python vis_gpu_args.py --gpu_stats 'importance_sampling_lightning/RU5_mamba2_100_split_gpu_stats' --events 'importance_sampling_lightning/RU5_mamba2_100_split_events' --output_file '128_RU5.pdf'  --x_lim_start 0 --x_lim_end 0
+#python vis_gpu_args.py --gpu_stats 'bsz_point/mamba2_50_bsz10_gpu_stats' --events 'bsz_point/mamba2_50_bsz10_events' --output_file 'point/bsz/mamab2_50_bsz10.pdf'  --x_lim_start 0 --x_lim_end 0
+#python vis_gpu_args.py --gpu_stats 'bsz_point/mamba2_50_bsz100_gpu_stats' --events 'bsz_point/mamba2_50_bsz100_events' --output_file 'point/bsz/mamab2_50_bsz100.pdf'  --x_lim_start 0 --x_lim_end 0
+#python vis_gpu_args.py --gpu_stats 'bsz_point/mamba2_50_bsz200_gpu_stats' --events 'bsz_point/mamba2_50_bsz200_events' --output_file 'point/bsz/mamab2_50_bsz200.pdf'  --x_lim_start 0 --x_lim_end 0
+
+#python vis_gpu_args.py --gpu_stats 'importance_sampling_lightning/NC_mamba2_100_split_gpu_stats' --events 'importance_sampling_lightning/NC_mamba2_100_split_events' --output_file '128_NC.pdf'  --x_lim_start 0 --x_lim_end 0
+#python vis_gpu_args.py --gpu_stats 'importance_sampling_lightning/T_mamba2_100_split_gpu_stats' --events 'importance_sampling_lightning/T_mamba2_100_split_events' --output_file '128_T.pdf'  --x_lim_start 0 --x_lim_end 0
+#python vis_gpu_args.py --gpu_stats 'importance_sampling_lightning/RU5_mamba2_100_split_gpu_stats' --events 'importance_sampling_lightning/RU5_mamba2_100_split_events' --output_file '128_RU5.pdf'  --x_lim_start 0 --x_lim_end 0
 
 #city_count
-python vis_gpu_args.py --gpu_stats 'city_count_point/mamba2_100_d16_gpu_stats' --events 'city_count_point/mamba2_100_d16_events' --output_file 'point/city_count/mamba2_100_d16.pdf'  --x_lim_start 0 --x_lim_end 0
-python vis_gpu_args.py --gpu_stats 'city_count_point/mamba2_100_gpu_stats' --events 'city_count_point/mamba2_100_events' --output_file 'point/city_count/mamba2_100.pdf'  --x_lim_start 0 --x_lim_end 0
+#python vis_gpu_args.py --gpu_stats 'city_count_point/mamba2_100_d16_gpu_stats' --events 'city_count_point/mamba2_100_d16_events' --output_file 'point/city_count/mamba2_100_d16.pdf'  --x_lim_start 0 --x_lim_end 0
+#python vis_gpu_args.py --gpu_stats 'city_count_point/mamba2_100_gpu_stats' --events 'city_count_point/mamba2_100_events' --output_file 'point/city_count/mamba2_100.pdf'  --x_lim_start 0 --x_lim_end 0
 
 #lay
-python vis_gpu_args.py --gpu_stats 'lay_point/mamba2_50_lay1_gpu_stats' --events 'lay_point/mamba2_50_lay1_events' --output_file 'point/lay/mamba2_lay1.pdf'  --x_lim_start 0 --x_lim_end 0
-python vis_gpu_args.py --gpu_stats 'lay_point/mamba2_50_lay2_gpu_stats' --events 'lay_point/mamba2_50_lay2_events' --output_file 'point/lay/mamba2_lay2.pdf'  --x_lim_start 0 --x_lim_end 0
-python vis_gpu_args.py --gpu_stats 'lay_point/mamba2_50_lay3_gpu_stats' --events 'lay_point/mamba2_50_lay3_events' --output_file 'point/lay/mamba2_lay3.pdf'  --x_lim_start 0 --x_lim_end 0
+#python vis_gpu_args.py --gpu_stats 'lay_point/mamba2_50_lay1_gpu_stats' --events 'lay_point/mamba2_50_lay1_events' --output_file 'point/lay/mamba2_lay1.pdf'  --x_lim_start 0 --x_lim_end 0
+#python vis_gpu_args.py --gpu_stats 'lay_point/mamba2_50_lay2_gpu_stats' --events 'lay_point/mamba2_50_lay2_events' --output_file 'point/lay/mamba2_lay2.pdf'  --x_lim_start 0 --x_lim_end 0
+#python vis_gpu_args.py --gpu_stats 'lay_point/mamba2_50_lay3_gpu_stats' --events 'lay_point/mamba2_50_lay3_events' --output_file 'point/lay/mamba2_lay3.pdf'  --x_lim_start 0 --x_lim_end 0
 #############
 
 #NG
 ##################
 #bsz
-python vis_gpu_args.py --gpu_stats 'bsz_point_ng/mamba2_50_bsz10_gpu_stats' --events 'bsz_point_ng/mamba2_50_bsz10_events' --output_file 'point_ng/bsz/mamab2_50_bsz10.pdf'  --x_lim_start 0 --x_lim_end 0
-python vis_gpu_args.py --gpu_stats 'bsz_point_ng/mamba2_50_bsz100_gpu_stats' --events 'bsz_point_ng/mamba2_50_bsz100_events' --output_file 'point_ng/bsz/mamab2_50_bsz100.pdf'  --x_lim_start 0 --x_lim_end 0
-python vis_gpu_args.py --gpu_stats 'bsz_point_ng/mamba2_50_bsz200_gpu_stats' --events 'bsz_point_ng/mamba2_50_bsz200_events' --output_file 'point_ng/bsz/mamab2_50_bsz200.pdf'  --x_lim_start 0 --x_lim_end 0
+#python vis_gpu_args.py --gpu_stats 'bsz_point_ng/mamba2_50_bsz10_gpu_stats' --events 'bsz_point_ng/mamba2_50_bsz10_events' --output_file 'point_ng/bsz/mamab2_50_bsz10.pdf'  --x_lim_start 0 --x_lim_end 0
+#python vis_gpu_args.py --gpu_stats 'bsz_point_ng/mamba2_50_bsz100_gpu_stats' --events 'bsz_point_ng/mamba2_50_bsz100_events' --output_file 'point_ng/bsz/mamab2_50_bsz100.pdf'  --x_lim_start 0 --x_lim_end 0
+#python vis_gpu_args.py --gpu_stats 'bsz_point_ng/mamba2_50_bsz200_gpu_stats' --events 'bsz_point_ng/mamba2_50_bsz200_events' --output_file 'point_ng/bsz/mamab2_50_bsz200.pdf'  --x_lim_start 0 --x_lim_end 0
 
 #city_count
-python vis_gpu_args.py --gpu_stats 'city_count_point_ng/mamba2_100_d16_gpu_stats' --events 'city_count_point_ng/mamba2_100_d16_events' --output_file 'point_ng/city_count/mamba2_100_d16.pdf'  --x_lim_start 0 --x_lim_end 0
-python vis_gpu_args.py --gpu_stats 'city_count_point_ng/mamba2_100_gpu_stats' --events 'city_count_point_ng/mamba2_100_events' --output_file 'point_ng/city_count/mamba2_100.pdf'  --x_lim_start 0 --x_lim_end 0
+#python vis_gpu_args.py --gpu_stats 'city_count_point_ng/mamba2_100_d16_gpu_stats' --events 'city_count_point_ng/mamba2_100_d16_events' --output_file 'point_ng/city_count/mamba2_100_d16.pdf'  --x_lim_start 0 --x_lim_end 0
+#python vis_gpu_args.py --gpu_stats 'city_count_point_ng/mamba2_100_gpu_stats' --events 'city_count_point_ng/mamba2_100_events' --output_file 'point_ng/city_count/mamba2_100.pdf'  --x_lim_start 0 --x_lim_end 0
 
 #lay
-python vis_gpu_args.py --gpu_stats 'lay_point_ng/mamba2_50_lay1_gpu_stats' --events 'lay_point_ng/mamba2_50_lay1_events' --output_file 'point_ng/lay/mamba2_lay1.pdf'  --x_lim_start 0 --x_lim_end 0
-python vis_gpu_args.py --gpu_stats 'lay_point_ng/mamba2_50_lay2_gpu_stats' --events 'lay_point_ng/mamba2_50_lay2_events' --output_file 'point_ng/lay/mamba2_lay2.pdf'  --x_lim_start 0 --x_lim_end 0
-python vis_gpu_args.py --gpu_stats 'lay_point_ng/mamba2_50_lay3_gpu_stats' --events 'lay_point_ng/mamba2_50_lay3_events' --output_file 'point_ng/lay/mamba2_lay3.pdf'  --x_lim_start 0 --x_lim_end 0
+#python vis_gpu_args.py --gpu_stats 'lay_point_ng/mamba2_50_lay1_gpu_stats' --events 'lay_point_ng/mamba2_50_lay1_events' --output_file 'point_ng/lay/mamba2_lay1.pdf'  --x_lim_start 0 --x_lim_end 0
+#python vis_gpu_args.py --gpu_stats 'lay_point_ng/mamba2_50_lay2_gpu_stats' --events 'lay_point_ng/mamba2_50_lay2_events' --output_file 'point_ng/lay/mamba2_lay2.pdf'  --x_lim_start 0 --x_lim_end 0
+#python vis_gpu_args.py --gpu_stats 'lay_point_ng/mamba2_50_lay3_gpu_stats' --events 'lay_point_ng/mamba2_50_lay3_events' --output_file 'point_ng/lay/mamba2_lay3.pdf'  --x_lim_start 0 --x_lim_end 0
 #############
