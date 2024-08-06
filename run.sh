@@ -1,6 +1,11 @@
 #!/bin/bash
+
+#Scaling
+python tsp.py --save_loc 'checkpoints/gpu/tour_lightning/mamba2_50_val10000_split' --nb_layers 3  --nb_epochs 4 --nb_batch_per_epoch 20 --city_count 50 --mamba2 True --pynvml True --gpu_id 0 --bsz 50 --reverse True  --project_name 'scale' 
+python tsp.py --save_loc 'checkpoints/gpu/importance_sampling_lightning/standard_mamba2_100' --nb_layers 1  --nb_epochs 4 --nb_batch_per_epoch 20 --city_count 100 --mamba2 True --pynvml True --gpu_id 0 --bsz 50 --d_model 128  --project_name 'scale' 
+
 #Importance Sampling
-python tsp.py --save_loc 'checkpoints/abalation/city20_128_importance'  --nb_epochs 1000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10  --bsz 600  --project_name 'Abalation' --d_model 128 --nb_layers 1 --action 'importance_sampling_5'
+#python tsp.py --save_loc 'checkpoints/abalation/city20_128_importance'  --nb_epochs 1000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10  --bsz 600  --project_name 'Abalation' --d_model 128 --nb_layers 1 --action 'importance_sampling_5'
 
 
 

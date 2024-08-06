@@ -49,6 +49,7 @@ parser.add_argument('--profiler', type=bool, default=False, help='Set to True if
 parser.add_argument('--memory_snapshot', type=bool, default=False, help='Set to True if you want to profile the model')
 parser.add_argument('--pynvml', type=bool, default=False, help='Set to True if you want to profile the model')
 parser.add_argument('--gpu_id', type=int, default=-1, help='The GPU ID to get information')
+parser.add_argument('--val_split', type=int, default=1, help='how many chuncks to split the validation data into')
 # Define model parameters and hyperparameters
 class DotDict(dict):
     def __init__(self, **kwds):
@@ -66,6 +67,16 @@ if args.test_folder_name is None and (args.start).is_integer():
     args.test_data_loc=f'data/start_{int(args.start)}/{args.test_size}_{args.city_count}_{args.coord_dim}.pt'
 else:
     args.test_data_loc=f'data/{args.test_folder_name}/{args.test_size}_{args.city_count}_{args.coord_dim}.pt'
+
+if args.pynvml:
+    if args.gpu_id == -1:
+        raise ValueError("Please provide a GPU ID")
+    print('gpu id= ',args.gpu_id)
+    from gpu_stats import GPULogger
+    gpu_logger = GPULogger(args.gpu_id)
+    gpu_logger.start_gpu_logging(f'{args.save_loc}_gpu_stats.csv', interval_ms=25)
+else:
+    gpu_logger=None
 
 #Load checkpoint
 if args.checkpoint is not None:
@@ -107,16 +118,6 @@ if args.wandb:
         # Track hyperparameters and run metadata
         config=args,
     )
-
-if args.pynvml:
-    if args.gpu_id == -1:
-        raise ValueError("Please provide a GPU ID")
-    print('gpu id= ',args.gpu_id)
-    from gpu_stats import GPULogger
-    gpu_logger = GPULogger(args.gpu_id)
-else:
-    gpu_logger=None
-
 importance_sampling  = 'importance_sampling' in args.action
 
 if args.memory_snapshot:
@@ -180,9 +181,6 @@ start_training_time = time.time()
 now = datetime.now()
 date_time = now.strftime("%d-%m_%H-%M")
 
-if args.pynvml:
-    gpu_logger.start_gpu_logging(f'{args.save_loc}_gpu_stats.csv', interval_ms=25)
-
 # Training loop
 for epoch in tqdm(range(start_epoch,args.nb_epochs)):
     model_train.train()
@@ -239,13 +237,18 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
 
         #VALIDATION DATA; Compute tour for model and baseline
         #We use the validation data to update the baseline model
-        if args.pynvml: gpu_logger.log_event(f'Testing on val data')
-        tour_train, _ = seq2seq_generate_tour(device, model_train,val_data, lastlayer=args.last_layer,deterministic=True)
-        tour_baseline, _ = seq2seq_generate_tour(device, model_baseline, val_data, lastlayer=args.last_layer, deterministic=True)
+        split_size = len(val_data) // args.val_split
+        L_train_val = 0
+        L_baseline_val = 0
+        for i in range(args.val_split):
+            val_data_split = val_data[i*split_size:(i+1)*split_size]
+            if args.pynvml: gpu_logger.log_event(f'Testing on val data split {i+1}')
+            tour_train, _ = seq2seq_generate_tour(device, model_train, val_data_split, lastlayer=args.last_layer, deterministic=True)
+            tour_baseline, _ = seq2seq_generate_tour(device, model_baseline, val_data_split, lastlayer=args.last_layer, deterministic=True)
 
-        # Get the lengths of the tours and add to the accumulators
-        L_train_val= compute_tour_length(val_data, tour_train).mean()
-        L_baseline_val= compute_tour_length(val_data, tour_baseline).mean()
+            # Get the lengths of the tours and add to the accumulators
+            L_train_val += compute_tour_length(val_data_split, tour_train).mean()
+            L_baseline_val += compute_tour_length(val_data_split, tour_baseline).mean()
 
         if L_train_val < L_baseline_val:
             model_baseline.load_state_dict( model_train.state_dict() )
