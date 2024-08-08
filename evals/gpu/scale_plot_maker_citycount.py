@@ -101,7 +101,7 @@ def generate_plot_memory_train(csv_files,saveto):
     plt.xlabel('City Count')
     plt.ylabel('Memory Usage (GB)')
     plt.title('Memory Usage required to train model by City Count')
-    plt.ylim(0, 18)
+    plt.ylim(0, 22)
     plt.legend()
     plt.savefig(saveto)
     plt.close()
@@ -211,8 +211,8 @@ generate_plot_memory_train(csv_files_action,'../figs/scale/lightning/memory_usag
 generate_plot_memory_train(csv_files_tour,'../figs/scale/lightning/memory_usage_train_tour.pdf')
 generate_plot_memory_train(csv_file_importance_sampling5,'../figs/scale/lightning/memory_usage_train_importance_sampling5.pdf')
 generate_plot_memory_train(csv_file_importance_sampling,'../figs/scale/lightning/memory_usage_train_importance_sampling_standard.pdf')
-
+'''
 generate_plot_time(csv_files_action,'../figs/scale/lightning/time_usage_action.pdf')
 generate_plot_time(csv_files_tour,'../figs/scale/lightning/time_usage_tour.pdf')
 generate_plot_time(csv_file_importance_sampling5,'../figs/scale/lightning/time_usage_importance_sampling5.pdf')
-generate_plot_time(csv_file_importance_sampling,'../figs/scale/lightning/time_usage_importance_sampling_standard.pdf')
+generate_plot_time(csv_file_importance_sampling,'../figs/scale/lightning/time_usage_importance_sampling_standard.pdf')'''
