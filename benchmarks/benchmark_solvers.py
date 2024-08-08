@@ -2,7 +2,7 @@ import torch
 import itertools
 from tqdm import tqdm
 
-def greedy_tsp(cities, device='cpu'):
+def greedy_tsp(cities, device='cpu',remove_start_token=True):
     """
     Solve TSP using a greedy approach.
 
@@ -12,7 +12,10 @@ def greedy_tsp(cities, device='cpu'):
     Returns:
     A tensor of shape (batch_size, sequence_length) representing the tour.
     """
-    cities = cities[:, :-1, :]
+    if remove_start_token:
+        cities = cities[:, :-1, :]
+    if len(cities.shape) == 2:
+        cities = cities.unsqueeze(0)
     bsz, city_count, _ = cities.shape
     arange_vec = torch.arange(bsz, device=device).unsqueeze(-1)
     visited = torch.zeros(bsz, city_count, dtype=torch.bool, device=device)
