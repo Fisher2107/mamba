@@ -2,7 +2,7 @@ import torch
 import itertools
 from tqdm import tqdm
 
-def greedy_tsp(cities, device='cpu',remove_start_token=True):
+def greedy_tsp(cities, device='cpu',remove_start_token=True,return_mean=True):
     """
     Solve TSP using a greedy approach.
 
@@ -48,8 +48,11 @@ def greedy_tsp(cities, device='cpu',remove_start_token=True):
         print(next_city.shape)
         print(distances[arange_vec.squeeze(-1), next_city].shape)'''
         tour_length += distances[arange_vec.squeeze(-1), next_city]
-    return tour_length.mean(),tour
-
+    if return_mean:
+        return tour_length.mean(),tour
+    else:
+        return tour_length,tour
+        
 def compute_tour_length(x, tour,remove_start_token=True): 
     """
     Compute the length of a batch of tours
