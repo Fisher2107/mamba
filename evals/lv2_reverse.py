@@ -25,17 +25,17 @@ class DotDict(dict):
         self.update(kwds)
         self.__dict__ = self
 
-checkpoint= torch.load('../checkpoints/pointer_v_standard_dim/pointer64_07-07_15-55.pt')
-checkpoint2 = torch.load('../checkpoints/pointer_layers/layer3_10-07_04-08.pt')
-checkpoint3 = torch.load('../checkpoints/pointer_generalisation/normal_pointer_10-07_07-41.pt')
+checkpoint = torch.load('../checkpoints/pointer_v_standard_dim/pointer64_07-07_15-55.pt', map_location=device)
+checkpoint2 = torch.load('../checkpoints/pointer_layers/layer3_10-07_04-08.pt', map_location=device)
+checkpoint3 = torch.load('../checkpoints/pointer_generalisation/normal_pointer_10-07_07-41.pt', map_location=device)
 
-checkpoint4 = torch.load('../checkpoints/mamba2_reverse/mamba2_reverse_point_07-07_22-41.pt')
-checkpoint5 = torch.load('../checkpoints/mamba2_reverse/mamba2_reverse_point_11-07_14-42.pt')
-checkpoint6 = torch.load('../checkpoints/mamba2_reverse/mamba2_reverse_point_11-07_16-48.pt')
+checkpoint4 = torch.load('../checkpoints/mamba2_reverse/mamba2_reverse_point_07-07_22-41.pt', map_location=device)
+checkpoint5 = torch.load('../checkpoints/mamba2_reverse/mamba2_reverse_point_11-07_14-42.pt', map_location=device)
+checkpoint6 = torch.load('../checkpoints/mamba2_reverse/mamba2_reverse_point_11-07_16-48.pt', map_location=device)
 
-checkpoint7 = torch.load('../checkpoints/mamba2_reverse/mamba2_reversestart_point_07-07_14-41.pt')
-checkpoint8 = torch.load('../checkpoints/mamba2_reverse/mamba2_reversestart_point_11-07_12-39.pt')
-checkpoint9 = torch.load('../checkpoints/mamba2_reverse/mamba2_reversestart_point_11-07_18-54.pt')
+checkpoint7 = torch.load('../checkpoints/mamba2_reverse/mamba2_reversestart_point_07-07_14-41.pt', map_location=device)
+checkpoint8 = torch.load('../checkpoints/mamba2_reverse/mamba2_reversestart_point_11-07_12-39.pt', map_location=device)
+checkpoint9 = torch.load('../checkpoints/mamba2_reverse/mamba2_reversestart_point_11-07_18-54.pt', map_location=device)
 
 
 
@@ -50,17 +50,21 @@ mean_tour_length_list8 = [tensor.cpu().numpy() for tensor in checkpoint8['mean_t
 mean_tour_length_list9 = [tensor.cpu().numpy() for tensor in checkpoint9['mean_tour_length_list']]
 
 mean_tour_length_lists = [mean_tour_length_list, mean_tour_length_list2, mean_tour_length_list3, mean_tour_length_list4, mean_tour_length_list5, mean_tour_length_list6, mean_tour_length_list7, mean_tour_length_list8, mean_tour_length_list9]
-bests1=[min(i) for i in mean_tour_length_lists[:4]]
-bests2=[min(i) for i in mean_tour_length_lists[4:7]]
-bests3=[min(i) for i in mean_tour_length_lists[7:]]
+bests1=[min(i) for i in mean_tour_length_lists[:3]]
+bests2=[min(i) for i in mean_tour_length_lists[3:6]]
+bests3=[min(i) for i in mean_tour_length_lists[6:]]
 
-print(np.mean(bests1),np.mean(bests2),np.mean(bests3))
+print(bests1)
+print(bests2)
+print(bests3)
+exact = 2.8630127906799316
+print(np.mean(bests1)*100/exact,np.mean(bests2)*100/exact,np.mean(bests3)*100/exact)
 
 print(np.sqrt(np.var(bests1)))
 print(np.sqrt(np.var(bests2)))
 print(np.sqrt(np.var(bests3)))
 
-plt.plot(mean_tour_length_list, label='Standard')
+'''plt.plot(mean_tour_length_list, label='Standard')
 plt.plot(mean_tour_length_list2, label='Standard2')
 plt.plot(mean_tour_length_list3, label='Standard3')
 plt.plot(mean_tour_length_list4, label='Reverse')
@@ -86,5 +90,5 @@ plt.title('All layers')
 plt.xlim(1000, 2000)
 plt.ylim(2.86,2.96)
 plt.legend()
-plt.savefig('figs/10_city/reverse_3l_pointer.pdf')
-plt.show()
+#plt.savefig('figs/10_city/reverse_3l_pointer.pdf')
+plt.show()'''
