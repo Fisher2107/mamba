@@ -16,4 +16,4 @@ source /exports/eddie/scratch/s2517783/miniconda3/bin/activate base
 cd /exports/eddie/scratch/s2517783/mamba
 conda activate tsp
 
-python tsp.py --save_loc 'checkpoints/abalation/city20_128_importance_RU10'  --nb_epochs 10000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10  --bsz 600  --project_name 'Abalation' --d_model 128 --nb_layers 1 --action 'importance_sampling_10'
+python tsp.py --save_loc 'checkpoints/abalation/city20_128_importance_RU10_long'  --nb_epochs 50000  --mamba2 True --city_count 20 --nb_batch_per_epoch 10  --bsz 600  --project_name 'Abalation' --d_model 128 --nb_layers 1 --action 'importance_sampling_10'

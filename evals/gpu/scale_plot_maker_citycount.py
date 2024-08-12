@@ -90,12 +90,12 @@ def generate_plot_memory_train(csv_files,saveto):
 
     train_mem = np.polyfit(x_values, memroy_train, 2)
     x_range = np.arange(0, 100, 0.1)
-    plt.plot(x_range, np.polyval(train_mem, x_range), label='train')
+    plt.plot(x_range, np.polyval(train_mem, x_range), label='memory scaling')
 
 
 
     plt.plot(x_values, memroy_train, marker='o', linestyle='None',ms=5)
-    plt.plot(x_values, total_memory, marker='o', linestyle='None',ms=5, label='total')
+    #plt.plot(x_values, total_memory, marker='o', linestyle='None',ms=5, label='total')
 
 
     plt.xlabel('City Count')

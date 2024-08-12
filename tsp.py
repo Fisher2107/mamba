@@ -181,6 +181,7 @@ print(args)
 start_training_time = time.time()
 now = datetime.now()
 date_time = now.strftime("%d-%m_%H-%M")
+time_list = []
 
 # Training loop
 for epoch in tqdm(range(start_epoch,args.nb_epochs)):
@@ -222,6 +223,7 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
 
     time_one_epoch = time.time()-start
     time_tot = time.time()-start_training_time + tot_time_ckpt
+    time_list.append(time_tot)
 
     ###################
     # Evaluate train model and baseline on test and validation sets
@@ -294,6 +296,7 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
             'args': args,
             'time_tot': time_tot,
             'time_to_reach_best': best_time,
+            'time_list': time_list,
         }
         if args.datetime:
             torch.save(checkpoint, f'{args.save_loc}_{date_time}.pt' )
