@@ -1,20 +1,20 @@
 #!/bin/bash
 
 #Transfer Learning
-python tsp.py --save_loc 'checkpoints/transfer/10_8h_1'   --nb_layers 3  --nb_epochs 1000000  --mamba2 True --city_count 10 --nb_batch_per_epoch 40 --bsz 1200 --last_layer 'pointer' --reverse True --project_name 'transfer' --test_city_count 50
-python tsp.py --save_loc 'checkpoints/transfer/10_8h_2'   --nb_layers 3  --nb_epochs 1000000  --mamba2 True --city_count 10 --nb_batch_per_epoch 40 --bsz 1200 --last_layer 'pointer' --reverse True --project_name 'transfer' --test_city_count 50
+python tsp.py --save_loc 'checkpoints/transfer/10_4h_1'   --nb_layers 3  --nb_epochs 1000000  --mamba2 True --city_count 10 --nb_batch_per_epoch 40 --bsz 1200 --last_layer 'pointer' --reverse True --project_name 'transfer' --test_city_count 50
+python tsp.py --save_loc 'checkpoints/transfer/10_4h_2'   --nb_layers 3  --nb_epochs 1000000  --mamba2 True --city_count 10 --nb_batch_per_epoch 40 --bsz 1200 --last_layer 'pointer' --reverse True --project_name 'transfer' --test_city_count 50
 python tsp.py --save_loc 'checkpoints/transfer/20_12h_1'   --nb_layers 3  --nb_epochs 1000000  --mamba2 True --city_count 20 --nb_batch_per_epoch 40 --bsz 600 --last_layer 'pointer' --reverse True --project_name 'transfer' --test_city_count 50
 python tsp.py --save_loc 'checkpoints/transfer/20_12h_2'   --nb_layers 3  --nb_epochs 1000000  --mamba2 True --city_count 20 --nb_batch_per_epoch 40 --bsz 600 --last_layer 'pointer' --reverse True --project_name 'transfer' --test_city_count 50
 python tsp.py --save_loc 'checkpoints/transfer/50_24h_1'   --nb_layers 3  --nb_epochs 1000000  --mamba2 True --city_count 50 --nb_batch_per_epoch 40 --bsz 220 --last_layer 'pointer' --reverse True --project_name 'transfer' --test_city_count 50
 python tsp.py --save_loc 'checkpoints/transfer/50_24h_2'   --nb_layers 3  --nb_epochs 1000000  --mamba2 True --city_count 50 --nb_batch_per_epoch 40 --bsz 220 --last_layer 'pointer' --reverse True --project_name 'transfer' --test_city_count 50
 
-python tsp.py --save_loc 'checkpoints/transfer/20_8h_1'   --nb_layers 3  --nb_epochs 1000000  --mamba2 True --city_count 20 --nb_batch_per_epoch 40 --bsz 600 --last_layer 'pointer' --reverse True --project_name 'transfer' --test_city_count 50 --checkpoint 'checkpoints/transfer/10_8h_1.pt'
-python tsp.py --save_loc 'checkpoints/transfer/20_8h_2'   --nb_layers 3  --nb_epochs 1000000  --mamba2 True --city_count 20 --nb_batch_per_epoch 40 --bsz 600 --last_layer 'pointer' --reverse True --project_name 'transfer' --test_city_count 50 --checkpoint 'checkpoints/transfer/10_8h_2.pt'
+python tsp.py --save_loc 'checkpoints/transfer/20_8h_1'   --nb_layers 3  --nb_epochs 1000000  --mamba2 True --city_count 20 --nb_batch_per_epoch 40 --bsz 600 --last_layer 'pointer' --reverse True --project_name 'transfer' --test_city_count 50 --checkpoint 'checkpoints/transfer/10_4h_1.pt'
+python tsp.py --save_loc 'checkpoints/transfer/20_8h_2'   --nb_layers 3  --nb_epochs 1000000  --mamba2 True --city_count 20 --nb_batch_per_epoch 40 --bsz 600 --last_layer 'pointer' --reverse True --project_name 'transfer' --test_city_count 50 --checkpoint 'checkpoints/transfer/10_4h_2.pt'
 python tsp.py --save_loc 'checkpoints/transfer/50_12h_1'   --nb_layers 3  --nb_epochs 1000000  --mamba2 True --city_count 50 --nb_batch_per_epoch 40 --bsz 220 --last_layer 'pointer' --reverse True --project_name 'transfer' --test_city_count 50 --checkpoint 'checkpoints/transfer/20_12h_1.pt'
 python tsp.py --save_loc 'checkpoints/transfer/50_12h_2'   --nb_layers 3  --nb_epochs 1000000  --mamba2 True --city_count 50 --nb_batch_per_epoch 40 --bsz 220 --last_layer 'pointer' --reverse True --project_name 'transfer' --test_city_count 50 --checkpoint 'checkpoints/transfer/20_12h_1.pt'
 
-python tsp.py --save_loc 'checkpoints/transfer/50_8h_1'   --nb_layers 3  --nb_epochs 1000000  --mamba2 True --city_count 50 --nb_batch_per_epoch 40 --bsz 220 --last_layer 'pointer' --reverse True --project_name 'transfer' --test_city_count 50 --checkpoint 'checkpoints/transfer/20_8h_1.pt'
-python tsp.py --save_loc 'checkpoints/transfer/50_8h_2'   --nb_layers 3  --nb_epochs 1000000  --mamba2 True --city_count 50 --nb_batch_per_epoch 40 --bsz 220 --last_layer 'pointer' --reverse True --project_name 'transfer' --test_city_count 50 --checkpoint 'checkpoints/transfer/20_8h_1.pt'
+python tsp.py --save_loc 'checkpoints/transfer/50_12h_3'   --nb_layers 3  --nb_epochs 1000000  --mamba2 True --city_count 50 --nb_batch_per_epoch 40 --bsz 220 --last_layer 'pointer' --reverse True --project_name 'transfer' --test_city_count 50 --checkpoint 'checkpoints/transfer/20_8h_1.pt'
+python tsp.py --save_loc 'checkpoints/transfer/50_12h_4'   --nb_layers 3  --nb_epochs 1000000  --mamba2 True --city_count 50 --nb_batch_per_epoch 40 --bsz 220 --last_layer 'pointer' --reverse True --project_name 'transfer' --test_city_count 50 --checkpoint 'checkpoints/transfer/20_8h_1.pt'
 
 #Scaling
 #python tsp.py --save_loc 'checkpoints/gpu/tour_lightning/mamba2_100_split' --nb_layers 3  --nb_epochs 4 --nb_batch_per_epoch 20 --city_count 100 --mamba2 True --pynvml True --gpu_id 0 --bsz 50 --reverse True  --project_name 'scale' --val_split 5
