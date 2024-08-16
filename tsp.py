@@ -21,6 +21,7 @@ parser.add_argument('--coord_dim', type=int, default=2, help='Coordinate dimensi
 parser.add_argument('--nb_layers', type=int, default=3, help='Number of layers in the model')
 parser.add_argument('--mlp_cls', type=str, default='gatedmlp', help='Type of mlp to use')#set as 'identity' or 'gatedmlp'
 parser.add_argument('--city_count', type=int, default=5, help='Number of cities')
+parser.add_argument('--test_city_count', type=int, default=0, help='Number of cities in test data')
 parser.add_argument('--fourier_scale', type=float, default=None, help='Fourier scale')#If set as None a standard Linear map is used else a gaussian fourier feature mapping is used
 parser.add_argument('--start', type=float, default=2.0, help='Start token')
 parser.add_argument('--city_range', type=str, default='0,0', help='Range of cities to be used when generating data')
@@ -65,7 +66,10 @@ for key, value in vars(parsed_args).items():
     setattr(args, key, value)
 
 if args.test_folder_name is None and (args.start).is_integer():
-    args.test_data_loc=f'data/start_{int(args.start)}/{args.test_size}_{args.city_count}_{args.coord_dim}.pt'
+    if args.test_city_count == 0:
+        args.test_data_loc=f'data/start_{int(args.start)}/{args.test_size}_{args.city_count}_{args.coord_dim}.pt'
+    else:
+        args.test_data_loc=f'data/start_{int(args.start)}/{args.test_size}_{args.test_city_count}_{args.coord_dim}.pt'
 else:
     args.test_data_loc=f'data/{args.test_folder_name}/{args.test_size}_{args.city_count}_{args.coord_dim}.pt'
 
@@ -283,7 +287,7 @@ for epoch in tqdm(range(start_epoch,args.nb_epochs)):
     mean_tour_length_list.append(L_train)
 
     # Save checkpoint
-    if L_train < mean_tour_length_best or epoch % 10 == 0:
+    if L_train < mean_tour_length_best or epoch % 5 == 0:
         if L_train < mean_tour_length_best:
             mean_tour_length_best = L_train
 
