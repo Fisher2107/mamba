@@ -4,8 +4,6 @@ import os
 # Add the parent directory to the system path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from benchmarks.benchmark_solvers import greedy_tsp,exact_solver
-from model import MambaFull
 import torch
 import torch.nn
 import matplotlib.pyplot as plt
@@ -25,25 +23,25 @@ class DotDict(dict):
         self.__dict__ = self
 
 #5city 3layer
-'''checkpoint = torch.load('../checkpoints/embed2/fourier1_5city_3l_06-07_06-17.pt')
-checkpoint2 = torch.load('../checkpoints/embed2/fourier2_5city_3l_05-07_22-04.pt')
-checkpoint3 = torch.load('../checkpoints/embed2/fourier5_5city_3l_05-07_17-09.pt')
-checkpoint4 = torch.load('../checkpoints/embed2/fourier10_5city_3l_05-07_23-04.pt')
-checkpoint5 = torch.load('../checkpoints/embed2/linear_5city_3l_05-07_23-11.pt')'''
+'''checkpoint = torch.load('../checkpoints/embed2/fourier1_5city_3l_06-07_06-17.pt', map_location=device)
+checkpoint2 = torch.load('../checkpoints/embed2/fourier2_5city_3l_05-07_22-04.pt', map_location=device)
+checkpoint3 = torch.load('../checkpoints/embed2/fourier5_5city_3l_05-07_17-09.pt', map_location=device)
+checkpoint4 = torch.load('../checkpoints/embed2/fourier10_5city_3l_05-07_23-04.pt', map_location=device)
+checkpoint5 = torch.load('../checkpoints/embed2/linear_5city_3l_05-07_23-11.pt', map_location=device)'''
 
 #5city 4layer
-checkpoint = torch.load('../checkpoints/embed2/fourier1_5city_4l_05-07_21-38.pt')
+'''checkpoint = torch.load('../checkpoints/embed2/fourier1_5city_4l_05-07_21-38.pt')
 checkpoint2 = torch.load('../checkpoints/embed2/fourier2_5city_4l_05-07_20-37.pt')
 checkpoint3 = torch.load('../checkpoints/embed2/fourier5_5city_4l_06-07_07-24.pt')
 checkpoint4 = torch.load('../checkpoints/embed2/fourier10_5city_4l_05-07_20-11.pt')
-checkpoint5 = torch.load('../checkpoints/embed2/linear_5city_4l_06-07_00-11.pt')
+checkpoint5 = torch.load('../checkpoints/embed2/linear_5city_4l_06-07_00-11.pt')'''
 
 #10city 3layer
-'''checkpoint = torch.load('../checkpoints/embed2/fourier1_10city_3l_06-07_09-10.pt')
-checkpoint2 = torch.load('../checkpoints/embed2/fourier2_10city_3l_06-07_01-37.pt')
-checkpoint3 = torch.load('../checkpoints/embed2/fourier5_10city_3l_06-07_08-51.pt')
-checkpoint4 = torch.load('../checkpoints/embed2/fourier10_10city_3l_06-07_03-54.pt')
-checkpoint5 = torch.load('../checkpoints/embed2/linear_10city_3l_05-07_18-18.pt')'''
+checkpoint = torch.load('../checkpoints/embed2/fourier1_10city_3l_06-07_09-10.pt', map_location=device)
+checkpoint2 = torch.load('../checkpoints/embed2/fourier2_10city_3l_06-07_01-37.pt', map_location=device)
+checkpoint3 = torch.load('../checkpoints/embed2/fourier5_10city_3l_06-07_08-51.pt', map_location=device)
+checkpoint4 = torch.load('../checkpoints/embed2/fourier10_10city_3l_06-07_03-54.pt', map_location=device)
+checkpoint5 = torch.load('../checkpoints/embed2/linear_10city_3l_05-07_18-18.pt', map_location=device)
 
 #10city 4layer
 '''checkpoint = torch.load('../checkpoints/embed2/fourier1_10city_4l_06-07_00-17.pt')
@@ -62,9 +60,9 @@ mean_tour_length_list5 = [tensor.cpu().numpy() for tensor in checkpoint5['mean_t
 greedy = 3.1791656017303467
 exact = 2.8630127906799316
 
-#5 city
+'''#5 city
 greedy = 2.207540988922119
-exact = 2.121398448944092
+exact = 2.121398448944092'''
 
 
 print(min(mean_tour_length_list))
@@ -73,11 +71,11 @@ print(min(mean_tour_length_list3))
 print(min(mean_tour_length_list4))
 print(min(mean_tour_length_list5))
 
-print('optimality gap', (min(mean_tour_length_list)-exact)/exact)
-print('optimality gap', (min(mean_tour_length_list2)-exact)/exact)
-print('optimality gap', (min(mean_tour_length_list3)-exact)/exact)
-print('optimality gap', (min(mean_tour_length_list4)-exact)/exact)
-print('optimality gap', (min(mean_tour_length_list5)-exact)/exact)
+print('optimality gap', (min(mean_tour_length_list)-exact)*100/exact)
+print('optimality gap', (min(mean_tour_length_list2)-exact)*100/exact)
+print('optimality gap', (min(mean_tour_length_list3)-exact)*100/exact)
+print('optimality gap', (min(mean_tour_length_list4)-exact)*100/exact)
+print('optimality gap', (min(mean_tour_length_list5)-exact)*100/exact)
 
 plt.plot(mean_tour_length_list, label='Fourier1 ')
 plt.plot(mean_tour_length_list2, label='Fourier2 ')
@@ -93,10 +91,11 @@ plt.axhline(y=greedy, color='r', linestyle='--', label='Greedy Solver')
 plt.axhline(y=exact, color='g', linestyle='--', label='Exact Solver')
 
 # Add labels to the axes
-plt.xlabel('Epoch')
-plt.ylabel('Mean Tour Length')
+plt.xlabel('Epoch', fontsize=15)
+plt.ylabel('Mean Tour Length', fontsize=15)
+plt.tick_params(axis='both', which='major', labelsize=11)
 #plt.ylim(2.1, 2.64)
 
-plt.legend()
-plt.savefig('figs/5_city/embed_4l.pdf')
+plt.legend(fontsize=12)
+plt.savefig('figs/10_city/embed_3l.pdf')
 plt.show()
