@@ -1,6 +1,0 @@
-wandb: Currently logged in as: umutcanhalil10 (umutcanhalil10-University of Edinburgh). Use `wandb login --relogin` to force relogin
-Traceback (most recent call last):
-  File "/exports/eddie/scratch/s2517783/mamba/tsp.py", line 83, in <module>
-    if nb_layers%2==0:
-       ^^^^^^^^^
-NameError: name 'nb_layers' is not defined

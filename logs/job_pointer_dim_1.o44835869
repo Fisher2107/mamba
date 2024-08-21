@@ -1,5 +1,0 @@
-CUDA_VISIBLE_DEVICES: 
-True
-(0, 0)
-Total number of parameters: 109056
-{'bsz': 600, 'd_model': 64, 'coord_dim': 2, 'nb_layers': 1, 'mlp_cls': 'gatedmlp', 'city_count': 10, 'fourier_scale': None, 'start': 2.0, 'city_range': (0, 0), 'wandb': True, 'nb_epochs': 2000, 'nb_batch_per_epoch': 10, 'test_size': 2000, 'save_loc': 'checkpoints/pointer_layers/layer1', 'checkpoint': None, 'recycle_data': 0, 'model_name': 'Full', 'mamba2': False, 'reverse': False, 'reverse_start': False, 'last_layer': 'pointer', 'test_folder_name': None, 'profiler': False, 'test_data_loc': 'data/start_2/2000_10_2.pt', 'B': None, 'x_flipped': False}

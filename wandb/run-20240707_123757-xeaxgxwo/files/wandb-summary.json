@@ -1,1 +1,0 @@
-{"test_tour length train": 3.0121467113494873, "test_tour length baseline": 3.000988721847534, "time one epoch": 2.8143715858459473, "time tot": 7245.330048561096, "train_tour length train": 18273.5546875, "train_length baseline": 18222.697265625, "_timestamp": 1720359535.8997653, "_runtime": 7258.055227279663, "_step": 1999, "_wandb": {"runtime": 7257}}

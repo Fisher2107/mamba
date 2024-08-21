@@ -1,53 +1,0 @@
-wandb: Currently logged in as: umutcanhalil10 (umutcanhalil10-University of Edinburgh). Use `wandb login --relogin` to force relogin
-  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [01:07<04:28, 67.24s/it] 40%|████      | 2/5 [01:49<02:38, 52.79s/it] 60%|██████    | 3/5 [02:32<01:36, 48.07s/it] 80%|████████  | 4/5 [03:14<00:45, 45.88s/it]100%|██████████| 5/5 [03:57<00:00, 44.68s/it]100%|██████████| 5/5 [03:57<00:00, 47.49s/it]
-wandb: Currently logged in as: umutcanhalil10 (umutcanhalil10-University of Edinburgh). Use `wandb login --relogin` to force relogin
-  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [02:21<09:25, 141.43s/it] 20%|██        | 1/5 [02:22<09:30, 142.54s/it]
-Traceback (most recent call last):
-  File "/exports/eddie/scratch/s2517783/mamba/tsp.py", line 195, in <module>
-    L_train_train_total, L_baseline_train_total = train_step(model_train, model_baseline, inputs, optimizer, device,L_train_train_total,L_baseline_train_total,gpu_logger)
-                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/exports/eddie/scratch/s2517783/mamba/model.py", line 297, in train_step
-    tours_baseline, _ = seq2seq_generate_tour(device,model_baseline,inputs,lastlayer=lastlayer,deterministic=False)
-                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/exports/eddie/scratch/s2517783/mamba/model.py", line 270, in seq2seq_generate_tour
-    outputs = model(inputs)[:,-1,:]
-              ^^^^^^^^^^^^^
-  File "/exports/eddie/scratch/s2517783/miniconda3/envs/tsp/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1532, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/exports/eddie/scratch/s2517783/miniconda3/envs/tsp/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1541, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/exports/eddie/scratch/s2517783/mamba/model.py", line 233, in forward
-    x , residual = layer(x,residual)
-                   ^^^^^^^^^^^^^^^^^
-  File "/exports/eddie/scratch/s2517783/miniconda3/envs/tsp/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1532, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/exports/eddie/scratch/s2517783/miniconda3/envs/tsp/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1541, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/exports/eddie/scratch/s2517783/mamba/mamba_ssm/modules/block.py", line 67, in forward
-    hidden_states = self.mixer(hidden_states, inference_params=inference_params, **mixer_kwargs)
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/exports/eddie/scratch/s2517783/miniconda3/envs/tsp/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1532, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/exports/eddie/scratch/s2517783/miniconda3/envs/tsp/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1541, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/exports/eddie/scratch/s2517783/mamba/mamba_ssm/modules/mamba2.py", line 183, in forward
-    out = mamba_split_conv1d_scan_combined(
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/exports/eddie/scratch/s2517783/mamba/mamba_ssm/ops/triton/ssd_combined.py", line 930, in mamba_split_conv1d_scan_combined
-    return MambaSplitConv1dScanCombinedFn.apply(zxbcdt, conv1d_weight, conv1d_bias, dt_bias, A, D, chunk_size, initial_states, seq_idx, dt_limit, return_final_states, activation, rmsnorm_weight, rmsnorm_eps, outproj_weight, outproj_bias, headdim, ngroups, norm_before_gate)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/exports/eddie/scratch/s2517783/miniconda3/envs/tsp/lib/python3.12/site-packages/torch/autograd/function.py", line 598, in apply
-    return super().apply(*args, **kwargs)  # type: ignore[misc]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/exports/eddie/scratch/s2517783/miniconda3/envs/tsp/lib/python3.12/site-packages/torch/cuda/amp/autocast_mode.py", line 115, in decorate_fwd
-    return fwd(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^
-  File "/exports/eddie/scratch/s2517783/mamba/mamba_ssm/ops/triton/ssd_combined.py", line 779, in forward
-    causal_conv1d_cuda.causal_conv1d_fwd(rearrange(xBC, "b s d -> b d s"),
-torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 20.00 MiB. GPU 

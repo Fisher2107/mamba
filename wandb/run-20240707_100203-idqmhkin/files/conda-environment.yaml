@@ -1,4 +1,0 @@
-name: tspp
-channels:
-  - defaults
-prefix: /exports/eddie/scratch/s2517783/miniconda3/envs/tspp

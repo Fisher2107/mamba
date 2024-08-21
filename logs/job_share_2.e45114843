@@ -1,15 +1,0 @@
-wandb: Currently logged in as: umutcanhalil10 (umutcanhalil10-University of Edinburgh). Use `wandb login --relogin` to force relogin
-wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /exports/eddie/scratch/s2517783/mamba/wandb/run-20240725_232814-pfvvphr8
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run share_20_general
-wandb: ⭐️ View project at https://wandb.ai/umutcanhalil10-University%20of%20Edinburgh/Mamba_big
-wandb: 🚀 View run at https://wandb.ai/umutcanhalil10-University%20of%20Edinburgh/Mamba_big/runs/pfvvphr8
-0it [00:00, ?it/s]0it [00:00, ?it/s]
-wandb: - 0.008 MB of 0.008 MB uploadedwandb: \ 0.008 MB of 0.014 MB uploadedwandb: 🚀 View run share_20_general at: https://wandb.ai/umutcanhalil10-University%20of%20Edinburgh/Mamba_big/runs/pfvvphr8
-wandb: ⭐️ View project at: https://wandb.ai/umutcanhalil10-University%20of%20Edinburgh/Mamba_big
-wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240725_232814-pfvvphr8/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.

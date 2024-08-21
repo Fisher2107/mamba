@@ -1,5 +1,0 @@
-/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba
-Traceback (most recent call last):
-  File "/mnt/lustre/e1000/home/tc064/tc064/s2517783/mamba/pt_reader.py", line 1, in <module>
-    import torch
-ModuleNotFoundError: No module named 'torch'

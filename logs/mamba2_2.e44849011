@@ -1,43 +1,0 @@
-wandb: Currently logged in as: umutcanhalil10 (umutcanhalil10-University of Edinburgh). Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /exports/eddie/scratch/s2517783/mamba/wandb/run-20240710_163050-7lgk89o5
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run absurd-capybara-37
-wandb: ⭐️ View project at https://wandb.ai/umutcanhalil10-University%20of%20Edinburgh/Mamba
-wandb: 🚀 View run at https://wandb.ai/umutcanhalil10-University%20of%20Edinburgh/Mamba/runs/7lgk89o5
-  0%|          | 0/2000 [00:00<?, ?it/s]  0%|          | 0/2000 [01:57<?, ?it/s]
-Traceback (most recent call last):
-  File "/exports/eddie/scratch/s2517783/mamba/tsp.py", line 251, in <module>
-    torch.save(checkpoint, f'{args.save_loc}_{date_time}.pt' )
-  File "/exports/eddie/scratch/s2517783/miniconda3/lib/python3.12/site-packages/torch/serialization.py", line 627, in save
-    with _open_zipfile_writer(f) as opened_zipfile:
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/exports/eddie/scratch/s2517783/miniconda3/lib/python3.12/site-packages/torch/serialization.py", line 501, in _open_zipfile_writer
-    return container(name_or_buffer)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/exports/eddie/scratch/s2517783/miniconda3/lib/python3.12/site-packages/torch/serialization.py", line 472, in __init__
-    super().__init__(torch._C.PyTorchFileWriter(self.name))
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-RuntimeError: Parent directory checkpoints/mamba2 does not exist.
-wandb: - 0.008 MB of 0.008 MB uploadedwandb: \ 0.008 MB of 0.008 MB uploadedwandb: | 0.008 MB of 0.017 MB uploadedwandb: 
-wandb: Run history:
-wandb:  test_tour length baseline ▁
-wandb:     test_tour length train ▁
-wandb:             time one epoch ▁
-wandb:                   time tot ▁
-wandb: train_tour length baseline ▁
-wandb:    train_tour length train ▁
-wandb: 
-wandb: Run summary:
-wandb:  test_tour length baseline 5.22299
-wandb:     test_tour length train 5.2005
-wandb:             time one epoch 116.61243
-wandb:                   time tot 116.6199
-wandb: train_tour length baseline 31208.14453
-wandb:    train_tour length train 31249.23242
-wandb: 
-wandb: 🚀 View run absurd-capybara-37 at: https://wandb.ai/umutcanhalil10-University%20of%20Edinburgh/Mamba/runs/7lgk89o5
-wandb: ⭐️ View project at: https://wandb.ai/umutcanhalil10-University%20of%20Edinburgh/Mamba
-wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240710_163050-7lgk89o5/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
