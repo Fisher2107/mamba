@@ -198,9 +198,6 @@ csv_file_importance_sampling= ['../../checkpoints/gpu/importance_sampling_lightn
                 '../../checkpoints/gpu/importance_sampling_lightning/standard_mamba2_100_gpu_stats.csv',]
 
 
-
-
-
 generate_plot_memory(csv_files_action,'../figs/scale/lightning/memory_usage_action.pdf')
 generate_plot_memory(csv_files_tour,'../figs/scale/lightning/memory_usage_tour.pdf')
 generate_plot_memory(csv_file_importance_sampling5,'../figs/scale/lightning/memory_usage_importance_sampling5.pdf')

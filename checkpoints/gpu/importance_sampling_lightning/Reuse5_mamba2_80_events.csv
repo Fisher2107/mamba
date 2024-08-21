@@ -1,0 +1,161 @@
+Timestamp,Event
+2024-08-06T15:22:14.512226,"Epoch 0, Step 0 start"
+2024-08-06T15:22:14.512237,Generating data
+2024-08-06T15:22:22.393021,computing tour length of train model
+2024-08-06T15:22:22.440901,computing tour length of baseline model
+2024-08-06T15:22:31.858612,"Epoch 0, Step 5 start"
+2024-08-06T15:22:31.858623,Generating data
+2024-08-06T15:22:32.330189,computing tour length of train model
+2024-08-06T15:22:32.330428,computing tour length of baseline model
+2024-08-06T15:22:32.490690,"Epoch 0, Step 10 start"
+2024-08-06T15:22:32.490705,Generating data
+2024-08-06T15:22:32.960359,computing tour length of train model
+2024-08-06T15:22:32.960596,computing tour length of baseline model
+2024-08-06T15:22:33.121475,"Epoch 0, Step 15 start"
+2024-08-06T15:22:33.121494,Generating data
+2024-08-06T15:22:33.591049,computing tour length of train model
+2024-08-06T15:22:33.591305,computing tour length of baseline model
+2024-08-06T15:22:33.766337,Testing on test data split 1
+2024-08-06T15:22:36.532041,Testing on test data split 2
+2024-08-06T15:22:39.284961,Testing on test data split 3
+2024-08-06T15:22:42.013498,Testing on test data split 4
+2024-08-06T15:22:44.775228,Testing on val data split 1
+2024-08-06T15:22:47.531049,Testing on val data split 2
+2024-08-06T15:22:50.290207,Testing on val data split 3
+2024-08-06T15:22:53.050863,Testing on val data split 4
+2024-08-06T15:22:55.810829,Testing on val data split 5
+2024-08-06T15:22:58.551397,Testing on val data split 6
+2024-08-06T15:23:01.306714,Testing on val data split 7
+2024-08-06T15:23:04.075364,Testing on val data split 8
+2024-08-06T15:23:06.828449,Testing on val data split 9
+2024-08-06T15:23:09.592407,Testing on val data split 10
+2024-08-06T15:23:12.343585,Testing on val data split 11
+2024-08-06T15:23:15.121851,Testing on val data split 12
+2024-08-06T15:23:17.882831,Testing on val data split 13
+2024-08-06T15:23:20.643917,Testing on val data split 14
+2024-08-06T15:23:23.398582,Testing on val data split 15
+2024-08-06T15:23:26.158242,Testing on val data split 16
+2024-08-06T15:23:28.923648,Testing on val data split 17
+2024-08-06T15:23:31.660702,Testing on val data split 18
+2024-08-06T15:23:34.414670,Testing on val data split 19
+2024-08-06T15:23:37.154286,Testing on val data split 20
+2024-08-06T15:23:39.919406,"Epoch 1, Step 0 start"
+2024-08-06T15:23:39.919422,Generating data
+2024-08-06T15:23:40.383817,computing tour length of train model
+2024-08-06T15:23:40.384056,computing tour length of baseline model
+2024-08-06T15:23:40.544028,"Epoch 1, Step 5 start"
+2024-08-06T15:23:40.544039,Generating data
+2024-08-06T15:23:41.010461,computing tour length of train model
+2024-08-06T15:23:41.010703,computing tour length of baseline model
+2024-08-06T15:23:41.169534,"Epoch 1, Step 10 start"
+2024-08-06T15:23:41.169547,Generating data
+2024-08-06T15:23:41.637736,computing tour length of train model
+2024-08-06T15:23:41.638006,computing tour length of baseline model
+2024-08-06T15:23:41.796415,"Epoch 1, Step 15 start"
+2024-08-06T15:23:41.796427,Generating data
+2024-08-06T15:23:42.264936,computing tour length of train model
+2024-08-06T15:23:42.265224,computing tour length of baseline model
+2024-08-06T15:23:42.424988,Testing on test data split 1
+2024-08-06T15:23:45.189788,Testing on test data split 2
+2024-08-06T15:23:47.934138,Testing on test data split 3
+2024-08-06T15:23:50.695159,Testing on test data split 4
+2024-08-06T15:23:53.450302,Testing on val data split 1
+2024-08-06T15:23:56.207662,Testing on val data split 2
+2024-08-06T15:23:58.980337,Testing on val data split 3
+2024-08-06T15:24:01.750023,Testing on val data split 4
+2024-08-06T15:24:04.510270,Testing on val data split 5
+2024-08-06T15:24:07.284591,Testing on val data split 6
+2024-08-06T15:24:10.051552,Testing on val data split 7
+2024-08-06T15:24:12.807714,Testing on val data split 8
+2024-08-06T15:24:15.565523,Testing on val data split 9
+2024-08-06T15:24:18.322713,Testing on val data split 10
+2024-08-06T15:24:21.100939,Testing on val data split 11
+2024-08-06T15:24:23.868965,Testing on val data split 12
+2024-08-06T15:24:26.644297,Testing on val data split 13
+2024-08-06T15:24:29.417148,Testing on val data split 14
+2024-08-06T15:24:32.198349,Testing on val data split 15
+2024-08-06T15:24:34.982722,Testing on val data split 16
+2024-08-06T15:24:37.741952,Testing on val data split 17
+2024-08-06T15:24:40.516038,Testing on val data split 18
+2024-08-06T15:24:43.274416,Testing on val data split 19
+2024-08-06T15:24:46.037103,Testing on val data split 20
+2024-08-06T15:24:48.797861,"Epoch 2, Step 0 start"
+2024-08-06T15:24:48.797879,Generating data
+2024-08-06T15:24:49.421701,computing tour length of train model
+2024-08-06T15:24:49.421974,computing tour length of baseline model
+2024-08-06T15:24:49.582341,"Epoch 2, Step 5 start"
+2024-08-06T15:24:49.582354,Generating data
+2024-08-06T15:24:50.048643,computing tour length of train model
+2024-08-06T15:24:50.048881,computing tour length of baseline model
+2024-08-06T15:24:50.207991,"Epoch 2, Step 10 start"
+2024-08-06T15:24:50.208004,Generating data
+2024-08-06T15:24:50.675874,computing tour length of train model
+2024-08-06T15:24:50.676117,computing tour length of baseline model
+2024-08-06T15:24:50.835550,"Epoch 2, Step 15 start"
+2024-08-06T15:24:50.835562,Generating data
+2024-08-06T15:24:51.303134,computing tour length of train model
+2024-08-06T15:24:51.303380,computing tour length of baseline model
+2024-08-06T15:24:51.461742,Testing on test data split 1
+2024-08-06T15:24:54.232131,Testing on test data split 2
+2024-08-06T15:24:56.989021,Testing on test data split 3
+2024-08-06T15:24:59.763549,Testing on test data split 4
+2024-08-06T15:25:02.509234,Testing on val data split 1
+2024-08-06T15:25:05.286363,Testing on val data split 2
+2024-08-06T15:25:08.046961,Testing on val data split 3
+2024-08-06T15:25:10.807787,Testing on val data split 4
+2024-08-06T15:25:13.565347,Testing on val data split 5
+2024-08-06T15:25:16.325006,Testing on val data split 6
+2024-08-06T15:25:19.090372,Testing on val data split 7
+2024-08-06T15:25:21.863436,Testing on val data split 8
+2024-08-06T15:25:24.627420,Testing on val data split 9
+2024-08-06T15:25:27.381477,Testing on val data split 10
+2024-08-06T15:25:30.159822,Testing on val data split 11
+2024-08-06T15:25:32.921757,Testing on val data split 12
+2024-08-06T15:25:35.698970,Testing on val data split 13
+2024-08-06T15:25:38.459033,Testing on val data split 14
+2024-08-06T15:25:41.236029,Testing on val data split 15
+2024-08-06T15:25:44.008214,Testing on val data split 16
+2024-08-06T15:25:46.781426,Testing on val data split 17
+2024-08-06T15:25:49.553271,Testing on val data split 18
+2024-08-06T15:25:52.331277,Testing on val data split 19
+2024-08-06T15:25:55.113615,Testing on val data split 20
+2024-08-06T15:25:57.919733,"Epoch 3, Step 0 start"
+2024-08-06T15:25:57.919744,Generating data
+2024-08-06T15:25:58.386262,computing tour length of train model
+2024-08-06T15:25:58.386511,computing tour length of baseline model
+2024-08-06T15:25:58.548607,"Epoch 3, Step 5 start"
+2024-08-06T15:25:58.548621,Generating data
+2024-08-06T15:25:59.160249,computing tour length of train model
+2024-08-06T15:25:59.160634,computing tour length of baseline model
+2024-08-06T15:25:59.363710,"Epoch 3, Step 10 start"
+2024-08-06T15:25:59.363723,Generating data
+2024-08-06T15:25:59.834162,computing tour length of train model
+2024-08-06T15:25:59.834415,computing tour length of baseline model
+2024-08-06T15:25:59.994315,"Epoch 3, Step 15 start"
+2024-08-06T15:25:59.994327,Generating data
+2024-08-06T15:26:00.464817,computing tour length of train model
+2024-08-06T15:26:00.465067,computing tour length of baseline model
+2024-08-06T15:26:00.628591,Testing on test data split 1
+2024-08-06T15:26:03.386525,Testing on test data split 2
+2024-08-06T15:26:06.165633,Testing on test data split 3
+2024-08-06T15:26:08.944949,Testing on test data split 4
+2024-08-06T15:26:11.729960,Testing on val data split 1
+2024-08-06T15:26:14.504304,Testing on val data split 2
+2024-08-06T15:26:17.268024,Testing on val data split 3
+2024-08-06T15:26:20.047874,Testing on val data split 4
+2024-08-06T15:26:22.813123,Testing on val data split 5
+2024-08-06T15:26:25.582446,Testing on val data split 6
+2024-08-06T15:26:28.360077,Testing on val data split 7
+2024-08-06T15:26:31.139090,Testing on val data split 8
+2024-08-06T15:26:33.913278,Testing on val data split 9
+2024-08-06T15:26:36.698664,Testing on val data split 10
+2024-08-06T15:26:39.476872,Testing on val data split 11
+2024-08-06T15:26:42.256554,Testing on val data split 12
+2024-08-06T15:26:45.038765,Testing on val data split 13
+2024-08-06T15:26:47.798030,Testing on val data split 14
+2024-08-06T15:26:50.575821,Testing on val data split 15
+2024-08-06T15:26:53.352716,Testing on val data split 16
+2024-08-06T15:26:56.119009,Testing on val data split 17
+2024-08-06T15:26:58.897183,Testing on val data split 18
+2024-08-06T15:27:01.671266,Testing on val data split 19
+2024-08-06T15:27:04.449350,Testing on val data split 20

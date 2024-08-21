@@ -25,8 +25,8 @@ The tsp.py file used many imports however one notatble one is model.py. This con
 
 Also when --pynvml True was called we would call functions from the gpu_stats.py file in the main dir. This is what I used to keep track of scalability metrics used in Section Scalability. 
 
-## Usage Inference
-All trained models create checkpoints saved in the checkpoint folder. In this folder we only contain a subset of all checkpoints due to space restrictions. When running the mamba model we load the checkpoints into our mamba model, allowing it us to call the model on different datasets.
+## Usage Inference + checkpoints folder
+All trained models create checkpoints saved in the checkpoint folder. When running the mamba model we load the checkpoints into our mamba model, allowing it us to call the model on different datasets.
 
 ## Concorde and Transformer
 During my dissertation I also used the concorde and transformer model. Their respective repositories can be found here:
@@ -40,7 +40,7 @@ The data folder contains many sub folders. The subfolders named begninng with st
 This folder contains most of the python files I used to generate plots. It also contains figs which is where I saved the pdf figures generated from the python files. 
 
 ## Benchmarks Folder
-These contain transformer chekpoints and pyconorder repositories used to call the concorde and transformer model. They have been emptied due to space restrictions however there contents can be found in there repositories. benchmark_solvers.py contains code that computes the greedy tour length used in my figures. It also contains an brute force exact solver that can only be used in low city counts (<=10). The transformer_model.py file contains the code used to call the transformer model used during analysis.
+These contain transformer chekpoints and pyconorder repositories used to call the concorde and transformer model. They have been emptied due to space restrictions however their contents can be found in there repositories. benchmark_solvers.py contains code that computes the greedy tour length used in my figures. It also contains an brute force exact solver that can only be used in low city counts (<=10). The transformer_model.py file contains the code used to call the transformer model used during analysis.
 
 ## IPYNB files
 These files stored in the main dir are what I used to generate visualistions of the transformer and mamba models. They were also used to generate the boxplots, histograms and heatmaps used in analysis. 
