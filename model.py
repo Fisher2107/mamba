@@ -367,7 +367,7 @@ class Bandau_Pointer(nn.Module):
             energy = self.V(torch.tanh(key + queries)).squeeze(-1)  # (bsz, n, city_count)
             return energy  # returns a tensor of size (bsz, n, city_count)
 
-
+##Experimental not used
 class Dot_Pointer(nn.Module):
     def __init__(self, d_model,city_count):
         super().__init__()

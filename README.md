@@ -26,7 +26,7 @@ The tsp.py file used many imports however one notatble one is model.py. This con
 Also when --pynvml True was called we would call functions from the gpu_stats.py file in the main dir. This is what I used to keep track of scalability metrics used in Section Scalability. 
 
 ## Usage Inference + checkpoints folder
-All trained models create checkpoints saved in the checkpoint folder. When running the mamba model we load the checkpoints into our mamba model, allowing it us to call the model on different datasets.
+All trained models create checkpoints saved in the checkpoint folder. When running the mamba model we load the checkpoints into our mamba model, allowing us to call the model on different datasets.
 
 ## Concorde and Transformer
 During my dissertation I also used the concorde and transformer model. Their respective repositories can be found here:
@@ -34,7 +34,7 @@ https://github.com/jvkersch/pyconcorde
 https://github.com/xbresson/TSP_Transformer
 
 ## Data Folder
-The data folder contains many sub folders. The subfolders named begninng with start contain my test dataset I used to evaluate model performance whilst I was training. They contain 2000 instances of TSP instances and where generated using generate_data.py. Th generlaisation subfolder containes the custom TSP dataset I used in Section 5.2.2 Visualisation. Transformer data contains a 10k tsp instance of city count 50 and 100. This was the test set the transformer model used and which I also used in my analysis section. It also contains labels representing the optimal tour length of each instance. 
+The data folder contains many sub folders. The subfolders named begining with start contains test datasets I used to evaluate model performance whilst I was training. They contain 2000 instances of TSP instances and where generated using generate_data.py. The generlaisation subfolder containes the custom TSP dataset I used in Section 5.2.2 Visualisation. Transformer data contains a 10k tsp instance of city count 50 and 100. This was the test set the transformer model used and which I also used in my analysis section. It also contains labels representing the optimal tour length of each instance. 
 
 ## Evals Folder 
 This folder contains most of the python files I used to generate plots. It also contains figs which is where I saved the pdf figures generated from the python files. 
