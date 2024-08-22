@@ -4,8 +4,6 @@ import os
 # Add the parent directory to the system path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from benchmarks.benchmark_solvers import greedy_tsp,exact_solver
-from model import MambaFull
 import torch
 import torch.nn
 import matplotlib.pyplot as plt
@@ -22,13 +20,13 @@ class DotDict(dict):
         self.update(kwds)
         self.__dict__ = self
 plt.style.use('bmh')
-checkpoint= torch.load('../checkpoints/pointer_v_standard_dim/pointer16_07-07_22-00.pt')
-checkpoint2 = torch.load('../checkpoints/pointer_v_standard_dim/pointer32_07-07_16-43.pt')
-checkpoint3 = torch.load('../checkpoints/pointer_v_standard_dim/pointer64_07-07_15-55.pt')
+checkpoint= torch.load('../checkpoints/pointer_v_standard_dim/pointer16_07-07_22-00.pt', map_location=device)
+checkpoint2 = torch.load('../checkpoints/pointer_v_standard_dim/pointer32_07-07_16-43.pt', map_location=device)
+checkpoint3 = torch.load('../checkpoints/pointer_v_standard_dim/pointer64_07-07_15-55.pt', map_location=device)
 
-checkpoint4 = torch.load('../checkpoints/pointer_v_standard_dim/standard16_07-07_23-58.pt')
-checkpoint5 = torch.load('../checkpoints/pointer_v_standard_dim/standard32_07-07_13-16.pt')
-checkpoint6 = torch.load('../checkpoints/pointer_v_standard_dim/standard64_07-07_12-38.pt')
+checkpoint4 = torch.load('../checkpoints/pointer_v_standard_dim/standard16_07-07_23-58.pt', map_location=device)
+checkpoint5 = torch.load('../checkpoints/pointer_v_standard_dim/standard32_07-07_13-16.pt', map_location=device)
+checkpoint6 = torch.load('../checkpoints/pointer_v_standard_dim/standard64_07-07_12-38.pt', map_location=device)
 
 mean_tour_length_list = [tensor.cpu().numpy() for tensor in checkpoint['mean_tour_length_list']]
 mean_tour_length_list2 = [tensor.cpu().numpy() for tensor in checkpoint2['mean_tour_length_list']]
@@ -40,23 +38,30 @@ mean_tour_length_list6 = [tensor.cpu().numpy() for tensor in checkpoint6['mean_t
 plt.plot(mean_tour_length_list, label='Pointer d=16')
 plt.plot(mean_tour_length_list2, label='Pointer d=32')
 plt.plot(mean_tour_length_list3, label='Pointer d=64')
-plt.plot(mean_tour_length_list4, label='Standard d=16')
-plt.plot(mean_tour_length_list5, label='Standard d=32')
-plt.plot(mean_tour_length_list6, label='Standard d=64')
+plt.plot(mean_tour_length_list4, label='Sutskever d=16')
+plt.plot(mean_tour_length_list5, label='Sutskever d=32')
+plt.plot(mean_tour_length_list6, label='Sutskever d=64')
 
 greedy = 3.1791656017303467
 exact = 2.8630127906799316
 
+# Increase font sizes
+plt.rcParams['font.size'] = 16
+plt.rcParams['axes.labelsize'] = 18
+plt.rcParams['axes.titlesize'] = 16
+plt.rcParams['xtick.labelsize'] = 13
+plt.rcParams['ytick.labelsize'] = 13
+plt.rcParams['legend.fontsize'] = 11
 
 plt.axhline(y=greedy, color='r', linestyle='--', label='Greedy Solver')
 plt.axhline(y=exact, color='g', linestyle='--', label='Exact Solver')
 # Add labels to the axes
-plt.xlabel('Epoch')
-plt.ylabel('Mean Tour Length')
-plt.ylim(2.85, 3.2)
+plt.xlabel('Epoch',fontsize=16)
+plt.ylabel('Mean Tour Length',fontsize=16)
+#plt.ylim(2.85, 3.2)
 
-plt.title('All layers')
+plt.title('Pointer v Sutskever on 10 City TSP')
 
 plt.legend()
-plt.savefig('figs/mamba2_pointer_dims2.pdf')
-plt.show()
+plt.savefig('figs/10_city/mamba2_pointer_dims11.pdf')
+#plt.show()
